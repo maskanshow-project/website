@@ -83,9 +83,11 @@ class LaratrustSeeder extends CustomSeeder
             if ( $role->name === 'owner' )
             {
                 $user = \App\User::firstOrCreate([
-                    'username' => 'siteadmin',
                     'email' => 'admin@maskanshow.ir'
                 ], [
+                    'first_name' => 'الیاس',
+                    'last_name' => 'نسایی',
+                    'username' => 'siteadmin',
                     'password' => bcrypt('123456')
                 ]);
                 
