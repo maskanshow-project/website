@@ -203,6 +203,14 @@ class EstateFilter extends MainFilter
     }
 
     /**
+     * Filter the estates that has certain areas
+     */
+    public function roles($ids)
+    {
+        return $this->filter_relation('registrar_type', $ids);
+    }
+
+    /**
      * Filter the estates that has certain streets
      */
     public function streets($ids)

@@ -20,6 +20,9 @@ class SpecInput extends GraphQLType
             'id' => [
                 'type' => Type::int()
             ],
+            'is_required' => [
+                'type' => Type::boolean()
+            ],
             'value' => [
                 'type' => Type::int()
             ],

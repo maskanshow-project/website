@@ -25,7 +25,7 @@ $factory->define(App\Models\Estate\Estate::class, function () use($faker) {
     return [
         'assignment_id'         => Assignment::all()->random()->id ?? null,
         'estate_type_id'        => EstateType::all()->random()->id ?? null,
-        'label_id'              => nullable( Label::all()->random()->id ?? null ),
+        // 'label_id'              => nullable( Label::all()->random()->id ?? null ),
         'role_id'               => nullable( Role::all()->random()->id ?? null ),
         'code'                  => $faker->ean8,
         'title'                 => nullable( $title ),

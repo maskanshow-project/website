@@ -16,6 +16,19 @@ class UpdateUserPasswordMutation extends BaseUserMutation
     }
 
     /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize(array $args)
+    {
+        return
+              $args['user'] ?? false
+            ? auth()->id() !== $args['user'] && $this->checkPermission('reset-password-user')
+            : true;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -28,6 +41,9 @@ class UpdateUserPasswordMutation extends BaseUserMutation
     public function args()
     {
         return [
+            'user' => [
+                'type' => Type::string()
+            ],
             'current_password' => [
                 'type' => Type::string()
             ],
@@ -41,6 +57,31 @@ class UpdateUserPasswordMutation extends BaseUserMutation
     }
    
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    {
+        if ( $args['user'] ?? false )
+            return $this->updateUserPassword($args);
+
+        else
+            return $this->updateMyPassword($args);
+    }
+
+    public function updateUserPassword($args)
+    {
+        $user = User::findOrFail($args['user']);
+        
+        $user->tokens()->whereName('web')->delete();
+
+        $user->update([
+            'password' => \Hash::make( $args['password'] )
+        ]);
+
+        return [
+            'status' => 200,
+            'message' => 'رمز عبور با موفقیت تغییر کرد'
+        ];
+    }
+
+    public function updateMyPassword($args)
     {
         if ( !\Hash::check( $args['current_password'], auth()->user()->password ) )
         {

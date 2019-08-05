@@ -3876,9 +3876,6 @@ h6 {
 	/* Old browsers */
 	/* FF3.6-15 */
 	/* Chrome10-25,Safari5.1-6 */
-	background: -webkit-gradient(linear, left top, left bottom, from(black), color-stop(70%, #29B6F6));
-	background: -o-linear-gradient(top, black 0%, #29B6F6 70%);
-	background: linear-gradient(to bottom, black 0%, #29B6F6 70%);
 	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#29B6F6', GradientType=0);
 	/* IE6-9 */
@@ -4681,7 +4678,7 @@ img {
 
 .author-card {
 	padding: 30px;
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .author-card .author-img {
@@ -5092,7 +5089,7 @@ img {
 		padding-top: 15px;
 	}
 	.single-list-slider .sl-item {
-		height: 250px;
+		height: 200px;
 	}
 	.sl-thumb-slider .sl-thumb {
 		height: 60px;
@@ -5616,6 +5613,9 @@ img {
   filter: blur(3px) !important;
 }
 
-/*---------------------------------------------------- */
+.application--wrap .drawer-res .v-list {
+  max-height: calc(100% - 320px);
+  overflow: auto;
+}
 
-/*# sourceMappingURL=style.css.map */
+/*---------------------------------------------------- */

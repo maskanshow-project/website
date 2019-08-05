@@ -65,6 +65,17 @@ class UserFilter extends MainFilter
     }
 
     /**
+     * Filter the users that base in it's roles
+     *
+     * @param string $id
+     * @return Builder
+     */
+    public function roles($ids)
+    {
+        return $this->filter_relation('roles', $ids);
+    }
+
+    /**
      * Filter the users that locate in specific cities
      *
      * @param string $id

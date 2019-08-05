@@ -33,6 +33,9 @@ class EstatesQuery extends BaseEstateQuery
             'areas' => [
                 'type' => Type::listOf( Type::int() )
             ],
+            'roles' => [
+                'type' => Type::listOf( Type::int() )
+            ],
             'streets' => [
                 'type' => Type::listOf( Type::int() )
             ],

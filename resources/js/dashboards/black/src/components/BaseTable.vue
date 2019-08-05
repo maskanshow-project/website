@@ -580,6 +580,7 @@
     position: relative;
     border-radius: 10px 10px 10px 60px;
     transform: scale(1);
+    z-index: 1000;
     overflow: visible !important;
     transition: transform 200ms, box-shadow 250ms;
   }

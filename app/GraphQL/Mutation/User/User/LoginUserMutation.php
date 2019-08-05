@@ -29,7 +29,7 @@ class LoginUserMutation extends BaseUserMutation
     public function args()
     {
         return [
-            'email'     => [
+            'username'  => [
                 'type' => Type::string()
             ],
             'password'  => [
@@ -41,7 +41,7 @@ class LoginUserMutation extends BaseUserMutation
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {   
         if ( Auth::attempt([
-            'email' => $args['email'], 
+            'username' => strtolower( $args['username'] ),
             'password' => $args['password']
         ]) )
         {
@@ -49,17 +49,18 @@ class LoginUserMutation extends BaseUserMutation
             {
                 if ( Auth::user()->system_authentication_code !== request()->header('SystemAuthenticationCode') )
                 {
-                    die(json_encode([
-                        'status' => 403,
-                        'message' => 'Unauthorised'
-                    ]));
+                    if ( !Auth::user()->can('free-account-user') )
+                    {
+                        die(json_encode([
+                            'status' => 403,
+                            'message' => 'Unauthorised'
+                        ]));
+                    }
                 }
             }
             else
                 auth()->user()->update([ 'system_authentication_code' => str_random(50) ]);
 
-            
-            Auth::user()->tokens()->whereName('web')->delete();
 
             $data = collect( Auth::user()->toArray() );
             
@@ -71,7 +72,7 @@ class LoginUserMutation extends BaseUserMutation
         {
             die(json_encode([
                 'status' => 400,
-                'message' => 'Unauthorised'
+                'message' => 'نام کاربری یا رمز عبور شما اشتباه است'
             ]));
         }
     }

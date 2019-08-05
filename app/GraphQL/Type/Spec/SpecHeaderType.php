@@ -27,7 +27,21 @@ class SpecHeaderType extends BaseType
                 'type' => Type::string(),
                 'selectable' => false
             ],
-            'rows' => $this->relationListField('spec_row', 'is_active', 'read-spec'),
+            // 'rows' => $this->relationListField('spec_row', 'is_active', 'read-spec', 'asc'),
+            'rows' => [
+                'type'  => Type::listOf( \GraphQL::type('spec_row') ),
+                'query' => function(array $args, $query) {
+
+                    return $query->when($args['only_show_valid_spec'] ?? false, function($query) use($args) {
+                        
+                        $query->whereHas('data', function($query) use($args) {
+
+                            $query->where('estate_id', $args['id'] ?? false);
+                        });
+                    })
+                    ->orderBy("spec_rows.created_at", 'asc');
+                }
+            ],
             'audits' => $this->audits('spec'),
             'is_active' => $this->acceptableField('spec')
         ];

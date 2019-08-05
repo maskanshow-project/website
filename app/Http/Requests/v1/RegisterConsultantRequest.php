@@ -22,13 +22,14 @@ class RegisterConsultantRequest extends MainRequest
             'username'          => [
                 'required',
                 'string',
+                'alpha_dash',
                 'min:6',
                 'max:30',
                 'alpha_dash',
                 Rule::unique('users')
             ],
             'email'             => [
-                'required',
+                'nullable',
                 'email',
                 Rule::unique('users')
             ],
@@ -48,6 +49,7 @@ class RegisterConsultantRequest extends MainRequest
             'office_name'           => 'required|string|max:50',
             'office_username'       => [
                 'required',
+                'alpha_dash',
                 'string',
                 'min:6',
                 'max:30',

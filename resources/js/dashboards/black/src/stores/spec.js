@@ -163,6 +163,10 @@ export default {
                     type: 'Boolean',
                     value: null
                 },
+                is_required: {
+                    type: 'Boolean',
+                    value: null
+                },
                 is_multiple: {
                     type: 'Boolean',
                     value: null

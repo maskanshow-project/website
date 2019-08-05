@@ -17,7 +17,8 @@ use App\Models\{
     Estate\Estate,
     Financial\Plan,
     User\Message,
-    User\Office
+    User\Office,
+    User\ActiveSession,
 };
 use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
@@ -182,6 +183,14 @@ class User extends Authenticatable implements AuditableContract, HasMedia
      **             Relations
      ***************************************/
     
+    /**
+     * Get all the active sessions of the user
+     */
+    public function sessions()
+    {
+        return $this->hasMany(ActiveSession::class);
+    }
+
     /**
      * Get all the articles that the user wrote them
      */

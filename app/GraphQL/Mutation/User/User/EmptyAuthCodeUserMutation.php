@@ -46,6 +46,7 @@ class EmptyAuthCodeUserMutation extends BaseUserMutation
         }
 
         $user->update([ 'system_authentication_code' => null ]);
+        $user->sessions()->delete();
 
         return [
             'status' => 200,

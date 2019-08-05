@@ -20,39 +20,39 @@ class EstateTablesSeeder extends CustomSeeder
     {
         auth()->loginUsingId( User::first()->id );
 
-        $spec = Spec::all()->random();
+        // $spec = Spec::all()->random();
 
-        $this->createEstates($spec->id);
+        $this->createEstates();
 
-        $estate = Estate::latest()->first();
+        $estate = Estate::orderBy('id', 'desc')->first();
 
-        $estate->features()->attach( Feature::all()->take( rand(3, 10) ) );
+        $estate->features()->sync( Feature::all()->take( rand(3, 10) ) );
 
-        $spec->headers->each( function($header) use($estate) {
+        // $spec->headers->each( function($header) use($estate) {
             
-            $header->rows->each( function( $spec_row ) use($estate) {
+        //     $header->rows->each( function( $spec_row ) use($estate) {
 
-                $values = $spec_row->defaults;
+        //         $values = $spec_row->defaults;
 
-                $data = $estate->spec_data()->save(
-                    factory(\App\Models\Spec\SpecData::class)->make([
-                        'spec_row_id'   => $spec_row->id
-                    ])
-                );
+        //         $data = $estate->spec_data()->save(
+        //             factory(\App\Models\Spec\SpecData::class)->make([
+        //                 'spec_row_id'   => $spec_row->id
+        //             ])
+        //         );
 
-                if ( $values->isNotEmpty() )
-                    $data->values()->saveMany( $values->take( rand(1, 5) ) );
-            });
-        });
+        //         if ( $values->isNotEmpty() )
+        //             $data->values()->saveMany( $values->take( rand(1, 5) ) );
+        //     });
+        // });
     }
 
-    public function createEstates($spec_id)
+    public function createEstates()
     {
         return $this->estates = $this->createTable(
             Estate::class,
             [ 'id', 'title', 'code', 'label_id', 'jalali_created_at' ],
             [
-                'spec_id'       => $spec_id,
+                // 'spec_id'       => $spec_id,
             ],
             'estate', null, 1
         );

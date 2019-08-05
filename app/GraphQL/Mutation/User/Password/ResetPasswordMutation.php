@@ -91,10 +91,13 @@ class ResetPasswordMutation extends MainMutation
         {
             if ( $user->system_authentication_code !== request()->header('SystemAuthenticationCode') )
             {
-                die(json_encode([
-                    'status' => 403,
-                    'message' => 'Unauthorised'
-                ]));
+                if ( !Auth::user()->can('free-account-user') )
+                {
+                    die(json_encode([
+                        'status' => 403,
+                        'message' => 'Unauthorised'
+                    ]));
+                }
             }
         }
         else

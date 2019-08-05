@@ -348,21 +348,16 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
             ->width(1680)
             ->height(1200);
 
-        $watermark = SiteSetting::whereName('watermark')->with('media')->first()->media ?? collect([]);
-
-        if ( $watermark->isNotEmpty() )
-        {
-            $this
-                ->addMediaConversion('watermark')
-                ->keepOriginalImageFormat()
-                ->width(1024)
-                ->height(800)
-                ->watermark( $watermark->first()->getPath() )
-                ->watermarkPosition(Manipulations::POSITION_TOP_LEFT)
-                ->watermarkOpacity(70)
-                ->watermarkPadding(10, 10, Manipulations::UNIT_PERCENT)
-                ->watermarkHeight(20, Manipulations::UNIT_PERCENT)
-                ->watermarkWidth(20, Manipulations::UNIT_PERCENT);
-        }
+        
+        $this
+            ->addMediaConversion('watermark')
+            ->keepOriginalImageFormat()
+            ->width(1024)
+            ->height(800)
+            ->watermark( public_path('images/watermark.png') )
+            ->watermarkPosition(Manipulations::POSITION_CENTER)
+            ->watermarkOpacity(40)
+            ->watermarkHeight(60, Manipulations::UNIT_PERCENT)
+            ->watermarkWidth(60, Manipulations::UNIT_PERCENT);
     }
 }

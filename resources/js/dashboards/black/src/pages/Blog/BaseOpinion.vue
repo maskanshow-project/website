@@ -126,21 +126,14 @@
         <div class="p-2">
           <div class="row" :style="{ position: 'relative', zIndex: 1}">
             <div class="col-6" v-if="rel === 'article' && showing_info.article">
-              <img class="header-image" :src="showing_info.article.image ? showing_info.article.image.medium : '/images/placeholder.png'" />
+              <img class="header-image" :src="showing_info.article.image ? showing_info.article.image.small : '/images/placeholder.png'" />
               <p class="header-paragraph">
                 <i class="tim-icons icon-single-copy-04"></i>
                 {{ showing_info.article.title }}
               </p>
             </div>
-            <div class="col-6" v-if="rel === 'product' && showing_info.product">
-              <img class="header-image" :src="showing_info.product.photos && showing_info.product.photos.length ? showing_info.product.photos[0].thumb : '/images/placeholder.png'" />
-              <p class="header-paragraph">
-                <i class="tim-icons icon-basket-simple"></i>
-                {{ showing_info.product.name }}
-              </p>
-            </div>
             <div class="col-6">
-              <img class="header-image" :src="showing_info.writer.avatar ? showing_info.writer.avatar.thumb : '/images/placeholder-user.png'" />
+              <img class="header-image" :src="showing_info.writer.avatar ? showing_info.writer.avatar.small : '/images/placeholder-user.png'" />
               <p class="header-paragraph">
                 <i class="tim-icons icon-single-02"></i>
                 {{ showing_info.writer.full_name }}
@@ -489,7 +482,7 @@ export default {
                   first_name
                   last_name
                   full_name
-                  avatar { id file_name thumb }
+                  avatar { id file_name thumb small }
                 }
                 message
                 is_accept

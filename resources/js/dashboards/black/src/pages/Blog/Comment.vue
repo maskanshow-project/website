@@ -15,6 +15,7 @@
           id
           file_name
           thumb
+          small
         }
       }
     "

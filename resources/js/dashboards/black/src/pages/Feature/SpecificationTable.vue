@@ -182,27 +182,38 @@
                 <span class="md-helper-text">آیکون سطر جدول را مشخص کنید</span>
               </md-field>
 
+              <br/>
               <div class="row" dir="ltr">
                 <el-switch
-                  class="col-4 d-flex justify-content-center"
+                  class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_filterable.value"
                   active-text="قابلیت فیتلر"
                   active-color="#ff8d72"
                   inactive-text="غیرقابل فیلتر">
                 </el-switch>
                 <el-switch
-                  class="col-4 d-flex justify-content-center"
+                  class="col-6 d-flex justify-content-center"
+                  v-model="row_form.is_detailable.value"
+                  active-text="قابل نمایش"
+                  active-color="#ff8d72"
+                  inactive-text="عدم نمایش">
+                </el-switch>
+              </div>
+              <br/>
+              <div class="row" dir="ltr">
+                <el-switch
+                  class="col-6 d-flex justify-content-center"
+                  v-model="row_form.is_required.value"
+                  active-text="اجباری"
+                  active-color="#ff8d72"
+                  inactive-text="اختیاری">
+                </el-switch>
+                <el-switch
+                  class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_multiple.value"
                   active-text="چند مقداری"
                   active-color="#ff8d72"
                   inactive-text="تک مقداری">
-                </el-switch>
-                <el-switch
-                  class="col-4 d-flex justify-content-center"
-                  v-model="row_form.is_detailable.value"
-                  active-text="قابل نمیاش"
-                  active-color="#ff8d72"
-                  inactive-text="عدم نمایش">
                 </el-switch>
               </div>
               <br/>
@@ -425,7 +436,7 @@
                 <tbody>
                   <tr>
                     <td>
-                      <i class="tim-icons icon-lock-circle"></i>
+                      <i class="tim-icons icon-satisfied"></i>
                     </td>
                     <td class="text-right" :class="slotProps.row.is_detailable ? 'text-success' : 'text-danger'">
                       {{ slotProps.row.is_detailable ? 'نمایش' : 'عدم نمایش' }}
@@ -447,6 +458,15 @@
                     </td>
                     <td class="text-right" :class="slotProps.row.is_filterable ? 'text-success' : 'text-danger'">
                       {{ slotProps.row.is_filterable ? 'قابلیت فیلتر' : 'غیرقابل فیلتر' }}
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <i class="tim-icons icon-lock-circle"></i>
+                    </td>
+                    <td class="text-right" :class="slotProps.row.is_required ? 'text-success' : 'text-danger'">
+                      {{ slotProps.row.is_required ? 'اجباری' : 'اختیاری' }}
                     </td>
                   </tr>
                 </tbody>
@@ -773,6 +793,7 @@ export default {
           is_detailable
           is_multiple
           is_filterable
+          is_required
           created_at
           updated_at
 
@@ -824,6 +845,7 @@ export default {
               is_detailable
               is_multiple
               is_filterable
+              is_required
               created_at
               updated_at
 

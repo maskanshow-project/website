@@ -58,7 +58,7 @@ class ArticleType extends BaseType
                     $query->where('parent_id', null)
                           ->offset( (($args['page'] ?? 1 ) - 1) * 10 )->take(10);
         
-                    return $query->orderBy('created_at', 'desc');
+                    return $query->orderBy('created_at', 'asc');
                 }
             ],
             'audits' => $this->audits('article'),

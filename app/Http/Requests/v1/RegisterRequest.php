@@ -21,13 +21,14 @@ class RegisterRequest extends MainRequest
             'username'          => [
                 'required',
                 'string',
+                'alpha_dash',
                 'min:6',
                 'max:30',
                 'alpha_dash',
                 Rule::unique('users')
             ],
             'email'             => [
-                'required',
+                'nullable',
                 'email',
                 Rule::unique('users')
             ],

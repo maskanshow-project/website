@@ -29,7 +29,8 @@ export default {
                 return `${Math.round(number / 1000)} هزار`
         },
         numToPersian(number) {
-            return (number ? persianJs(number).persianNumber() * 1 : 0).toPersianLetter()
+            
+            return (number ? ( Number.isInteger( number ) ? number : persianJs(number).persianNumber() * 1 ) : 0).toPersianLetter()
         },
         expired(date) {
             const label = moment(date).isBefore( moment() ) ? ' منقضی شده است'  : ' منقضی میشود'

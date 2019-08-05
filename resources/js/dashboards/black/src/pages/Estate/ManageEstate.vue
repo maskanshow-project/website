@@ -244,12 +244,12 @@
                   v-if="row.defaults.length === 0 && row.is_multiple"
                   md-placeholder="افزودن ..."
                 >
-                  <label>{{ row.title }}</label>
+                  <label>{{ row.title }} <span v-if="row.is_required" class="text-danger">*</span></label>
                   <span class="md-helper-text">{{ row.description }}</span>
                 </md-chips>
 
                 <md-field v-else>
-                  <label>{{ row.title }}</label>
+                  <label>{{ row.title }} <span v-if="row.is_required" class="text-danger">*</span></label>
                   <span class="md-prefix">{{ row.prefix }}</span>
 
                   <md-input
@@ -313,7 +313,7 @@
               <label>نام مالک</label>
               <md-input v-model="form_data.landlord_fullname" :maxlength="50" />
               <i class="md-icon tim-icons icon-tag"></i>
-              <span class="md-helper-text">برای مثال : الیاس نسایی</span>
+              <span class="md-helper-text">برای مثال : امیر امیری</span>
             </md-field>
           </div>
 
@@ -447,7 +447,7 @@
       </md-empty-state>
     </card>
 
-    <div class="row" v-if="is_loaded">
+    <div class="row animated bounceInBottom delay-last" v-if="is_loaded">
       <base-button
         v-if="activeTab !== 'tab-variations'"
         :loading="attr('is_mutation_loading')"
@@ -663,7 +663,7 @@ export default {
         label { id title color }
         tags { name }
         photos { id file_name thumb small }
-        assignment { id } estate_type { id }
+        assignment { id } estate_type { id features { id title icon } }
         features { id title icon }
         want_cooperation
         spec {
@@ -671,7 +671,7 @@ export default {
             id title description
             rows {
               id title description help
-              prefix postfix is_multiple
+              prefix postfix is_multiple is_required
               data { id data values { id value } }
               defaults { id value }
             }
@@ -773,8 +773,12 @@ export default {
         if ( !data.data.estate.assignment )
           data.data.estate.assignment = { id: null }
 
+
         if ( !data.data.estate.estate_type )
           data.data.estate.estate_type = { id: null }
+
+        else
+          this.features = data.data.estate.estate_type.features
 
         if ( data.data.estate.street )
         {
@@ -796,11 +800,8 @@ export default {
             }
           })
         }
-
+        
         this.form_data = data.data.estate;
-        this.sales_price = this.form_data.sales_price
-        this.mortgage_price = this.form_data.mortgage_price
-        this.rental_price = this.form_data.rental_price
       })
       .then(() => setTimeout(() => this.is_loaded = true, 1000))
       .catch( error => console.log(error.response) )
@@ -868,9 +869,9 @@ export default {
         title: this.form_data.title,
         code: this.form_data.code,
         landlord_fullname: this.form_data.landlord_fullname,
-        landlord_phone_number: this.form_data.landlord_phone_number ? persianJs(this.form_data.landlord_phone_number).persianNumber().toString() : null,
+        landlord_phone_number: this.form_data.landlord_phone_number ? ( Number.isInteger( this.form_data.landlord_phone_number ) ? this.form_data.landlord_phone_number : persianJs(this.form_data.landlord_phone_number).persianNumber() * 1 ) : null,
         description: this.form_data.description,
-        area: this.form_data.area ? persianJs(this.form_data.area).persianNumber().toString() : null,
+        area: this.form_data.area ? ( Number.isInteger( this.form_data.area ) ? this.form_data.area : persianJs(this.form_data.area).persianNumber() * 1 ) : null,
         
         street_id: this.street_id,
         address: this.form_data.address,
@@ -882,9 +883,9 @@ export default {
         assignment_id: this.form_data.assignment.id ? this.form_data.assignment.id : null,
         estate_type_id: this.form_data.estate_type.id ? this.form_data.estate_type.id : null,
 
-        rental_price: this.form_data.rental_price ? persianJs(this.form_data.rental_price).persianNumber().toString() : null,
-        mortgage_price: this.form_data.mortgage_price ? persianJs(this.form_data.mortgage_price).persianNumber().toString() : null,
-        sales_price: this.form_data.sales_price ? persianJs(this.form_data.sales_price).persianNumber().toString() : null,
+        rental_price: this.form_data.rental_price ? ( Number.isInteger( this.form_data.rental_price ) ? this.form_data.rental_price : persianJs(this.form_data.rental_price).persianNumber() * 1 ) : null,
+        mortgage_price: this.form_data.mortgage_price ? ( Number.isInteger( this.form_data.mortgage_price ) ? this.form_data.mortgage_price : persianJs(this.form_data.mortgage_price).persianNumber() * 1 ) : null,
+        sales_price: this.form_data.sales_price ? ( Number.isInteger( this.form_data.sales_price ) ? this.form_data.sales_price : persianJs(this.form_data.sales_price).persianNumber() * 1 ) : null,
         
         tags: this.form_data.tags,
         advantages: this.form_data.advantages,
@@ -923,6 +924,7 @@ export default {
           specs[id] = { value: this.specifications[id] }
 
         specs[id].id = id
+        specs[id].is_required = row.is_required
       }
 
       return Object.values( specs )
@@ -1008,7 +1010,7 @@ export default {
             my_estate[0].area = data.area
             my_estate[0].created_at = data.created_at
             my_estate[0].updated_at = data.updated_at
-            my_estate[0].is_active = false
+            my_estate[0].is_active = !this.can('create-estate')
             my_estate[0].reject_reason = null
           }
           else
@@ -1028,7 +1030,7 @@ export default {
                 area: data.area,
                 created_at: data.created_at,
                 updated_at: data.updated_at,
-                is_active: false,
+                is_active: !this.can('create-estate'),
                 reject_reason: null,
               })
             }
@@ -1095,7 +1097,7 @@ export default {
                 id title description
                 rows {
                   id title description help
-                  prefix postfix is_multiple
+                  prefix postfix is_multiple is_required
                   defaults { id value }
                 }
               }

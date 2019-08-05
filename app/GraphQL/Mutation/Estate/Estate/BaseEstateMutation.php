@@ -206,7 +206,7 @@ class BaseEstateMutation extends MainMutation
     {
         $estate->attachTags( $request->get('tags') );
         $estate->features()->attach( $request->get('features') );
-        
+
         if ( $request->get('specs', false) && count( $request->get('specs', []) ) )
             $this->createSpecData($request, $estate);
     }
@@ -222,7 +222,6 @@ class BaseEstateMutation extends MainMutation
     {
         $estate->syncTags( $request->get('tags') );
         $estate->features()->sync( $request->get('features') );
-        
         
         if ( $this->old_spec !== $estate->spec_id )
             $estate->spec_data()->delete();
@@ -286,10 +285,15 @@ class BaseEstateMutation extends MainMutation
     {
         if ( $row->data )
         {
-            $row->data->update([ 'data' => $data ]);
-            $row->data->values()->sync( $values );
+            if ( count($values ?? []) !== 0 || ( $data && $data !== '[]' ) )
+            {
+                $row->data->update([ 'data' => $data ]);
+                $row->data->values()->sync( $values );
+            }
+            else
+                $row->data->delete();
         }
-        else
+        else if ( count($values ?? []) !== 0 || ( $data && $data !== '[]' ) ) 
         {
             $spec_data = $row->data()->create([
                 'estate_id' => $estate->id,

@@ -57,6 +57,9 @@ class SpecRowType extends BaseType
             'is_detailable' => [
                 'type' => Type::boolean()
             ],
+            'is_required' => [
+                'type' => Type::boolean()
+            ],
             'is_filterable' => [
                 'type' => Type::boolean()
             ],

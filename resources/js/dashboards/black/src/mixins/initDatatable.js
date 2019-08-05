@@ -226,7 +226,7 @@ export default {
       .then(() => this.load(true) )
       .catch(error => console.log(error))
     },
-    handleSearch(query)
+    handleSearch(query = '')
     {
       if ( query.length >= 3 || query.length === 0  )
       {

@@ -798,7 +798,8 @@ export default {
         responsive: {
             0: { items:1 },
             600: { items:2 },
-            1000: { items: 3 }
+            1000: { items: 3 },
+            1200: { items: 4 }
         }
       })
     })
@@ -896,5 +897,32 @@ export default {
 .account-expire-timer .flip-clock-wrapper ul li a div div.inn {
   background: #373737;
   color: #f0f0f0;
+}
+
+.row.owl-carousel.owl-loaded.owl-drag {
+  margin: 0px;
+}
+
+@media screen and (max-width: 800px) {
+
+  .account-expire-timer {
+    height: 160px;
+  }
+  .account-expire-timer .flip-clock {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .account-expire-timer {
+    height: 180px;
+  }
+  .account-expire-timer .flip-clock {
+    transform: translateX(-50%) scale(.6);
+    bottom: 5px;
+  }
 }
 </style>

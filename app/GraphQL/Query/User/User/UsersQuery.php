@@ -23,6 +23,9 @@ class UsersQuery extends BaseUserQuery
             'national_code' => [
                 'type' => Type::string()
             ],
+            'roles' => [
+                'type' => Type::listOf( Type::int() )
+            ],
             'cities' => [
                 'type' => Type::string()
             ],

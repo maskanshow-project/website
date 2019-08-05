@@ -79,11 +79,11 @@ class BaseType extends GraphQLType
         ];
     }
 
-    public function relationListField($type, $acceptable_field = 'is_active', $permission = null)
+    public function relationListField($type, $acceptable_field = 'is_active', $permission = null, $ordering = 'desc')
     {
         return [
             'type'  => Type::listOf( \GraphQL::type($type) ),
-            'query' => $this->getRelationQuery($type, $acceptable_field, $permission)
+            'query' => $this->getRelationQuery($type, $acceptable_field, $permission, null, $ordering)
         ];
     }
 
@@ -103,11 +103,11 @@ class BaseType extends GraphQLType
         ];
     }
 
-    public function getRelationQuery($type, $acceptable_field, $permission = null, $paginated = false)
+    public function getRelationQuery($type, $acceptable_field, $permission = null, $paginated = false, $ordering = 'desc')
     {
         $permission = $permission ? $permission : "read-{$type}";
 
-        return function(array $args, $query) use($type, $acceptable_field, $permission, $paginated) {
+        return function(array $args, $query) use($type, $acceptable_field, $permission, $paginated, $ordering) {
                 
             if ( !$this->checkPermission($permission) )
                 $query->where(Str::plural($type) . ".{$acceptable_field}", 1);
@@ -115,7 +115,7 @@ class BaseType extends GraphQLType
             if ( $paginated )
                 $query->offset( (($args['page'] ?? 1 ) - 1) * 10 )->take(10);
 
-            return $query->orderBy(Str::plural($type) . ".created_at", 'desc');
+            return $query->orderBy(Str::plural($type) . ".created_at", $ordering);
         };
     }
 

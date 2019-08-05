@@ -101,7 +101,7 @@
             </div>
 
             <div class="animated bounceInLeft delay-secound">
-              <input type="text" v-if="canSearch" :value="filter('query')" @keyup.enter="search" dir="rtl" class="pull-right form-control col-3 ml-2 d-inline-block" placeholder="جستجو کنید ...">
+              <input type="text" v-if="canSearch" :value="filter('query')" @keyup="search" dir="rtl" class="pull-right form-control col-3 ml-2 d-inline-block" placeholder="جستجو کنید ...">
 
               <base-button
                 @click="methods.create"

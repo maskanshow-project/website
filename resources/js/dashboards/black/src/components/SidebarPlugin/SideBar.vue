@@ -160,8 +160,16 @@
       },
       logout()
       {
-        localStorage.removeItem('JWT');
-        window.location.replace('/login')
+        axios.post('/graphql/auth', {
+          query: `mutation {
+            logout { status message }
+          }`
+        })
+        .then(({data}) => {
+          localStorage.removeItem('JWT');
+          window.location.replace('/login')
+        })
+        .catch(error => console.log(error))
       }
     },
     mounted() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <datatable
-      class="users-table"
+      class="spec-rows-table"
       :type="type"
       :group="group"
       :label="label"
@@ -154,34 +154,75 @@
             <i class="tim-icons" :class="acceptType ? 'icon-check-2' : 'icon-refresh-01'"></i>
           </base-button>
         </transition>
+
+        <transition name="fade">
+          <el-checkbox-group v-model="selected_roles" v-show="attr('selected_items').length === 0" :style="{
+            position: 'absolute',
+            left: '0px',
+            top: '0px'
+          }">
+            <el-checkbox-button v-for="role in $store.state.user.role" :label="role.id" :key="role.id">{{ role.display_name }}</el-checkbox-button>
+          </el-checkbox-group>
+        </transition>
       </template>
 
       <template #custom-operations="slotProps">
-        <el-tooltip content="تغییر اعتبار">
-          <base-button
-            class="m-0 mb-1 d-block"
+        <base-dropdown
+          v-if="
+               !can('change-credit-user')
+            || !can('empty-auth-code-user')
+            || !can('create-access-code')
+            || !can('reset-password-user')
+            || !can('see-sessions-user')
+          "
+          class="dropup user-operations-dropdown"
+          title-classes="btn btn-success"
+        >
+          <div
+            class="p-2"
             @click="manageCredit(slotProps.index, slotProps.row)"
-            :type="can('change-credit-user') ? 'default' : 'success'"
-            :disabled="can('change-credit-user')"
-            size="sm"
-            icon
+            v-if="!can('change-credit-user')"
           >
             <i class="tim-icons icon-credit-card"></i>
-          </base-button>
-        </el-tooltip>
+            تغییر اعتبار
+          </div>
 
-        <el-tooltip content="حذف کد دسترسی سیستم">
-          <base-button
-            class="m-0 d-block"
+          <div
+            class="p-2"
             @click="emptyAuthCode(slotProps.index, slotProps.row)"
-            :type="can('empty-auth-code-user') ? 'default' : 'primary'"
-            :disabled="can('empty-auth-code-user')"
-            size="sm"
-            icon
+            v-if="!can('empty-auth-code-user')"
+          >
+            <i class="tim-icons icon-lock-circle"></i>
+            حذف کد دسترسی سیستم
+          </div>
+
+          <div
+            class="p-2"
+            @click="createAccessCode(slotProps.index, slotProps.row)"
+            v-if="!can('create-access-code')"
           >
             <i class="tim-icons icon-key-25"></i>
-          </base-button>
-        </el-tooltip>
+            ساختن کد دسترسی جدید
+          </div>
+
+          <div
+            class="p-2"
+            @click="resetPassword(slotProps.index, slotProps.row)"
+            v-if="!can('reset-password-user')"
+          >
+            <i class="tim-icons icon-refresh-02"></i>
+            تغییر رمز عبور
+          </div>
+
+          <div
+            class="p-2"
+            @click="seeSessions(slotProps.index, slotProps.row)"
+            v-if="!can('reset-password-user')"
+          >
+            <i class="tim-icons icon-tv-2"></i>
+            مشاهده نشست ها
+          </div>
+        </base-dropdown>
       </template>
 
       <template #modal>
@@ -427,15 +468,89 @@
         </base-button>
       </md-dialog-actions>
     </md-dialog>
+    
+    <md-dialog :md-active.sync="is_show_sessions" class="text-right" dir="rtl">
+      <md-dialog-title>
+        <h2 class="modal-title">
+          نشست های {{ selected_user.full_name && selected_user.full_name.trim() ? selected_user.full_name : selected_user.username }}
+        </h2>
+        <p>از طریق فرم زیر میتوانید نشست های فعال این حساب را مشاهده کنید</p>
+      </md-dialog-title>
+
+      <div class="md-dialog-content">
+        <div class="p-2">
+          <base-table
+            class="w-100"
+            :tableData="sessions"
+            :has_animation="false"
+            :type="type"
+            :group="group"
+            :label="label"
+            :fields="[
+              {
+                field: 'os',
+                label: 'سیستم عامل',
+                icon: 'icon-badge',
+              }, {
+                field: 'device',
+                label: 'مرورگر/دیوایس',
+                icon: 'icon-paper',
+              }, {
+                field: 'created_at',
+                label: 'تاریخ قفل شدن',
+                icon: 'icon-refresh-02',
+              }
+            ]"
+            :methods="{}"
+            :canSelect="false"
+            :canCreate="false"
+            :has_loaded="true"
+            :has_times="false"
+            :has_operation="false"
+          >
+            <template #os-body="props">
+              {{ props.row.os.name }} {{ props.row.os.version }}
+            </template>
+            
+            <template #device-body="props">
+              <span v-if="props.row.device.type">
+                {{ props.row.device.type }} {{ props.row.device.vendor }} {{ props.row.device.model }}
+              </span>
+              <span v-else>
+                {{ props.row.browser.name }} {{ props.row.browser.version }}
+              </span>
+            </template>
+
+            <template #created_at-body="props">
+              {{ props.row.created_at | ago }}
+            </template>
+          </base-table>
+        </div>
+      </div>
+
+      <md-dialog-actions>
+        <base-button
+          class="ml-2"
+          type="danger"
+          size="sm"
+          @click="is_show_sessions = false"
+        >
+          <i class="tim-icons icon-simple-remove"></i>
+          بستن
+        </base-button>
+      </md-dialog-actions>
+    </md-dialog>
   </div>
 </template>
 
 <script>
 import Datatable from '../../components/BaseDatatable.vue'
+import BaseTable from '../../components/BaseTable'
 import ICountUp from 'vue-countup-v2'
 
 import createMixin from '../../mixins/createMixin'
 import initDatatable from '../../mixins/initDatatable'
+import parser from 'ua-parser-js'
 
 import Binding, { bind } from '../../mixins/binding'
 
@@ -449,6 +564,7 @@ import moment from 'moment'
 export default {
   components: {
     Datatable,
+    BaseTable,
     ICountUp
   },
   mixins: [
@@ -492,23 +608,27 @@ export default {
   },
   data() {
     return {
-        plural: 'users',
-        type: 'user',
-        group: 'user',
-        label: 'کاربر',
-        ignoreOperations: ['000000000000'],
+      plural: 'users',
+      type: 'user',
+      group: 'user',
+      label: 'کاربر',
+      ignoreOperations: ['000000000000'],
 
-        is_open: false,
-        selected_user: {
-          // 
-        },
-        form_data: {
-          count: 0,
-          registered: 0,
-          days: 0,
-          type: true
-        },
-        selected_index: null
+      is_open: false,
+      selected_user: {
+        // 
+      },
+      form_data: {
+        count: 0,
+        registered: 0,
+        days: 0,
+        type: true
+      },
+      selected_index: null,
+      queryFilters: '',
+      selected_roles: [],
+      sessions: [],
+      is_show_sessions: false
     }
   },
   mounted() {
@@ -630,6 +750,135 @@ export default {
           verticalAlign: 'top',
           horizontalAlign: 'left',
         })
+      })
+      .catch( error => {
+        this.setAttr('is_query_loading', false)
+        console.log(error)
+      });
+    },
+    createAccessCode(index, row) {
+      this.setAttr('is_query_loading', true)
+
+      axios.post(`/graphql/auth`, {
+        query: `
+        mutation {
+          createAccessCode(user: "${row.id}") {
+            code
+            status
+            message
+          }
+        }`
+      })
+      .then(({data}) => {
+        this.setAttr('is_query_loading', false)
+
+        this.$swal.fire({
+          title: data.data.createAccessCode.status === 200 ? `کد دسترسی : ${data.data.createAccessCode.code}` : null,
+          text: data.data.createAccessCode.message,
+          type: data.data.createAccessCode.status === 200 ? 'success' : 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'باشه'
+        })
+      })
+      .catch( error => {
+        this.setAttr('is_query_loading', false)
+        console.log(error)
+      });
+    },
+    resetPassword(index, row) {
+      this.$swal.fire({
+        input: 'password',
+        inputPlaceholder: 'رمز عبور',
+        showCancelButton: true,
+        title: `لطفا رمز عبور مورد نظر خود را وارد کنید`,
+        type: 'warning',
+        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
+        confirmButtonColor: '#0098f0',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'تغییر رمز عبور',
+        cancelButtonText: 'منصرف شدم'
+      })
+      .then(({value}) => {
+        if (value) {
+          this.setAttr('is_query_loading', true)
+
+          axios.post(`/graphql/auth`, {
+            query: `
+            mutation {
+              updateUserPassword (
+                user: "${row.id}",
+                password: "${value}",
+                password_confirmation: "${value}"
+              ) {
+                status
+                message
+              }
+            }`
+          })
+          .then(({data}) => {
+            this.setAttr('is_query_loading', false)
+
+            if ( data.data.updateUserPassword.status === 400 )
+            {
+              return this.$swal.fire({
+                title: 'تغییری نکرد',
+                text: data.data.updateUserPassword.message,
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+              })
+            }
+
+            this.$swal.fire({
+              title: 'تغییر کرد',
+              text: 'رمز عبور کاربر مورد نظر با موفقیت بروزرسانی شد',
+              type: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            })
+          })
+          .catch( error => {
+            this.setAttr('is_query_loading', false)
+            
+            this.errorResolver(error)
+          });
+        }
+      })
+    },
+    seeSessions(index, row) {
+      this.setAttr('is_query_loading', true)
+
+      axios.post(`/graphql/auth`, {
+        query: `{
+          user(id: "${row.id}") {
+            sessions {
+              id
+              user_agent
+              created_at
+            }
+          }
+        }`
+      })
+      .then(({data}) => {
+        this.sessions = data.data.user.sessions.map(i => {
+          
+          const ua = parser(i.user_agent)
+
+          return {
+            id: i.id,
+            browser: ua.browser,
+            device: ua.device,
+            os: ua.os,
+            created_at: i.created_at
+          }
+        })
+
+        this.setAttr('is_query_loading', false)
+        
+        console.log( this.sessions )
+
+        this.selected_user = row
+        this.is_show_sessions = true
       })
       .catch( error => {
         this.setAttr('is_query_loading', false)
@@ -892,6 +1141,18 @@ export default {
       `
     },
   },
+  watch: {
+    'selected_roles': function(newVal, oldVal) {
+
+      this.queryFilters = `roles: [${newVal.join(',')}]`
+
+      if ( this.filter('query') )
+        this.handleSearch( this.filter('query') )
+    
+      else
+        this.handleSearch()
+    }
+  },
   beforeRouteLeave (to, from, next) {
     this.$refs.datatable.closePanel()
 
@@ -909,7 +1170,31 @@ export default {
   height: 100%;
 }
 
-.users-table .data-table-row ul {
-  min-height: 151px;
+.user-operations-dropdown {
+  width: 30px;
+}
+.user-operations-dropdown button {
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  padding: 8px !important;
+}
+.user-operations-dropdown .dropdown-menu {
+  min-height: 0px !important;
+  width: 200px;
+  text-align: right;
+  position: absolute !important;
+  bottom: 0px !important;
+  left: 40px !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 2px 15px -4px !important;
+  padding: 10px 0px !important;
+}
+.user-operations-dropdown .dropdown-menu div {
+  transition: background 200ms;
+}
+.user-operations-dropdown .dropdown-menu div:hover {
+  cursor: pointer;
+  background: #eaeaea;
 }
 </style>

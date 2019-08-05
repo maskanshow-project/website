@@ -70,19 +70,28 @@
                   </transition>
                 </span>
               </template>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-estate')">
+              <el-menu-item v-if="
+                  $store.state.permissions.includes('read-estate') || (
+                     $store.state.me.remaining_registered_count > 0
+                  && $store.state.me.validity_end_at
+                  && !moment($store.state.me.validity_end_at).isBefore( moment() )
+                )"
+              >
+                <sidebar-link to="/panel/estate/create" name="ثبت ملک جدید" icon="tim-icons icon-simple-add" />
+              </el-menu-item>
+              <el-menu-item v-if="$store.state.permissions.includes('read-estate')">
                 <sidebar-link to="/panel/estate" name="کلیه املاک" icon="tim-icons icon-basket-simple" />
               </el-menu-item>
               <el-menu-item>
-                <sidebar-link to="/panel/estate/mine" name="ملک های شما" icon="tim-icons icon-single-02" :alert="!this.$store.state.permissions.includes('read-estate') ? $store.state.estate.counts.inactive_estate.total : 0" />
+                <sidebar-link to="/panel/estate/mine" name="ملک های شما" icon="tim-icons icon-single-02" :alert="!$store.state.permissions.includes('read-estate') ? $store.state.estate.counts.inactive_estate.total : 0" />
               </el-menu-item>
               <el-menu-item>
                 <sidebar-link to="/panel/estate/favorite" name="املاک نشان شده" icon="tim-icons icon-pin" />
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('active-estate')">
+              <el-menu-item v-if="$store.state.permissions.includes('active-estate')">
                 <sidebar-link to="/panel/estate/inactive" name="ملک های تایید نشده" icon="tim-icons icon-tap-02" :alert="$store.state.estate.counts.inactive_estate.total" />
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('accept-assignment-estate')">
+              <el-menu-item v-if="$store.state.permissions.includes('accept-assignment-estate')">
                 <sidebar-link to="/panel/estate/assignmented" name="ملک های واگذار شده" icon="tim-icons icon-cloud-download-93" :alert="$store.state.estate.counts.assignmented_estate.total" />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('office')">
@@ -104,9 +113,9 @@
                 <span>مالی</span>
               </template>
               <el-menu-item>
-                <sidebar-link to="/panel/payment" :name="this.$store.state.permissions.includes('read-payment') ? 'گزارشات پرداخت' : 'پرداختی های شما'" icon="tim-icons icon-credit-card"/>      
+                <sidebar-link to="/panel/payment" :name="$store.state.permissions.includes('read-payment') ? 'گزارشات پرداخت' : 'پرداختی های شما'" icon="tim-icons icon-credit-card"/>      
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-promocode')">
+              <el-menu-item v-if="$store.state.permissions.includes('read-promocode')">
                 <sidebar-link to="/panel/promocode" name="کد تخفیف" icon="tim-icons icon-scissors"/>      
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('plan')">
@@ -114,25 +123,25 @@
               </el-menu-item>
             </el-submenu>
             <el-submenu index="5" v-if="
-                 this.$store.state.permissions.includes('read-user')
-              || this.$store.state.permissions.includes('read-role')
-              || this.$store.state.permissions.includes('read-blacklist_phone_number')
-              || this.$store.state.permissions.includes('read-message')
+                 $store.state.permissions.includes('read-user')
+              || $store.state.permissions.includes('read-role')
+              || $store.state.permissions.includes('read-blacklist_phone_number')
+              || $store.state.permissions.includes('read-message')
             ">
               <template slot="title">
                 <i class="tim-icons icon-single-02 user-icon"></i>
                 <span>کاربران</span>
               </template>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-user')">
+              <el-menu-item v-if="$store.state.permissions.includes('read-user')">
                 <sidebar-link to="/panel/user" name="کاربران" icon="tim-icons icon-single-02"/>      
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-role')">
+              <el-menu-item v-if="$store.state.permissions.includes('read-role')">
                 <sidebar-link to="/panel/role" name="نقش ها" icon="tim-icons icon-tap-02"/>      
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-blacklist_phone_number')">
+              <el-menu-item v-if="$store.state.permissions.includes('read-blacklist_phone_number')">
                 <sidebar-link to="/panel/blacklist_phone_number" name="تلفن های لیست سیاه" icon="tim-icons icon-lock-circle"/>      
               </el-menu-item>
-              <el-menu-item v-if="this.$store.state.permissions.includes('read-message')">
+              <el-menu-item v-if="$store.state.permissions.includes('read-message')">
                 <sidebar-link to="/panel/message" name="پیام ها" icon="tim-icons icon-email-85"/>      
               </el-menu-item>
             </el-submenu>
@@ -180,6 +189,7 @@ import DashboardContent from "./layout/dashboard/Content.vue";
 import MobileMenu from "./layout/dashboard/MobileMenu";
 import Granim from 'granim'
 import anime from 'animejs'
+import moment from 'moment'
 import _ from 'lodash'
 
 export default {
@@ -270,6 +280,10 @@ export default {
 </script>
 
 <style>
+
+.fas.fa-spinner.fa-spin {
+  display: none;
+}
 
 .material-icons {
   font-family: Material Icons !important;

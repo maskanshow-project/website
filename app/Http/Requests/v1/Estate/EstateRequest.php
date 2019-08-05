@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\UniqueTranslation;
 use App\Rules\PlaqueNotInAddress;
 use App\Rules\Blacklist;
+use App\Rules\CheckRequiredSpecification;
 
 class EstateRequest extends MainRequest
 {
@@ -72,6 +73,18 @@ class EstateRequest extends MainRequest
             
             'features'              => 'nullable|array',
             'features.*'            => 'required|integer|exists:features,id',
+
+            'specs'                 => 'nullable|array',
+            'specs.*'               => [
+                'required',
+                'array',
+                new CheckRequiredSpecification
+            ],
+            'specs.*.id'            => 'required|integer|exists:spec_rows,id',
+            'specs.*.data'          => 'nullable|string',
+            'specs.*.value'         => 'nullable|integer',
+            'specs.*.values'        => 'nullable|array',
+            'specs.*.values.*'      => 'required|integer|exists:spec_defaults,id',
 
             'photos'                => 'nullable|array',
             'photos.*'              => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',

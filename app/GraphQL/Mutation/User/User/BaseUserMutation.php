@@ -114,16 +114,17 @@ class BaseUserMutation extends MainMutation
             )->all();
         }
         
-        return $request->only(
+        return array_merge($request->only(
             'city_id',
             'first_name',
             'last_name',
-            'username',
             'address',
             'phone_number',
             'email',
             'national_code',
             'gender'
-        )->all();
+        )->all(), [
+            'username' => strtolower($request['username'])
+        ]);
     }
 }

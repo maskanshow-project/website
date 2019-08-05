@@ -19,7 +19,7 @@
   > 
     <template v-slot:photos-body="slotProps">
       <div>
-        <img class="tilt" :src="slotProps.row.photos && slotProps.row.photos.length !== 0 ? slotProps.row.photos[0].thumb : '/images/placeholder.png'" />
+        <img :src="slotProps.row.photos && slotProps.row.photos.length !== 0 ? slotProps.row.photos[0].thumb : '/images/placeholder.png'" />
         <span :style="{ marginTop: '-50%', background: slotProps.row.assignment ? slotProps.row.assignment.color : '#f13b3bc7' }" class="d-block position-relative badge badge-danger">
           {{ slotProps.row.assignment ? slotProps.row.assignment.title : '' }}
           {{ slotProps.row.estate_type ? slotProps.row.estate_type.title : '' }}
@@ -37,6 +37,12 @@
       >
         <a :href="`/estate/${slotProps.row.id}`" slot="reference">{{ slotProps.row.title | truncate(50) }}</a>
       </el-popover>
+    </template>
+
+    <template #registrar_type-body="slotProps">
+      <span v-if="slotProps.row.registrar_type">
+        {{ slotProps.row.registrar_type.display_name }}
+      </span>
     </template>
 
     <template #address-body="slotProps">
@@ -174,6 +180,16 @@
           <i class="tim-icons icon-refresh-01"></i>
         </base-button>
       </transition>
+
+      <transition name="fade">
+        <el-checkbox-group v-model="selected_roles" v-show="attr('selected_items').length === 0" :style="{
+          position: 'absolute',
+          left: '0px',
+          top: '0px'
+        }">
+          <el-checkbox-button v-for="role in $store.state.user.role" :label="role.id" :key="role.id">{{ role.display_name }}</el-checkbox-button>
+        </el-checkbox-group>
+      </transition>
     </template>
   </datatable>
 </template>
@@ -201,17 +217,32 @@ export default {
   },
   data() {
     return {
-        type: 'inactive_estate',
-        plural: 'estates',
-        group: 'estate',
-        label: 'ملک تایید نشده',
+      type: 'inactive_estate',
+      plural: 'estates',
+      group: 'estate',
+      label: 'ملک تایید نشده',
 
-        emptyState: {
-          icon: 'insert_emoticon',
-          title: 'ملک جدیدی ثبت نشده است',
-          description: 'تمامی ملک های ثبت شده تایید شده اند ، ملک جدیدی جهت تایید وجود ندارد'
-        }
+      emptyState: {
+        icon: 'insert_emoticon',
+        title: 'ملک جدیدی ثبت نشده است',
+        description: 'تمامی ملک های ثبت شده تایید شده اند ، ملک جدیدی جهت تایید وجود ندارد'
+      },
+
+      moreFilters: '',
+      selected_roles: [],
     }
+  },
+  mounted() {
+    this.$store.dispatch('getData', {
+      group: 'user',
+      type: 'role',
+      query: `roles {
+        data {
+          id name display_name permissions { id } created_at updated_at
+        }
+        total trash chart { month count }
+      }`
+    })
   },
   methods: {
     accept(index, row, status) {
@@ -489,6 +520,10 @@ export default {
           label: 'قیمت',
           icon: 'icon-coins'
         }, {
+          field: 'registrar_type',
+          label: 'توسط',
+          icon: 'icon-single-02'
+        }, {
           field: 'area',
           label: 'متراژ',
           icon: 'icon-map-big'
@@ -516,6 +551,10 @@ export default {
           id
           title
         }
+        registrar_type {
+          id
+          display_name
+        }
         photos {
           id
           file_name
@@ -525,7 +564,19 @@ export default {
     },
 
     queryFilters() {
-      return `is_active: false, has_reject_reason: false`
+      return `is_active: false, has_reject_reason: false ${this.moreFilters ? `, ${this.moreFilters}` : ''}`
+    }
+  },
+  watch: {
+    'selected_roles': function(newVal, oldVal) {
+
+      this.moreFilters = `roles: [${newVal.join(',')}]`
+
+      if ( this.filter('query') )
+        this.handleSearch( this.filter('query') )
+    
+      else
+        this.handleSearch()
     }
   },
   beforeRouteLeave (to, from, next) {

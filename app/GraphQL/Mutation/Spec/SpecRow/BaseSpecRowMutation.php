@@ -44,6 +44,9 @@ class BaseSpecRowMutation extends MainMutation
             'is_multiple' => [
                 'type' => Type::boolean()
             ],
+            'is_required' => [
+                'type' => Type::boolean()
+            ],
             'is_detailable' => [
                 'type' => Type::boolean()
             ],

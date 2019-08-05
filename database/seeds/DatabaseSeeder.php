@@ -15,7 +15,8 @@ class DatabaseSeeder extends CustomSeeder
      */
     public function run()
     {
-        $this->call(LocationTablesSeeder::class);
+
+        // $this->call(LocationTablesSeeder::class);
 
         // $this->call(UserTableSeeder::class);
 
@@ -27,9 +28,9 @@ class DatabaseSeeder extends CustomSeeder
 
         // factory(BlacklistPhoneNumber::class, rand(1, 20) )->create();
 
-        $this->call(LaratrustSeeder::class);
+        // $this->call(LaratrustSeeder::class);
 
-        $this->call(OptionTableSeeder::class);
+        // $this->call(OptionTableSeeder::class);
     
         // $this->call(BlogTablesSeeder::class);
 

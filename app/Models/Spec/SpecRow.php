@@ -54,6 +54,7 @@ class SpecRow extends Model implements AuditableContract
         'is_detailable',
         'is_filterable',
         'is_multiple',
+        'is_required',
         'is_active',
     ];
 

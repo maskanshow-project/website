@@ -12,7 +12,7 @@ class LoginRequest extends MainRequest
     public function rules()
     {
         return [
-            'email' => [ 'required', 'email' ], 
+            'username' => [ 'required', 'alpha_dash' ], 
             'password' => 'required', 
         ];
     }

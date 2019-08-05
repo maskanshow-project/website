@@ -76,7 +76,9 @@ use App\GraphQL\Mutation\Blog\{
 use App\GraphQL\Mutation\User\{
     User\ActiveUserMutation, User\UpdateUserMutation, User\DeleteUserMutation,
     User\LoginUserMutation, User\RegisterUserMutation, User\UpdateUserPasswordMutation,
-    User\ChangeCreditUserMutation,
+    User\ChangeCreditUserMutation, User\LogoutUserMutation,
+
+    AccessCode\CreateAccessCodeMutation, AccessCode\LoginWithAccessCodeMutation,
 
     Password\RequestResetPasswordMutation, Password\ResetPasswordMutation,
 
@@ -118,6 +120,7 @@ use App\GraphQL\Type\Opinion\CommentType;
 use App\GraphQL\Type\ResultMessageType;
 use App\GraphQL\Type\TagType;
 use App\GraphQL\Type\User\PermissionType;
+use App\GraphQL\Type\User\SessionType;
 use App\GraphQL\Type\AuditType;
 use App\GraphQL\Type\ChartRecordType;
 use App\GraphQL\Type\VotesType;
@@ -281,6 +284,7 @@ return [
             'mutation' => [
                 // User
                 'login'                 => LoginUserMutation::class,
+                'loginWithAccessCode'   => LoginWithAccessCodeMutation::class,
                 'register'              => RegisterUserMutation::class,
                 'registerConsultant'    => RegisterConsultantMutation::class,
                 'requestResetPassword'  => RequestResetPasswordMutation::class,
@@ -454,6 +458,7 @@ return [
                 'updateUser'    => UpdateUserMutation::class,
                 'deleteUser'    => DeleteUserMutation::class,
                 'changeCreditUser' => ChangeCreditUserMutation::class,
+                'createAccessCode' => CreateAccessCodeMutation::class,
                 'updateUserPassword' => UpdateUserPasswordMutation::class,
                 'emptyAuthCodeUser' => EmptyAuthCodeUserMutation::class,
 
@@ -472,14 +477,7 @@ return [
                 'updateBlacklistPhoneNumber' => UpdateBlacklistPhoneNumberMutation::class,
                 'deleteBlacklistPhoneNumber' => DeleteBlacklistPhoneNumberMutation::class,
 
-                // 'createUserPhone' => CreateUserPhoneMutation::class,
-                // 'updateUserPhone' => UpdateUserPhoneMutation::class,
-                // 'deleteUserPhone' => DeleteUserPhoneMutation::class,
-
-                // 'createUserAddress' => CreateUserAddressMutation::class,
-                // 'updateUserAddress' => UpdateUserAddressMutation::class,
-                // 'deleteUserAddress' => DeleteUserAddressMutation::class,
-
+                'logout' => LogoutUserMutation::class,
 
                 // Favorite
                 'addFavorite'   => AddFavoriteMutation::class,
@@ -541,6 +539,7 @@ return [
         'office'            => OfficeType::class,
         'message'           => MessageType::class,
         'permission'        => PermissionType::class,
+        'session'           => SessionType::class,
         'blacklist_phone_number' => BlacklistPhoneNumberType::class,
 
         // Place

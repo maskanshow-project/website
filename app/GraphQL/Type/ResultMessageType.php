@@ -15,6 +15,9 @@ class ResultMessageType extends GraphQLType
     public function fields()
     {
         return [
+            'code' => [
+                'type' => Type::string()
+            ],
             'count' => [
                 'type' => Type::int()
             ],

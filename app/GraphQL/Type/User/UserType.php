@@ -160,6 +160,17 @@ class UserType extends BaseType
             'members' => [
                 'type' => Type::listOf( \GraphQL::type('user') ),
             ],
+            'sessions' => [
+                'type' => Type::listOf( \GraphQL::type('session') ),
+                'privacy' => function() {
+
+                    return $this->checkPermission("see-sessions-user");
+                },
+                'query' => function($args, $query) {
+                    
+                    return $query->orderBy('created_at', 'desc');
+                }
+            ],
             'audits' => $this->audits('user'),
         ];
     }
