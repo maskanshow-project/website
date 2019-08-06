@@ -201,12 +201,13 @@
         </base-table>
 
         <el-pagination
-          v-if="attr('counts').total > 10"
+          v-if="attr('counts').total > 20"
           dir="rtl"
           class="text-center"
           :hide-on-single-page="false"
           layout="prev, pager, next"
           :current-page="attr('page')"
+          :page-size="20"
           :total="attr('counts').total"
           @current-change="$parent.handlePagination"
         >

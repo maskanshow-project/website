@@ -45,7 +45,10 @@
                 <i class="tim-icons icon-time-alarm"></i>
               </td>
               <td class="text-right">
-                {{ slotProps.row.validity_end_at | ago }}
+                <span v-if="!isBefore(slotProps.row.validity_end_at)">
+                  {{ slotProps.row.validity_end_at | dffInDays }}
+                </span>
+                <span class="text-danger" v-else>منقضی شده</span>
               </td>
             </tr>
           </tbody>

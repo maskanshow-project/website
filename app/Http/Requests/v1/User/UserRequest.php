@@ -25,18 +25,30 @@ class UserRequest extends MainRequest
                 'min:6',
                 'max:30',
                 'alpha_dash',
-                Rule::unique('users')->ignore( $args['id'] ?? null )
+                Rule::unique('users')
+                    ->ignore( $args['id'] ?? null )
+                    ->where(function ($query) use($args) {
+                        return $query->where('deleted_at', null);
+                    }),
             ],
             'email'             => [
-                $this->requiredOrFilled(),
+                'nullable',
                 'email',
-                Rule::unique('users')->ignore( $args['id'] ?? null )
+                Rule::unique('users')
+                    ->ignore( $args['id'] ?? null )
+                    ->where(function ($query) use($args) {
+                        return $query->where('deleted_at', null);
+                    }),
             ],
             'phone_number'  => [
                 $this->requiredOrFilled(),
                 'string',
                 'regex:/^(\+98|0)?9\d{9}$/',
-                Rule::unique('users')->ignore( $args['id'] ?? null )
+                Rule::unique('users')
+                    ->ignore( $args['id'] ?? null )
+                    ->where(function ($query) use($args) {
+                        return $query->where('deleted_at', null);
+                    }),
             ],
             'address'           => 'nullable|string|max:100',
             'avatar'            => 'nullable|image|mimes:jpg,jpeg,png|max:1024',

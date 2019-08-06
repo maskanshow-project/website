@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Props\User;
 
-use App\Models\BlacklistPhoneNumber;
+use App\BlacklistPhoneNumber;
 use App\Http\Requests\User\v1\BlacklistPhoneNumberRequest;
 
 trait BlacklistPhoneNumberProps

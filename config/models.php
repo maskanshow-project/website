@@ -12,7 +12,7 @@ use App\User;
 use App\Role;
 use App\Models\Financial\Promocode;
 use App\Models\Financial\Plan;
-use App\Models\BlacklistPhoneNumber;
+use App\BlacklistPhoneNumber;
 use App\Models\Places\Area;
 use App\Models\Places\Street;
 use App\Models\Estate\Feature;

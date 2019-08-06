@@ -205,6 +205,8 @@ export default {
     },
     handlePagination(page)
     {
+      this.setAttr('is_query_loading', true)
+
       axios.post('/graphql/auth', {
         query: `{
           allData: ${this.plural} (page: ${page}) {
@@ -222,6 +224,8 @@ export default {
         this.setAttr('counts', { total: data.data.allData.total })
 
         this.setAttr('page', page)
+
+        this.setAttr('is_query_loading', false)
       })
       .then(() => this.load(true) )
       .catch(error => console.log(error))

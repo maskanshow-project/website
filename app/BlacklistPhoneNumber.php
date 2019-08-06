@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
+use App\CachableModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;

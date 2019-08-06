@@ -109,7 +109,7 @@ class MainQuery extends Query
     public function getPortionOfData($data, $args)
     {
         return $data->paginate(
-            isset($args['per_page']) ? $this->getPerPage($args) : 10
+            isset($args['per_page']) ? $this->getPerPage($args) : 20
             ,
             ['*'],
             'page',

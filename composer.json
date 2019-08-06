@@ -15,6 +15,7 @@
         "cybercog/laravel-likeable": "^3.1",
         "dimsav/laravel-translatable": "^9.4",
         "fideloper/proxy": "^4.0",
+        "genealabs/laravel-model-caching": "*",
         "geoip2/geoip2": "~2.0",
         "grimzy/laravel-mysql-spatial": "^2.1",
         "guzzlehttp/guzzle": "^6.3",

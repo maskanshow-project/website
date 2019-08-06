@@ -129,7 +129,7 @@ class Assignment extends Model implements AuditableContract
     /**
      * Get all the types of the assignemnt
      */
-    public function types()
+    public function estate_types()
     {
         return $this->belongsToMany(EstateType::class, 'assignment_type');
     }

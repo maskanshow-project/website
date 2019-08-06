@@ -49,6 +49,9 @@ export default {
         ago(date) {
             return moment(date, "YYYY-MM-DD hh:mm:ss").fromNow();
         },
+        dffInDays(date) {
+            return moment(date, "YYYY-MM-DD hh:mm:ss").diff( moment(), 'days' ) + ' روز';
+        },
         timestampAgo(date) {
             return moment(date * 1000).fromNow();
         },

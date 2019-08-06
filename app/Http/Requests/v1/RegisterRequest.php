@@ -25,19 +25,25 @@ class RegisterRequest extends MainRequest
                 'min:6',
                 'max:30',
                 'alpha_dash',
-                Rule::unique('users')
+                Rule::unique('users')->where(function ($query) use($args) {
+                    return $query->where('deleted_at', null);
+                }),
             ],
             'email'             => [
                 'nullable',
                 'email',
-                Rule::unique('users')
+                Rule::unique('users')->where(function ($query) use($args) {
+                    return $query->where('deleted_at', null);
+                }),
             ],
             'password'          => 'required|min:6|confirmed',
             'phone_number'      => [
                 'required',
                 'string',
                 'regex:/^(\+98|0)?9\d{9}$/',
-                Rule::unique('users')
+                Rule::unique('users')->where(function ($query) use($args) {
+                    return $query->where('deleted_at', null);
+                }),
             ],
             'address'           => 'nullable|string|max:100',
             'avatar'            => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
