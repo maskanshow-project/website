@@ -5617,3 +5617,8 @@ img {
 }
 
 /*---------------------------------------------------- */
+
+.application--wrap .drawer-res .v-list {
+  max-height: calc(100% - 180px);
+  overflow: auto;
+}

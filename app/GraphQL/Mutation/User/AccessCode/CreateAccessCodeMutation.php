@@ -51,7 +51,7 @@ class CreateAccessCodeMutation extends MainMutation
 
         AccessCode::create([
             'user_id' => $user->id,
-            'code' => $code = str_random(8),
+            'code' => $code = rand(100000, 999999),
             'expired_at' => now()->addMinutes(30)
         ]);
 

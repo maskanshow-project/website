@@ -15,7 +15,6 @@ class DatabaseSeeder extends CustomSeeder
      */
     public function run()
     {
-
         // $this->call(LocationTablesSeeder::class);
 
         // $this->call(UserTableSeeder::class);

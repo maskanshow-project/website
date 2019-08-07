@@ -252,11 +252,21 @@ class EstateFilter extends MainFilter
         foreach ($filters as $item)
         {
             $this->whereHas('spec_data', function($query) use ($item) {
-    
-                $query->where('spec_row_id', $item['row_id'])->whereHas('values', function($query) use ($item) {
-    
-                    $query->whereIn('id', $item['values'] );
+                
+                $query->where('spec_row_id', $item['row_id'])->when( $item['values'] ?? false, function($query) use($item) {
+
+                    $query->whereHas('values', function($query) use ($item) {
+        
+                        $query->whereIn('id', $item['values'] );
+                    });
+                }, function($query) use($item) {
+
+                    $query->whereHas('translations', function($query) use ($item) {
+                        
+                        $query->where('data', $item['data'] ?? null);
+                    });
                 });
+
             });
         }
 
