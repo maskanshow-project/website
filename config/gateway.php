@@ -12,13 +12,13 @@ return [
     // Zarinpal gateway
     //--------------------------------
     'zarinpal' => [
-        'merchant-id'  => 'dd5e2112-c720-11e8-8292-000c295eb8fc',
+        'merchant-id'  => 'b5141d18-3fe0-11e9-8ae4-000c29344814',
         'type'         => 'normal',             // Types: [zarin-gate || normal]
         'callback-url' => '/api/v1/payment/verify',
-        'server'       => 'germany',                // Servers: [germany || iran || test]
-        'email'        => 'AmirKhadangi920@Gmail.com',
-        'mobile'       => '09105009868',
-        'description'  => 'پرداخت از وبسایت های مجموعه SmaaT',
+        'server'       => 'sgermany',                // Servers: [germany || iran || test]
+        'email'        => '',
+        'mobile'       => '',
+        'description'  => '«مسکن شو» سامانه هوشمندی است که در حوزه «املاک و مستغلات» و «مشاغل ساختمانی» و «اشتغال زایی» وخدمات وابسته به آن، فعالیت می‌کند. مسکن شو به شما امکان فروش، اجاره و خرید ملک مورد نظرتان را می‌دهد.',
     ],
 
     //--------------------------------

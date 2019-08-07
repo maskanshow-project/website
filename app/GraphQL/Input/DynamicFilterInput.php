@@ -21,9 +21,13 @@ class DynamicFilterInput extends GraphQLType
                 'type' => Type::int(),
                 'rules' => 'required'
             ],
+            'data' => [
+                'type' => Type::string(),
+                'rules' => 'nullable'
+            ],
             'values' => [
                 'type' => Type::listOf( Type::int() ),
-                'rules' => 'required'
+                'rules' => 'nullable'
             ]
         ];
     }

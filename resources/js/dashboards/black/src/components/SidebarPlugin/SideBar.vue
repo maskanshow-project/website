@@ -167,7 +167,7 @@
         })
         .then(({data}) => {
           localStorage.removeItem('JWT');
-          window.location.replace('/login')
+          window.location.replace('/')
         })
         .catch(error => console.log(error))
       }

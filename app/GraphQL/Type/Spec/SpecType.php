@@ -33,10 +33,10 @@ class SpecType extends BaseType
                 'type'  => Type::listOf( \GraphQL::type('spec_row') ),
                 'query' => function(array $args, $query) {
                 
-                    if ( !$this->checkPermission('read-spec') )
-                        $query->where('spec_rows.is_active', 1);
+                    // if ( !$this->checkPermission('read-spec') )
+                    //     $query->where('spec_rows.is_active', 1);
             
-                    $query->whereHas('defaults');
+                    // $query->whereHas('defaults');
                     $query->where('is_filterable', true);
 
                     return $query;
