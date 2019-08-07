@@ -5622,3 +5622,7 @@ img {
   max-height: calc(100% - 180px);
   overflow: auto;
 }
+
+.el-cascader-menu__wrap {
+  height: 230px !important;
+}

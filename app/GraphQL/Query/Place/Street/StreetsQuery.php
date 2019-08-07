@@ -26,7 +26,7 @@ class StreetsQuery extends BaseStreetQuery
                 $query->where('area_id', $area);
             })
             ->paginate(
-                isset($args['per_page']) ? $this->getPerPage($args) : 10
+                isset($args['per_page']) ? $this->getPerPage($args) : 20
                 ,
                 ['*'],
                 'page',

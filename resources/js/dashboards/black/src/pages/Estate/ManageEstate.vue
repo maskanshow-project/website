@@ -1125,7 +1125,7 @@ export default {
 
       axios.post('/graphql/auth', {
         query: `{
-          streets(area: ${newVal}) { data { id name coordinates { lat lng } } }
+          streets(area: ${newVal}, per_page: 50) { data { id name coordinates { lat lng } } }
         }`
       })
       .then(({data}) => {
