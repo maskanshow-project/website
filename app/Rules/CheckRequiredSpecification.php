@@ -30,7 +30,7 @@ class CheckRequiredSpecification implements Rule
     {
         if ( $value['is_required'] ?? false )
         {
-            if ( $value['data'] ?? false)
+            if ( isset( $value['data'] ) && ( $value || $value == 0 ) )
                 return true;
                 
             if ( $value['value'] ?? false)

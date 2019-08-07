@@ -65,17 +65,22 @@
 
       <md-tab id="tab-address-map" md-label="آدرس و موقعیت">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-8">
             <md-field>
               <label>منطقه</label>
               <md-select v-model="area_id">
-                <md-option v-for="area in areas" :key="area.id" :value="area.id">{{ area.name }}</md-option>
+                <md-option v-for="area in areas" :key="area.id" :value="area.id">
+                  {{ area.name }}
+
+                  <div class="mt-2" :style="{ fontSize: '10px' }">{{ area.streets.map(i => i.name).join(' - ') }}</div>
+                </md-option>
               </md-select>
-              <span class="md-helper-text">لطفا نام منطقه این ملک را از لیست انتخاب کنید</span>
+              <span class="md-helper-text" v-if="area_id">{{ area.streets.map(i => i.name).join(' - ') }}</span>
+              <span class="md-helper-text" v-else>لطفا نام منطقه این ملک را از لیست انتخاب کنید</span>
             </md-field>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-4">
             <md-field>
               <label>خیابان</label>
               <md-select v-model="street_id">
@@ -88,7 +93,8 @@
             </md-field>
           </div>
         </div>
-        
+        <br/>
+
         <div class="row">
           <div class="col-md-9">
             <md-field>
@@ -535,7 +541,7 @@ export default {
   ],
   metaInfo() {
     return {
-      title: this.$route.params.id ? this.form_data.title : 'ثبت ملک',
+      title: this.$route.params.id ? this.form_data.title || 'ویرایش ملک' : 'ثبت ملک',
     }
   },
   data() {
@@ -560,7 +566,7 @@ export default {
         aparat_video: '',
         address: '',
         plaque: '',
-        area: 0,
+        area: null,
         want_cooperation: true,
         is_mine: true,
 
@@ -717,7 +723,12 @@ export default {
   mounted()
   {
     axios.post('/graphql/auth', {
-      query: `{ areas (per_page: 20) { data { id name coordinates { lat lng } } } }`
+      query: `{ areas (per_page: 20) {
+        data {
+          id name coordinates { lat lng }
+          streets { id name coordinates { lat lng } }
+        }
+      } }`
     })
     .then(({data}) => this.areas = _.orderBy( data.data.areas.data , ['name'], ['asc']))
 
@@ -1123,15 +1134,8 @@ export default {
       this.form_data.coordinates = this.area.coordinates
       this.$refs.map.setCenter( this.area.coordinates )
 
-      axios.post('/graphql/auth', {
-        query: `{
-          streets(area: ${newVal}, per_page: 50) { data { id name coordinates { lat lng } } }
-        }`
-      })
-      .then(({data}) => {
-        this.street_id = null
-        this.streets = data.data.streets.data
-      })
+      this.street_id = null
+      this.streets = this.area.streets
     },
     street_id: function(newVal, oldVal)
     {

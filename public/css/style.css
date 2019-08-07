@@ -5616,13 +5616,13 @@ img {
   filter: blur(3px) !important;
 }
 
-/*---------------------------------------------------- */
-
 .application--wrap .drawer-res .v-list {
   max-height: calc(100% - 180px);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .el-cascader-menu__wrap {
   height: 230px !important;
 }
+
+/*---------------------------------------------------- */

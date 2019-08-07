@@ -38,7 +38,7 @@ class EstateRequest extends MainRequest
             'landlord_phone_number' => [
                 $this->requiredOrFilled(),
                 'string',
-                'regex:/^(\+98|0)?9\d{9}$/',
+                'regex:/^(\+98|0)?\d\d{9}$/',
                 new Blacklist
             ],
             'address'               => [
