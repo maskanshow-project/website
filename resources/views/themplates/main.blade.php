@@ -12,10 +12,38 @@
             {
                 $id = \Illuminate\Support\Str::replaceFirst('/estate/', '', $path);
 
-                $estate = \App\Models\Estate\Estate::select('id', 'area', 'assignment_id', 'estate_type_id')->with(['assignment:id', 'estate_type:id'])->find( $id );
+                $estate = \App\Models\Estate\Estate::select('id', 'area', 'street_id', 'assignment_id', 'estate_type_id')
+                    ->with(['assignment:id', 'estate_type:id', 'street:id,area_id,name', 'street.area:id,name'])
+                    ->find( $id );
 
-                \SEO::setTitle( $estate->title ?? ( ($estate->assignment->title ?? null).' '.($estate->estate_type->title ?? null).' '.$estate->area . ' متری' ) );
-                \SEO::setDescription("{$estate->address} | {$estate->description}");
+                if ( $estate )
+                {
+                    if ( $estate->title )
+                        $title = $estate->title;
+
+                    else {
+                        $title = $estate->assignment ? $estate->assignment->title : null;
+                        $title .= $estate->estate_type ? ' ' . $estate->estate_type->title : null;
+                        $title .= $estate->area ? ' ' . $estate->area . ' متری' : null;
+                    }
+
+                    $address = '';
+                    
+                    if ( $estate->street )
+                    {
+                        if ( $estate->street->area )
+                            $address .= ' ' . $estate->street->area->name . ' ،';
+
+                        $address .= ' خیابان ' . $estate->street->name . ' ،';
+                    }
+
+                    $address .= ' ' . $estate->address;
+                    $address .= $estate->description ? ' | ' . $estate->description : null;
+                    
+                    \SEO::setTitle( trim($title) );
+                    \SEO::setDescription( trim($address) );
+                    \SEO::addImages('http://maskanshow.ir/images/site-logo.jpg');
+                }
             }
         @endphp
 
