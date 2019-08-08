@@ -42,7 +42,6 @@
                     
                     \SEO::setTitle( trim($title) );
                     \SEO::setDescription( trim($address) );
-                    \SEO::addImages('http://maskanshow.ir/images/site-logo.jpg');
                 }
             }
         @endphp

@@ -35,7 +35,7 @@ return [
             'url'         => null, // Set null for using Url::current(), set false to total remove
             'type'        => 'website',
             'site_name'   => 'مسکن شو',
-            'images'      => [],
+            'images'      => ['http://maskanshow.ir/images/site-logo.jpg'],
         ],
     ],
     'twitter' => [
