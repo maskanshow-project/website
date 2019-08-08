@@ -35,6 +35,14 @@
 	}
 }
 
+@media (max-width:780px) {
+	.advanced_search {
+		float: none;
+		margin-top: 0px;
+		margin: auto;
+	}
+}
+
 @media (max-width:991px){
 	/* Main Menu Area css
 	============================================================================================ */
@@ -152,11 +160,7 @@
 		max-width: 350px;
 		margin: auto;
 	}
-	.advanced_search {
-		float: none;
-		margin-top: 0px;
-		margin: auto;
-	}
+
 	.home_banner_area {
 		background-size: cover;
 		margin-bottom: 0px;
@@ -195,7 +199,7 @@
 		min-height: 500px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 500px;
+		min-height: 660px;
 	}
 	.home_banner_area .banner_inner .banner_content {
 		margin-top: 0px;
@@ -272,7 +276,7 @@
 		min-height: 500px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 500px;
+		min-height: 660px;
 	}
 	.blog_banner .banner_inner .blog_b_text {
 		margin-top: 0px;
