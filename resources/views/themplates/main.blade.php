@@ -5,7 +5,21 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>مسکن شو</title>
+        @php
+            $path = request()->getPathInfo();
+
+            if ( \Illuminate\Support\Str::startsWith($path, '/estate/') )
+            {
+                $id = \Illuminate\Support\Str::replaceFirst('/estate/', '', $path);
+
+                $estate = \App\Models\Estate\Estate::select('id', 'area', 'assignment_id', 'estate_type_id')->with(['assignment:id', 'estate_type:id'])->find( $id );
+
+                \SEO::setTitle( $estate->title ?? ( ($estate->assignment->title ?? null).' '.($estate->estate_type->title ?? null).' '.$estate->area . ' متری' ) );
+                \SEO::setDescription("{$estate->address} | {$estate->description}");
+            }
+        @endphp
+
+        {!! \SEO::generate(false) !!}
 
         <!-- Fonts -->
         <link href="/fonts/flaticon/flaticon.css" rel="stylesheet">
