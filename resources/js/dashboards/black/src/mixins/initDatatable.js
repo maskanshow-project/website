@@ -220,12 +220,11 @@ export default {
       })
       .then(({data}) => {
         this.setData(data.data.allData.data)
-
         this.setAttr('counts', { total: data.data.allData.total })
-
         this.setAttr('page', page)
-
         this.setAttr('is_query_loading', false)
+        this.setAttr('selected_items', [], true)
+        this.$refs.datatable.selected_items = []
       })
       .then(() => this.load(true) )
       .catch(error => console.log(error))
@@ -249,6 +248,8 @@ export default {
           this.setData(data.data.allData.data)
           this.setAttr('counts', { total: data.data.allData.total })
           this.setAttr('page', 1)
+          this.setAttr('selected_items', [], true)
+          this.$refs.datatable.selected_items = []
         })
         .then(() => this.load(true) )
         .catch(error => console.log(error))
