@@ -16,9 +16,9 @@ class ChangeCreditRequest extends MainRequest
         $this->method = $method;
 
         return [
-            'count'         => 'required|integer|max:10000',
-            'registered'    => 'required|integer|max:1000',
-            'days'          => 'required|integer|max:100',
+            'count'         => 'required|integer|max:100000',
+            'registered'    => 'required|integer|max:10000',
+            'days'          => 'required|integer|max:1000',
             'type'          => 'required|boolean',
         ];
     }
