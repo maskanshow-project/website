@@ -47,7 +47,7 @@ class EstateRequest extends MainRequest
                 'max:100',
                 new PlaqueNotInAddress
             ],
-            'plaque'                => [$this->requiredOrFilled(), 'string', 'max:20'],
+            'plaque'                => ['required', 'string', 'max:20'],
             'aparat_video'          => 'nullable|url|starts_with:https://www.aparat.com/v/',
             
             'sales_price'           => 'nullable|integer|digits_between:1,10',
