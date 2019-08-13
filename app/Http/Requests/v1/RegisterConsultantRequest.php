@@ -76,7 +76,7 @@ class RegisterConsultantRequest extends MainRequest
             
             // relations
             'city_id'           => 'nullable|integer|exists:cities,id',
-            'area_id'           => 'nullable|integer|exists:areas,id',
+            'area_id'           => 'required|integer|exists:areas,id',
             'reagent_code'      => [
                 'required',
                 'string',

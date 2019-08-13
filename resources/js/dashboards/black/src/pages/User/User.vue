@@ -164,6 +164,7 @@
             left: '0px',
             top: '0px'
           }">
+            <el-checkbox-button :label="0" :key="0">بدون نقش</el-checkbox-button>
             <el-checkbox-button v-for="role in $store.state.user.role" :label="role.id" :key="role.id">{{ role.display_name }}</el-checkbox-button>
           </el-checkbox-group>
         </transition>

@@ -61,15 +61,19 @@ class CreatePaymentMutation extends MainMutation
                 })
                 ->first();
 
-        if ( $promocode ?? false && $promocode->used_count >= $promocode->quantity )
-            $promocode = null;
 
-        if ( $promocode ?? false && $promocode->users()->where('id', auth()->id() )->count() )
-            $promocode = null;
-
-        if ( $promocode ?? false && $promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'] )->count() !== 1 )
-            $promocode = null;
-
+        if ( $promocode ?? false )
+        {
+            if ( $promocode->quantity && $promocode->used_count >= $promocode->quantity )
+                $promocode = null;
+    
+            if ( $promocode->users()->where('id', auth()->id() )->count() )
+                $promocode = null;
+    
+            if ( $promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'] )->count() !== 1 )
+                $promocode = null;
+        }
+        
 
         return Payment::create([
             'code' => str_random(50),
