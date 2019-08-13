@@ -886,7 +886,7 @@ export default {
         
         street_id: this.street_id,
         address: this.form_data.address,
-        plaque: this.form_data.plaque ? this.form_data.plaque : null,
+        plaque: this.form_data.plaque ? this.form_data.plaque : 0,
         lat: this.form_data.coordinates.lat,
         lng: this.form_data.coordinates.lng,
 
