@@ -764,6 +764,7 @@ export default {
         }`
       })
       .then(({data}) => {
+
         if ( data.data.estate.spec && data.data.estate.spec.headers.length )
           this.handleSpecification(data.data.estate.spec.headers)
         else if ( !data.data.estate.spec )

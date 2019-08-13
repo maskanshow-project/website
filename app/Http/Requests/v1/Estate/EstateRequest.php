@@ -50,8 +50,8 @@ class EstateRequest extends MainRequest
             'plaque'                => ['required', 'string', 'max:20'],
             'aparat_video'          => 'nullable|url|starts_with:https://www.aparat.com/v/',
             
-            'sales_price'           => 'nullable|integer|digits_between:1,10',
-            'mortgage_price'        => 'nullable|integer|digits_between:1,10',
+            'sales_price'           => 'nullable|integer|digits_between:1,12',
+            'mortgage_price'        => 'nullable|integer|digits_between:1,12',
             'rental_price'          => 'nullable|integer|digits_between:1,10',
             
             'area'                  => [$this->requiredOrFilled(), 'integer', 'digits_between:1,6'],

@@ -88,13 +88,13 @@ class EstateType extends BaseType
                 'type' => Type::string()
             ],
             'sales_price' => [
-                'type' => Type::int()
+                'type' => Type::string()
             ],
             'mortgage_price' => [
-                'type' => Type::int()
+                'type' => Type::string()
             ],
             'rental_price' => [
-                'type' => Type::int()
+                'type' => Type::string()
             ],
             'area' => [
                 'type' => Type::int()
