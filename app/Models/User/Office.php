@@ -50,10 +50,17 @@ class Office extends Model implements AuditableContract
      */
     protected $searchable = [
         'columns' => [
-            'name' => 10,
-            'description' => 5,
-            'address' => 5,
-            'phone_number' => 5,
+            'offices.name' => 10,
+            'offices.address' => 3,
+            'offices.phone_number' => 5,
+            'offices.username' => 6,
+
+            'users.first_name' => 9,
+            'users.last_name' => 9,
+            'users.username' => 7,
+        ],
+        'joins' => [
+            'users' => ['users.id','offices.user_id'],
         ],
     ];
 

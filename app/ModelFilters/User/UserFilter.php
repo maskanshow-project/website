@@ -72,7 +72,15 @@ class UserFilter extends MainFilter
      */
     public function roles($ids)
     {
-        return $this->filter_relation('roles', $ids);
+        if ( !$ids ) return;
+
+        $this->whereHas('roles', function($query) use ($ids) {
+
+            $query->whereIn('id', $ids);
+        });
+
+        if ( in_array(0, $ids) )
+            $this->orWhereDoesntHave('roles');
     }
 
     /**

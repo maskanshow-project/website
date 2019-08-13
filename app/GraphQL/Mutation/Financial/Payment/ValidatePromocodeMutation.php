@@ -56,7 +56,6 @@ class ValidatePromocodeMutation extends MainMutation
                 })
                 ->first();
 
-        
         if ( !$promocode )
         {
             return [
@@ -64,7 +63,7 @@ class ValidatePromocodeMutation extends MainMutation
                 'message' => 'این کد تخفیف معتبر نیست یا منقضی شده است'
             ];
         }
-        
+
         if ( $promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'] )->count() !== 1 )
         {
             return [
@@ -74,7 +73,7 @@ class ValidatePromocodeMutation extends MainMutation
         }
 
 
-        if ( $promocode && $promocode->used_count >= $promocode->quantity )
+        if ( $promocode->quantity && $promocode->used_count >= $promocode->quantity )
         {
             return [
                 'status' => 400,
@@ -82,7 +81,7 @@ class ValidatePromocodeMutation extends MainMutation
             ];
         }
 
-        if ( $promocode && $promocode->users()->where('id', auth()->id() )->count() )
+        if ( $promocode->users()->where('id', auth()->id() )->count() )
         {
             return [
                 'status' => 400,

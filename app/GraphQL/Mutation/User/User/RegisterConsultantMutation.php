@@ -107,6 +107,7 @@ class RegisterConsultantMutation extends BaseUserMutation
 
         $office = $user->offices()->create([
             'name' => $args['office_name'] ?? null,
+            'area_id' => $args['area_id'] ?? null,
             'username' => $args['office_username'] ?? null,
             'description' => $args['office_description'] ?? null,
             'address' => $args['office_address'] ?? null,

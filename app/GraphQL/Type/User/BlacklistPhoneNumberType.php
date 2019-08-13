@@ -4,7 +4,7 @@ namespace App\GraphQL\Type\User;
 
 use App\GraphQL\Type\BaseType;
 use GraphQL\Type\Definition\Type;
-use App\Models\BlacklistPhoneNumber;
+use App\BlacklistPhoneNumber;
 
 class BlacklistPhoneNumberType extends BaseType
 {

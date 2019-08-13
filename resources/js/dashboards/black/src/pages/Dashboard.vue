@@ -243,9 +243,9 @@
 
         <div class="plan-price text-center">
           <h2 class="m-0" :style="{ color: isLight(plan.color) ? darken(plan.color, .6) : lighten(plan.color, .6) }">
-            {{ plan.price / 1000 }}
+            {{ plan.price > 999999 ? plan.price / 1000000 : plan.price / 1000 }}
           </h2>
-          <span :style="{ color: isLight(plan.color) ? '#6c757d' : '#ffffff' }">هزار تومان</span>
+          <span :style="{ color: isLight(plan.color) ? '#6c757d' : '#ffffff' }">{{ plan.price > 999999 ? 'میلیون' : 'هزار' }} تومان</span>
         </div>
         
         <p class="text-center mt-5">
@@ -263,7 +263,7 @@
           :title="plan.title"
           :content="plan.description"
         >
-          <p slot="reference" class="card-text text-muted text-center mt-3">{{ plan.description | truncate(120) }}</p>
+          <pre slot="reference" class="card-text text-muted text-center mt-3" :style="{ overflow: 'hidden', outline: 'none' }">{{ plan.description | truncate(120) }}</pre>
         </el-popover>
 
         <div class="d-flex justify-content-center text-center mt-2">
