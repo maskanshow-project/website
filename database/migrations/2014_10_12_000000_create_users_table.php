@@ -22,10 +22,10 @@ class CreateUsersTable extends Migration
         $schema->create('offices', function (Blueprint $table) {
             $table->table([
                 'name'              => 50,
-                'username'          => '32|unique',
+                'username'          => '32',
                 'description'       => '255|nullable',
                 'address'           => '100|nullable',
-                'phone_number'      => '15|unique|nullable',
+                'phone_number'      => '15|nullable',
                 'jalali_created_at' => 'datetime|nullable'
             ], [
                 'areas' => ['nullable', 'set null']
@@ -37,9 +37,9 @@ class CreateUsersTable extends Migration
                 'first_name'            => '20|nullable',
                 'last_name'             => '30|nullable',
                 'address'               => '100|nullable',
-                'phone_number'          => '15|unique|nullable',
-                'username'              => '32|unique',
-                'email'                 => '100|unique',
+                'phone_number'          => '15|nullable',
+                'username'              => '32',
+                'email'                 => '100',
                 'email_verified_at'     => 'timestamp|nullable',
                 'password'              => 100,
                 'national_code'         => '10|nullable',

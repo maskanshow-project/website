@@ -53,9 +53,9 @@ class CreateEstateTables extends Migration
                 'landlord_fullname' => 50,
                 'landlord_phone_number' => 15,
 
-                'sales_price'       => 'integer|nullable',
-                'mortgage_price'    => 'integer|nullable',
-                'rental_price'      => 'integer|nullable',
+                'sales_price'       => 'unsignedBigInteger|nullable',
+                'mortgage_price'    => 'unsignedBigInteger|nullable',
+                'rental_price'      => 'unsignedBigInteger|nullable',
 
                 'want_cooperation'  => 'boolean|default:1',
 

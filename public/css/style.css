@@ -776,6 +776,7 @@ p {
 .banner_area .banner_inner .overlay {
   background: url(/img/home.jpg) no-repeat scroll center center;
   background-size: cover !important;
+  background-position-y: 70%;
   position: absolute;
   left: 0;
   right: 0;
@@ -4677,8 +4678,8 @@ img {
 }
 
 .author-card {
-	padding: 30px;
-  margin-bottom: 30px;
+	padding: 20px;
+  margin-bottom: 20px;
 }
 
 .author-card .author-img {
@@ -4701,8 +4702,12 @@ img {
 .author-card .author-contact {
 	display: block;
 	clear: both;
-	padding-top: 20px;
+	padding-top: 15px;
 	position: relative;
+}
+
+.author-card .author-contact a {
+  color: inherit;
 }
 
 .author-card .author-contact p {

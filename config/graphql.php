@@ -290,7 +290,7 @@ return [
                 'requestResetPassword'  => RequestResetPasswordMutation::class,
                 'resetPassword'         => ResetPasswordMutation::class,
             ],
-            'middleware' => ['CORS'],
+            'middleware' => [],
             'method' => ['get', 'post'],
         ],
 
@@ -483,7 +483,7 @@ return [
                 'addFavorite'   => AddFavoriteMutation::class,
                 'removeFavorite'=> RemoveFavoriteMutation::class,
             ],
-            'middleware' => ['auth:api', 'CORS'],
+            'middleware' => ['auth:api'],
             'method' => ['get', 'post', 'put', 'delete']
         ]
     ],

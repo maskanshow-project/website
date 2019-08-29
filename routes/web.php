@@ -11,13 +11,6 @@
 |
 */
 
-Route::get('/test/amir', function() {
-
-    return cache()->all();
-
-    return cache(['key' => 'value'], 100);
-});
-
 Route::get('/panel/{path?}', function() {
     $dashboard_template = 'black';
 

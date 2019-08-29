@@ -12,6 +12,7 @@
         "artesaos/seotools": "^0.14.0",
         "askedio/laravel-soft-cascade": "^5.7",
         "awssat/laravel-visits": "^1.5",
+        "barryvdh/laravel-cors": "^0.11.3",
         "cviebrock/eloquent-sluggable": "^4.6",
         "cybercog/laravel-likeable": "^3.1",
         "dimsav/laravel-translatable": "^9.4",
