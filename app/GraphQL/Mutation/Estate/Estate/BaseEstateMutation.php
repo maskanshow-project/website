@@ -285,7 +285,7 @@ class BaseEstateMutation extends MainMutation
     {
         if ( $row->data )
         {
-            if ( count($values ?? []) !== 0 || ( $data && $data !== '[]' ) )
+            if ( count($values ?? []) !== 0 || ( ( $data && $data !== '[]' ) || $data == 0 ) )
             {
                 $row->data->update([ 'data' => $data ]);
                 $row->data->values()->sync( $values );
@@ -293,7 +293,7 @@ class BaseEstateMutation extends MainMutation
             else
                 $row->data->delete();
         }
-        else if ( count($values ?? []) !== 0 || ( $data && $data !== '[]' ) ) 
+        else if ( count($values ?? []) !== 0 || ( ( $data && $data !== '[]' ) || $data == 0 ) ) 
         {
             $spec_data = $row->data()->create([
                 'estate_id' => $estate->id,

@@ -5630,4 +5630,9 @@ img {
   height: 230px !important;
 }
 
+.container {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 /*---------------------------------------------------- */

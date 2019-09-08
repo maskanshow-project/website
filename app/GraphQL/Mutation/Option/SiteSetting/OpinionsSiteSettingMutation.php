@@ -24,6 +24,14 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
     {
         $args = collect($args);
 
+        if ( is_array( $args->get( $this->field ) ) && count( $args->get( $this->field ) ) === 0 )
+        {
+            $slider = $this->model::whereName( $this->field )->first();
+            $slider->update([ 'value' => '[]' ]);
+
+            return $this->result();
+        }
+
         if ( !$args->get( $this->field ) )
             return $this->result(false);
 
@@ -86,6 +94,8 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
             }
         }
 
-        $slider->update([ 'value' => json_encode($slider_item->take( count( $args->get( $this->field ) ) ), true) ]);
+        $slider->update([
+            'value' => json_encode($slider_item->take( count( $args->get( $this->field ) ) ), true)
+        ]);
     }
 }
