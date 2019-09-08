@@ -5635,4 +5635,8 @@ img {
   padding-bottom: 0 !important;
 }
 
+.application--wrap {
+  min-height: unset !important;
+}
+
 /*---------------------------------------------------- */
