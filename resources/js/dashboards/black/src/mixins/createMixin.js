@@ -223,8 +223,8 @@ export default {
 
       axios.post('/graphql/auth', fd).then(({data}) =>
       {
-        // this.setAttr('is_mutation_loading', false)
-        // return console.log( data )
+        this.setAttr('is_mutation_loading', false)
+        return console.log( data )
 
         var msg = this.attr('is_creating') ? 'ثبت شد' : 'بروزرسانی شد'
           

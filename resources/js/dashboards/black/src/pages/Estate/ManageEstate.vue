@@ -968,6 +968,8 @@ export default {
     },
     handleSpecification(headers)
     {
+      console.log( _.flatten( headers.map(i => i.rows) ) )
+
       this.specifications = {}
 
       _.flatten( headers.map(i => i.rows) ).map(i => {
