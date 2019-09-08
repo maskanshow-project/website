@@ -283,6 +283,14 @@ class BaseEstateMutation extends MainMutation
 
     public function createNewSpecData($row, $estate, $data = null, $values = [])
     {
+        // if ( $row->title === 'سن بنا' )
+        // {
+        //     die(json_encode([
+        //         'row' => $row,
+        //         'data' => $data
+        //     ]));
+        // }
+
         if ( $row->data )
         {
             if ( count($values ?? []) !== 0 || ( ( $data && $data !== '[]' ) || $data == 0 ) )
