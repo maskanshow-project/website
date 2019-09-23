@@ -51,7 +51,7 @@ class EstateFilter extends MainFilter
      */
     public function code($code)
     {
-        return $this->whereLike('code', $code)->orWhere('id', 'like', "%{$code}%");
+        return $this->whereLike('code', $code)->orWhere('estates.id', 'like', "%{$code}%");
     }
 
     /**

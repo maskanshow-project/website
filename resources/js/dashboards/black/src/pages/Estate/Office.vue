@@ -124,6 +124,7 @@
       <md-field>
         <label>منطقه</label>
         <md-select v-model="area_id">
+          <md-option>بدون منطقه</md-option>
           <md-option v-for="item in $store.state.place.area" :key="item.id" :value="item.id">{{ item.name }}</md-option>
         </md-select>
         <i class="md-icon tim-icons icon-map-big"></i>

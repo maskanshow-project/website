@@ -14,16 +14,8 @@
     ref="datatable"
   >
 
-    <template #title-body="slotProps">
-      <el-popover
-        placement="top-end"
-        width="300"
-        trigger="hover"
-        :disabled="typeof slotProps.row.title === 'string' ? slotProps.row.title.length <= 50 : false"
-        :content="slotProps.row.title"
-      >
-        <a :href="`/estate/${slotProps.row.id}`" slot="reference">{{ slotProps.row.title | truncate(50) }}</a>
-      </el-popover>
+    <template #id-body="slotProps">
+      <a :href="`/estate/${slotProps.row.id}`" slot="reference">{{ slotProps.row.id }}</a>
     </template>
 
     <template #address-body="slotProps">
@@ -41,7 +33,7 @@
     <template v-slot:photos-body="slotProps">
       <div>
         <img class="tilt" :src="slotProps.row.photos && slotProps.row.photos.length !== 0 ? slotProps.row.photos[0].thumb : '/images/placeholder.png'" />
-        <span v-if="!slotProps.row.is_active" :style="{ marginTop: '-50%', background: '#f13b3bc7' }" class="d-block position-relative badge badge-danger">پیش نویس</span>
+        <span v-if="!slotProps.row.is_active" :style="{ marginTop: '-50%', background: '#f13b3bc7' }" class="d-block position-relative badge badge-danger">تایید نشده</span>
         <span v-else :style="{ marginTop: '-50%', background: slotProps.row.assignment ? slotProps.row.assignment.color : '#f13b3bc7' }" class="d-block position-relative badge badge-danger">
           {{ slotProps.row.assignment ? slotProps.row.assignment.title : '' }}
           {{ slotProps.row.estate_type ? slotProps.row.estate_type.title : '' }}
@@ -145,8 +137,8 @@ export default {
           label: 'تصویر ملک',
           icon: 'icon-image-02'
         }, {
-          field: 'title',
-          label: 'عنوان',
+          field: 'id',
+          label: 'کد ملک',
           icon: 'icon-caps-small'
         }, {
           field: 'address',

@@ -4084,7 +4084,7 @@ h6 {
   margin-bottom: 25px;
 }
 
-.testi_item p {
+.testi_item p, .testi_item pre {
   line-height: 24px;
   font-size: 13px;
   color: #999;

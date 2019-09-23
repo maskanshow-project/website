@@ -342,7 +342,8 @@ export default {
                 },
                 area_id: {
                     type: 'Int',
-                    value: null
+                    value: null,
+                    clientResolver: (value) => value ? value : null
                 },
             },
         },

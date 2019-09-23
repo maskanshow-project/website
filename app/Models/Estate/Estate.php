@@ -115,13 +115,12 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
      */
     protected $searchable = [
         'columns' => [
-            'estate_translations.title' => 10,
+            'estates.id' => 10,
+            'estate_translations.title' => 6,
             'estate_translations.description' => 5,
             'estate_translations.address' => 5,
             'landlord_fullname' => 6,
             'landlord_phone_number' => 6,
-            'estate_translations.advantages' => 3,
-            'estate_translations.disadvantages' => 2,
         ],
         'joins' => [
             'estate_translations' => ['estates.id','estate_translations.estate_id'],

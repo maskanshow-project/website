@@ -18,10 +18,10 @@
 	/* Home Banner Area css
 	============================================================================================ */
 	.home_banner_area {
-		min-height: 700px;
+		min-height: 490px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 700px;
+		min-height: 490px;
 	}
 	/* End Home Banner Area css
 	============================================================================================ */
@@ -196,10 +196,10 @@
 }
 @media (max-width:767px){
 	.home_banner_area {
-		min-height: 500px;
+		min-height: 400px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 660px;
+		min-height: 400px;
 	}
 	.home_banner_area .banner_inner .banner_content {
 		margin-top: 0px;
@@ -273,10 +273,10 @@
 		font-size: 28px;
 	}
 	.home_banner_area {
-		min-height: 500px;
+		min-height: 400px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 660px;
+		min-height: 400px;
 	}
 	.blog_banner .banner_inner .blog_b_text {
 		margin-top: 0px;
@@ -359,6 +359,6 @@
 		min-height: 400px;
 	}
 	.home_banner_area .banner_inner {
-		min-height: 660px;
+		min-height: 400px;
 	}
 }

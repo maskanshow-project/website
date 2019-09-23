@@ -25,6 +25,7 @@ class OfficeRequest extends MainRequest
                 'max:30',
                 Rule::unique('offices')->ignore( $args['id'] ?? null )
             ],
+            'area_id'        => 'nullable|integer|exists:areas,id',
             'description'    => 'nullable|string|max:255',
             'address'        => [$this->requiredOrFilled(), 'string', 'max:100'],
             'phone_number'   => [
