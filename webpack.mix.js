@@ -11,10 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-// mix.js('resources/js/app.js', 'public/js')
-   // .sass('resources/sass/app.scss', 'public/css');
+// mix.js('resources/js/dashboards/black/src/main.js', 'public/js/main-1.3.1.js')
 
-mix.js('resources/js/dashboards/black/src/main.js', 'public/js')
-
-// mix.js('resources/js/dashboards/vue-material/src/main.js', 'public/js')
-   // .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/website/app.js', 'public/js/app-1.3.1.js')
+    .extract(['vue'])
+    .sourceMaps()
+    // .sass('resources/sass/app.scss', 'public/css');

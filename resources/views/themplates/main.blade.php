@@ -76,7 +76,7 @@
 
         <script src="/js/manifest.js"></script>
         <script src="/js/vendor.js"></script>
-        <script src="/js/app.js"></script>
+        <script src="/js/app-1.3.1.js"></script>
         <script src="/js/jquery-3.2.1.min.js"></script>
         <script src="/js/stellar.js"></script>
         <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
