@@ -3,19 +3,31 @@
     <div class="row" v-if="is_loaded">
       <div class="col-12 text-right">
         <div class="pull-right">
-          <h1 class="animated bounceInRight delay-first" :style="{ color: '#fff', fontWeight: 'bold', textShadow: '0px 3px 15px #333' }">
+          <h1
+            class="animated bounceInRight delay-first"
+            :style="{ color: '#fff', fontWeight: 'bold', textShadow: '0px 3px 15px #333' }"
+          >
             <span v-if="$route.params.id" dir="rtl">
-              ویرایش <span :style="{ color: '#ff3d3d', fontSize: '24px' }">{{ form_data.title }}</span>
+              ویرایش
+              <span :style="{ color: '#ff3d3d', fontSize: '24px' }">{{ form_data.title }}</span>
             </span>
             <span v-else>
-              ثبت <span :style="{ color: '#ff3d3d' }">ملک</span> جدید
+              ثبت
+              <span :style="{ color: '#ff3d3d' }">ملک</span> جدید
             </span>
             <i class="header-nav-icon tim-icons icon-align-left-2" :style="{fontSize: '25px'}"></i>
           </h1>
-          <h6 class="header-description animated bounceInRight delay-secound">از طریق فرم زیر میتوانید به صورت کامل اطلاعات ملک خود را به ثبت برسانید</h6>
+          <h6
+            class="header-description animated bounceInRight delay-secound"
+          >از طریق فرم زیر میتوانید به صورت کامل اطلاعات ملک خود را به ثبت برسانید</h6>
         </div>
         <div class="pull-left animated bounceInDown delay-last">
-          <base-button @click="$router.push('/panel/estate/mine')" size="sm" type="warning" class="pull-left">
+          <base-button
+            @click="$router.push('/panel/estate/mine')"
+            size="sm"
+            type="warning"
+            class="pull-left"
+          >
             <i class="tim-icons icon-double-left"></i>
             بازگشت
           </base-button>
@@ -23,7 +35,13 @@
       </div>
     </div>
 
-    <md-tabs class="animated bounceInUp delay-last" v-show="is_loaded" md-active-tab="tab-info" @md-changed="changeTab" v-if="canCreateEstate">
+    <md-tabs
+      class="animated bounceInUp delay-last"
+      v-show="is_loaded"
+      md-active-tab="tab-info"
+      @md-changed="changeTab"
+      v-if="canCreateEstate"
+    >
       <md-tab id="tab-images" md-label="تصاویر و ویدیو" dir="ltr">
         <div class="row">
           <div class="col-md-5" :style="{ borderLeft: '1px solid #c7c7c7' }">
@@ -35,11 +53,13 @@
               <span class="md-helper-text">برای مثال : https://www.aparat.com/v/TJcin</span>
             </md-field>
 
-            <br/>
+            <br />
 
             <div id="aparat_video_frame" v-if="is_loaded_video">
-              <script type="text/JavaScript" :src="`https://www.aparat.com/embed/${form_data.aparat_video.replace('https://www.aparat.com/v/', '').trim()}?data[rnddiv]=aparat_video_frame&data[responsive]=yes`">
-              </script>
+              <script
+                type="text/JavaScript"
+                :src="`https://www.aparat.com/embed/${form_data.aparat_video.replace('https://www.aparat.com/v/', '').trim()}?data[rnddiv]=aparat_video_frame&data[responsive]=yes`"
+              ></script>
             </div>
           </div>
 
@@ -53,11 +73,12 @@
               list-type="picture-card"
               :file-list="form_data.photos"
               :on-change="handleSelectPhotos"
-              :on-remove="handleRemove">
+              :on-remove="handleRemove"
+            >
               <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
+              <img width="100%" :src="dialogImageUrl" alt />
             </el-dialog>
           </div>
         </div>
@@ -71,11 +92,16 @@
               <md-select v-model="area_id">
                 <md-option v-for="area in areas" :key="area.id" :value="area.id">
                   {{ area.name }}
-
-                  <div class="mt-2" :style="{ fontSize: '10px' }">{{ area.streets.map(i => i.name).join(' - ') }}</div>
+                  <div
+                    class="mt-2"
+                    :style="{ fontSize: '10px' }"
+                  >{{ area.streets.map(i => i.name).join(' - ') }}</div>
                 </md-option>
               </md-select>
-              <span class="md-helper-text" v-if="area_id">{{ area.streets.map(i => i.name).join(' - ') }}</span>
+              <span
+                class="md-helper-text"
+                v-if="area_id"
+              >{{ area.streets.map(i => i.name).join(' - ') }}</span>
               <span class="md-helper-text" v-else>لطفا نام منطقه این ملک را از لیست انتخاب کنید</span>
             </md-field>
           </div>
@@ -84,16 +110,20 @@
             <md-field>
               <label>خیابان</label>
               <md-select v-model="street_id">
-                <md-option v-if="streets.length === 0">
-                  {{ area_id ? 'در این منطقه هیچ خیابانی ثبت نشده است' : 'لطفا ابتدا منطقه مورد نظر خود را انتخاب کنید' }}
-                </md-option>
-                <md-option v-for="street in streets" :key="street.id" :value="street.id">{{ street.name }}</md-option>
+                <md-option
+                  v-if="streets.length === 0"
+                >{{ area_id ? 'در این منطقه هیچ خیابانی ثبت نشده است' : 'لطفا ابتدا منطقه مورد نظر خود را انتخاب کنید' }}</md-option>
+                <md-option
+                  v-for="street in streets"
+                  :key="street.id"
+                  :value="street.id"
+                >{{ street.name }}</md-option>
               </md-select>
               <span class="md-helper-text">لطفا نام خیابان این ملک از لیست انتخاب کنید</span>
             </md-field>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <div class="col-md-9">
@@ -114,18 +144,17 @@
             </md-field>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <transition name="fade">
             <div class="col-md-12" v-if="form_data.address">
               آدرس نهایی‌ :
-
               <transition name="fade">
                 <span v-if="area">{{ area.name }} ،</span>
               </transition>
               <transition name="fade">
-                <span v-if="street">خیابان {{ street.name }} ، </span>
+                <span v-if="street">خیابان {{ street.name }} ،</span>
               </transition>
               {{ form_data.address }}
               <transition name="fade">
@@ -135,7 +164,7 @@
           </transition>
         </div>
 
-        <div class="row p-4" v-if="form_data.coordinates && form_data.coordinates.lat && is_loaded" >
+        <div class="row p-4" v-if="form_data.coordinates && form_data.coordinates.lat && is_loaded">
           <l-map
             v-show="form_data.coordinates && form_data.coordinates.lat"
             ref="map"
@@ -156,22 +185,32 @@
           >
             <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
             <l-marker draggable :lat-lng.sync="form_data.coordinates">
-              <l-icon
-                :icon-size="[40, 50]"
-                :icon-anchor="[20, 50]"
-                icon-url="/location_marker.svg" >
-              </l-icon>   
+              <l-icon :icon-size="[40, 50]" :icon-anchor="[20, 50]" icon-url="/location_marker.svg"></l-icon>
             </l-marker>
             <!-- <l-circle-marker ref="location" :lat-lng="location" v-if="location" :radius="8" color="#0043ff" /> -->
             <l-control position="bottomright">
               <el-tooltip content="موقعیت من">
-                <base-button @click="location ? $refs.map.setCenter({ lat: location[0], lng: location[1] }) : false" class="pt-2" type="success" size="sm" icon round>
+                <base-button
+                  @click="location ? $refs.map.setCenter({ lat: location[0], lng: location[1] }) : false"
+                  class="pt-2"
+                  type="success"
+                  size="sm"
+                  icon
+                  round
+                >
                   <i class="material-icons m-0 hvr-icon" :style="{ paddingTop: '5px' }">my_location</i>
                 </base-button>
               </el-tooltip>
 
               <el-tooltip content="موقعیت ملک">
-                <base-button @click="$refs.map.setCenter({ lat: form_data.coordinates.lat, lng: form_data.coordinates.lng })" class="pt-2" type="warning" size="sm" icon round>
+                <base-button
+                  @click="$refs.map.setCenter({ lat: form_data.coordinates.lat, lng: form_data.coordinates.lng })"
+                  class="pt-2"
+                  type="warning"
+                  size="sm"
+                  icon
+                  round
+                >
                   <i class="material-icons m-0 hvr-icon">room</i>
                 </base-button>
               </el-tooltip>
@@ -189,12 +228,13 @@
               :value="item.id"
               :key="item.id"
               :label="item.id"
-            >
-              {{ item.title }}
-            </el-checkbox>
+            >{{ item.title }}</el-checkbox>
           </el-checkbox-group>
-          <small slot="helperText" class="form-text text-muted">لطفا از بخش بالا کلیه امکانات ملک خود را مشخص کنید</small>
-          <br/>
+          <small
+            slot="helperText"
+            class="form-text text-muted"
+          >لطفا از بخش بالا کلیه امکانات ملک خود را مشخص کنید</small>
+          <br />
         </base-input>
 
         <div class="row">
@@ -211,13 +251,13 @@
             </md-chips>
           </div>
         </div>
-        <br/>
+        <br />
 
         <md-chips v-model="form_data.tags" md-placeholder="افزودن کلمه کلیدی ...">
           <label>کلمات کلیدی ملک</label>
           <span class="md-helper-text">کلمات کلیدی مرتبط با ملک خود را وارد کنید</span>
         </md-chips>
-        <br/>
+        <br />
 
         <md-field>
           <label>توضیح کوتاه</label>
@@ -225,7 +265,7 @@
           <i class="md-icon tim-icons icon-align-center"></i>
           <span class="md-helper-text">توضیحی مختصر درباره این ملک</span>
         </md-field>
-        <br/>
+        <br />
       </md-tab>
 
       <md-tab id="tab-specifications" md-label="مشخصات ملک" :md-disabled="!form_data.spec">
@@ -244,18 +284,24 @@
                 v-for="(row, indexRow) in header.rows"
                 :key="row.id"
               >
-                <br/>
+                <br />
                 <md-chips
                   v-model="specifications[row.id]"
                   v-if="row.defaults.length === 0 && row.is_multiple"
                   md-placeholder="افزودن ..."
                 >
-                  <label>{{ row.title }} <span v-if="row.is_required" class="text-danger">*</span></label>
+                  <label>
+                    {{ row.title }}
+                    <span v-if="row.is_required" class="text-danger">*</span>
+                  </label>
                   <span class="md-helper-text">{{ row.description }}</span>
                 </md-chips>
 
                 <md-field v-else>
-                  <label>{{ row.title }} <span v-if="row.is_required" class="text-danger">*</span></label>
+                  <label>
+                    {{ row.title }}
+                    <span v-if="row.is_required" class="text-danger">*</span>
+                  </label>
                   <span class="md-prefix">{{ row.prefix }}</span>
 
                   <md-input
@@ -268,7 +314,11 @@
                     v-model="specifications[row.id]"
                     v-if="row.defaults.length !== 0"
                   >
-                    <md-option v-for="value in row.defaults" :key="value.id" :value="value.id">{{ value.value }}</md-option>
+                    <md-option
+                      v-for="value in row.defaults"
+                      :key="value.id"
+                      :value="value.id"
+                    >{{ value.value }}</md-option>
                   </md-select>
 
                   <span class="md-suffix">{{ row.postfix }}</span>
@@ -285,8 +335,8 @@
               v-show="form_data.spec.headers.length === 0"
               md-icon="search"
               md-label="متاسفانه هیچ داده ای یافت نشد :("
-              md-description="لطفا یک جدول معتبر انتخاب کنید که دارای سطر و ردیف باشد">
-            </md-empty-state>
+              md-description="لطفا یک جدول معتبر انتخاب کنید که دارای سطر و ردیف باشد"
+            ></md-empty-state>
           </transition>
         </div>
       </md-tab>
@@ -311,7 +361,7 @@
             </md-field>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <div class="col-md-6">
@@ -332,14 +382,18 @@
             </md-field>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <div class="col-md-6">
             <md-field>
               <label>نوع واگذاری</label>
               <md-select v-model="form_data.assignment.id">
-                <md-option v-for="item in $store.state.feature.assignment" :key="item.id" :value="item.id">{{ item.title }}</md-option>
+                <md-option
+                  v-for="item in $store.state.feature.assignment"
+                  :key="item.id"
+                  :value="item.id"
+                >{{ item.title }}</md-option>
               </md-select>
               <span class="md-helper-text">لطفا نوع واگذاری این ملک رو مشخص کنید</span>
             </md-field>
@@ -349,13 +403,17 @@
             <md-field>
               <label>نوع ملک</label>
               <md-select v-model="form_data.estate_type.id">
-                <md-option v-for="item in $store.state.feature.estate_type" :key="item.id" :value="item.id">{{ item.title }}</md-option>
+                <md-option
+                  v-for="item in $store.state.feature.estate_type"
+                  :key="item.id"
+                  :value="item.id"
+                >{{ item.title }}</md-option>
               </md-select>
               <span class="md-helper-text">لطفا نوع این ملک رو مشخص کنید</span>
             </md-field>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <div class="col-md-6">
@@ -364,7 +422,10 @@
               <md-input v-model="form_data.area" />
               <span class="md-suffix ml-2">متر</span>
               <i class="md-icon tim-icons icon-map-big"></i>
-              <span class="md-helper-text" v-if="form_data.area">{{ form_data.area | numToPersian }} متر</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.area"
+              >{{ form_data.area | numToPersian }} متر</span>
               <span class="md-helper-text" v-else>مساحت ملک بر اساس متر مربع</span>
             </md-field>
           </div>
@@ -381,12 +442,15 @@
               :defaults="[form_data.label]"
             >
               <template #content="props">
-                <span :style="{ borderRight: `3px solid ${props.item.color}` }" class="pr-2">{{ props.item.title }}</span>
+                <span
+                  :style="{ borderRight: `3px solid ${props.item.color}` }"
+                  class="pr-2"
+                >{{ props.item.title }}</span>
               </template>
             </remote-select>
           </div>
         </div>
-        <br/>
+        <br />
 
         <div class="row">
           <div :class="priceFieldWithClass" v-if="getSelectedAssignment.has_sales_price">
@@ -395,7 +459,10 @@
               <md-input v-model="form_data.sales_price" />
               <span class="md-suffix ml-2">تومان</span>
               <i class="md-icon tim-icons icon-tag"></i>
-              <span class="md-helper-text" v-if="form_data.sales_price">{{ form_data.sales_price | numToPersian }} تومان</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.sales_price"
+              >{{ form_data.sales_price | numToPersian }} تومان</span>
               <span class="md-helper-text" v-else>ارزش کل ملک بر حسب تومان</span>
             </md-field>
           </div>
@@ -406,7 +473,10 @@
               <md-input v-model="form_data.mortgage_price" />
               <span class="md-suffix ml-2">تومان</span>
               <i class="md-icon tim-icons icon-tag"></i>
-              <span class="md-helper-text" v-if="form_data.mortgage_price">{{ form_data.mortgage_price | numToPersian }} تومان</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.mortgage_price"
+              >{{ form_data.mortgage_price | numToPersian }} تومان</span>
               <span class="md-helper-text" v-else>مبلغ قابل پرداخت جهت ودیعه ملک</span>
             </md-field>
           </div>
@@ -417,20 +487,30 @@
               <md-input v-model="form_data.rental_price" />
               <span class="md-suffix ml-2">تومان</span>
               <i class="md-icon tim-icons icon-tag"></i>
-              <span class="md-helper-text" v-if="form_data.rental_price">{{ form_data.rental_price | numToPersian }} تومان</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.rental_price"
+              >{{ form_data.rental_price | numToPersian }} تومان</span>
               <span class="md-helper-text" v-else>مبلغ قابل پرداخت جهت اجاره ملک</span>
             </md-field>
           </div>
 
-          <base-input class="col-md-4" label="تمایل به همکاری" v-if="$store.state.roles.includes('consultant') && getSelectedAssignment">
+          <base-input
+            class="col-md-4"
+            label="تمایل به همکاری"
+            v-if="$store.state.roles.includes('consultant') && getSelectedAssignment"
+          >
             <el-switch
               dir="ltr"
               v-model="form_data.want_cooperation"
               active-text="تمایل دارم"
               active-color="#ff8d72"
-              inactive-text="تمایل ندارم">
-            </el-switch>
-            <small slot="helperText" class="form-text text-muted">درصورت عدم تمایل ، لیبل مربوطه روی ملک شما در سایت قرار خواهد گرفت</small>
+              inactive-text="تمایل ندارم"
+            ></el-switch>
+            <small
+              slot="helperText"
+              class="form-text text-muted"
+            >درصورت عدم تمایل ، لیبل مربوطه روی ملک شما در سایت قرار خواهد گرفت</small>
           </base-input>
         </div>
       </md-tab>
@@ -440,7 +520,8 @@
         v-if="form_data.is_mine"
         md-icon="error"
         md-label="اعتبار شما به پایان رسیده است"
-        md-description="اعتبار شما برای ثبت ملک جدید به پایان رسیده است ، لطفا پس از هدایت به داشبورد با کلیک بر روی دکمه زیر اقدام به شارژ اعتبار خود بنمایید">
+        md-description="اعتبار شما برای ثبت ملک جدید به پایان رسیده است ، لطفا پس از هدایت به داشبورد با کلیک بر روی دکمه زیر اقدام به شارژ اعتبار خود بنمایید"
+      >
         <router-link to="/panel">ورود به داشبورد</router-link>
       </md-empty-state>
 
@@ -448,7 +529,8 @@
         v-else
         md-icon="error"
         md-label="آگهی متعلق به شما نیست"
-        md-description="متاسفانه ملکی که قصد ویرایش آن را دارید متعلق به شما نیست و شما دسترسی لازم جهت ویرایش این ملک را ندارید ، لطفا از طریق لینک زیر وارد بخش املاک متعلق به خود شوید">
+        md-description="متاسفانه ملکی که قصد ویرایش آن را دارید متعلق به شما نیست و شما دسترسی لازم جهت ویرایش این ملک را ندارید ، لطفا از طریق لینک زیر وارد بخش املاک متعلق به خود شوید"
+      >
         <router-link to="/panel/estate/mine">ورود به ملک های من</router-link>
       </md-empty-state>
     </card>
@@ -469,15 +551,19 @@
             color="#fff"
             v-if="attr('is_mutation_loading')"
           />
-          <span v-else class="pull-right ml-2" >
+          <span v-else class="pull-right ml-2">
             <i v-if="attr('is_creating')" class="tim-icons icon-simple-add"></i>
             <i v-else class="tim-icons icon-pencil"></i>
           </span>
-        </transition>
-        ذخیره
+        </transition>ذخیره
       </base-button>
 
-      <base-button @click="$router.push('/panel/estate/mine')" size="sm" type="danger" class="pull-left mt-3 ml-2">
+      <base-button
+        @click="$router.push('/panel/estate/mine')"
+        size="sm"
+        type="danger"
+        class="pull-left mt-3 ml-2"
+      >
         <i class="tim-icons icon-simple-remove"></i>
         بازگشت
       </base-button>
@@ -485,51 +571,61 @@
 
     <transition name="fade">
       <div class="main-panel-loading" v-if="!is_loaded">
-        <fingerprint-spinner
-          :animation-duration="1000"
-          :size="100"
-          color="#fff"
-        />
+        <fingerprint-spinner :animation-duration="1000" :size="100" color="#fff" />
       </div>
     </transition>
 
     <transition name="loading">
       <div class="query-loader" v-if="attr('is_query_loading')">
-        <half-circle-spinner
-          :animation-duration="800"
-          :size="40"
-          color="#fff"
-        />
+        <half-circle-spinner :animation-duration="800" :size="40" color="#fff" />
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import RemoteSelect from '../../components/RemoteSelect'
-import BaseTable from '../../components/BaseTable'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import Binding, { bind } from '../../mixins/binding'
-import { validationMixin } from 'vuelidate'
-import vuexHelper from '../../mixins/vuexHelper'
-import { required, maxLength } from 'vuelidate/lib/validators'
-import createMixin from '../../mixins/createMixin'
-import filtersHelper from '../../mixins/filtersHelper'
-import deleteMixin from '../../mixins/deleteMixin'
-import {SemipolarSpinner, HalfCircleSpinner, FingerprintSpinner} from 'epic-spinners'
-import persianJs from 'persianjs'
-import moment from 'moment'
-import numeral from 'numeral'
+import RemoteSelect from "../../components/RemoteSelect";
+import BaseTable from "../../components/BaseTable";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Binding, { bind } from "../../mixins/binding";
+import { validationMixin } from "vuelidate";
+import vuexHelper from "../../mixins/vuexHelper";
+import { required, maxLength } from "vuelidate/lib/validators";
+import createMixin from "../../mixins/createMixin";
+import filtersHelper from "../../mixins/filtersHelper";
+import deleteMixin from "../../mixins/deleteMixin";
+import {
+  SemipolarSpinner,
+  HalfCircleSpinner,
+  FingerprintSpinner
+} from "epic-spinners";
+import persianJs from "persianjs";
+import moment from "moment";
+import numeral from "numeral";
 
-import { LMap, LTileLayer, LMarker, LIcon, LControl, LCircleMarker } from 'vue2-leaflet';
-import 'leaflet/dist/leaflet.css'
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LIcon,
+  LControl,
+  LCircleMarker
+} from "vue2-leaflet";
+import "leaflet/dist/leaflet.css";
 
 export default {
   components: {
     BaseTable,
     RemoteSelect,
-    LMap, LTileLayer, LMarker, LIcon, LControl, LCircleMarker,
-    SemipolarSpinner, HalfCircleSpinner, FingerprintSpinner
+    LMap,
+    LTileLayer,
+    LMarker,
+    LIcon,
+    LControl,
+    LCircleMarker,
+    SemipolarSpinner,
+    HalfCircleSpinner,
+    FingerprintSpinner
   },
   mixins: [
     Binding,
@@ -541,8 +637,10 @@ export default {
   ],
   metaInfo() {
     return {
-      title: this.$route.params.id ? this.form_data.title || 'ویرایش ملک' : 'ثبت ملک',
-    }
+      title: this.$route.params.id
+        ? this.form_data.title || "ویرایش ملک"
+        : "ثبت ملک"
+    };
   },
   data() {
     return {
@@ -554,18 +652,18 @@ export default {
       checkAll: false,
       isIndeterminate: true,
 
-      type: 'estate',
-      group: 'estate',
+      type: "estate",
+      group: "estate",
 
       form_data: {
-        title: '',
-        code: '',
-        landlord_fullname: '',
-        landlord_phone_number: '',
-        description: '',
-        aparat_video: '',
-        address: '',
-        plaque: '',
+        title: "",
+        code: "",
+        landlord_fullname: "",
+        landlord_phone_number: "",
+        description: "",
+        aparat_video: "",
+        address: "",
+        plaque: "",
         area: null,
         want_cooperation: true,
         is_mine: true,
@@ -576,56 +674,56 @@ export default {
 
         coordinates: null,
         tags: [
-          // 
+          //
         ],
         photos: [
-          // 
+          //
         ],
         features: [
-          // 
+          //
         ],
         advantages: [
-          // 
+          //
         ],
         disadvantages: [
-          // 
+          //
         ],
         label: {
-          // 
+          //
         },
         assignment: {
-          // 
+          //
         },
         estate_type: {
-          // 
+          //
         },
         spec: null
       },
       specifications: {
-        // 
+        //
       },
       deleted_images: [
-        // 
+        //
       ],
-      
+
       is_loaded: false,
       is_loaded_video: false,
-      dialogImageUrl: '',
+      dialogImageUrl: "",
       dialogVisible: false,
-      
+
       areas: [
-        // 
+        //
       ],
       streets: [
-        // 
+        //
       ],
       features: [
-        // 
+        //
       ],
       area_id: null,
       street_id: null,
-      activeTab: 'tab-info',
-    }
+      activeTab: "tab-info"
+    };
   },
   validations: {
     title: {
@@ -646,19 +744,19 @@ export default {
       maxLength: maxLength(255)
     },
     advantages: {},
-    disadvantages: {},
+    disadvantages: {}
   },
   computed: {
     canCreateEstate() {
-      return !this.can('create-estate') || (
-           this.$store.state.me.remaining_registered_count > 0
-        && this.$store.state.me.validity_end_at
-        && !moment(this.$store.state.me.validity_end_at).isBefore( moment() )
-        && this.form_data.is_mine
-      )
+      return (
+        !this.can("create-estate") ||
+        (this.$store.state.me.remaining_registered_count > 0 &&
+          this.$store.state.me.validity_end_at &&
+          !moment(this.$store.state.me.validity_end_at).isBefore(moment()) &&
+          this.form_data.is_mine)
+      );
     },
-    allQuery()
-    {
+    allQuery() {
       return `
         id is_mine code title description aparat_video
         address plaque
@@ -683,208 +781,203 @@ export default {
             }
           }
         }
-      `
+      `;
     },
-    getSelectedAssignment()
-    {
-      const data = this.$store.state.feature.assignment.filter(i => i.id === this.form_data.assignment.id)
+    getSelectedAssignment() {
+      const data = this.$store.state.feature.assignment.filter(
+        i => i.id === this.form_data.assignment.id
+      );
 
-      return data.length ? data[0] : false 
+      return data.length ? data[0] : false;
     },
-    priceFieldWithClass()
-    {
-      const data = this.getSelectedAssignment
-      const isConsultant = this.$store.state.roles.includes('consultant')
+    priceFieldWithClass() {
+      const data = this.getSelectedAssignment;
+      const isConsultant = this.$store.state.roles.includes("consultant");
 
-      if (data.length === 0)
-        return isConsultant ? 'col-md-8' : 'col-md-12'
+      if (data.length === 0) return isConsultant ? "col-md-8" : "col-md-12";
 
-      let count = 0
+      let count = 0;
 
-      if ( data.has_sales_price ) ++count
+      if (data.has_sales_price) ++count;
 
-      if ( data.has_mortgage_price ) ++count
+      if (data.has_mortgage_price) ++count;
 
-      if ( data.has_rental_price ) ++count
+      if (data.has_rental_price) ++count;
 
-      if ( isConsultant )
-        return count === 2 ? 'col-md-4' : 'col-md-8'
-
-      else
-        return count === 2 ? 'col-md-6' : 'col-md-12'
+      if (isConsultant) return count === 2 ? "col-md-4" : "col-md-8";
+      else return count === 2 ? "col-md-6" : "col-md-12";
     },
     area() {
-      return _.find(this.areas, { 'id': this.area_id })
+      return _.find(this.areas, { id: this.area_id });
     },
     street() {
-      return _.find(this.streets, { 'id': this.street_id })
-    },
+      return _.find(this.streets, { id: this.street_id });
+    }
   },
-  mounted()
-  {
-    axios.post('/graphql/auth', {
-      query: `{ areas (per_page: 20) {
+  mounted() {
+    axios
+      .post("/graphql/auth", {
+        query: `{ areas (per_page: 20) {
         data {
           id name coordinates { lat lng }
           streets { id name coordinates { lat lng } }
         }
       } }`
-    })
-    .then(({data}) => this.areas = _.orderBy( data.data.areas.data , ['name'], ['asc']))
+      })
+      .then(
+        ({ data }) =>
+          (this.areas = _.orderBy(data.data.areas.data, ["name"], ["asc"]))
+      );
 
-    this.$store.dispatch('getData', {
-      group: 'feature',
-      type: 'assignment',
+    this.$store.dispatch("getData", {
+      group: "feature",
+      type: "assignment",
       query: `assignments(per_page: 20) {
         data { id title description color has_sales_price has_mortgage_price has_rental_price created_at updated_at }
         total trash chart { month count }
       }`
-    })
+    });
 
-    this.$store.dispatch('getData', {
-      group: 'feature',
-      type: 'estate_type',
+    this.$store.dispatch("getData", {
+      group: "feature",
+      type: "estate_type",
       query: `estate_types(per_page: 20) {
         data { id title description assignments { id title } icon created_at updated_at }
         total trash chart { month count }
       }`
-    })
+    });
 
-    this.$watchLocation({ enableHighAccuracy: true })
-    .then(({lat, lng}) => this.location = [lat, lng])
+    this.$watchLocation({ enableHighAccuracy: true }).then(
+      ({ lat, lng }) => (this.location = [lat, lng])
+    );
 
-    if ( this.$route.params.id )
-    {
-      this.setAttr('selected', { id: this.$route.params.id })
-      this.setAttr('is_creating', false)
+    if (this.$route.params.id) {
+      this.setAttr("selected", { id: this.$route.params.id });
+      this.setAttr("is_creating", false);
 
-      axios.post('/graphql/auth', {
-        query: `{
+      axios
+        .post("/graphql/auth", {
+          query: `{
           estate (id: "${this.$route.params.id}") { ${this.allQuery} }
         }`
-      })
-      .then(({data}) => {
+        })
+        .then(({ data }) => {
+          if (data.data.estate.spec && data.data.estate.spec.headers.length)
+            this.handleSpecification(data.data.estate.spec.headers);
+          else if (!data.data.estate.spec)
+            data.data.estate.spec = { headers: [] };
 
-        if ( data.data.estate.spec && data.data.estate.spec.headers.length )
-          this.handleSpecification(data.data.estate.spec.headers)
-        else if ( !data.data.estate.spec )
-            data.data.estate.spec = { headers: [] }
+          if (data.data.estate.aparat_video)
+            data.data.estate.aparat_video = `https://www.aparat.com/v/${data.data.estate.aparat_video}`;
 
-        if ( data.data.estate.aparat_video )
-          data.data.estate.aparat_video = `https://www.aparat.com/v/${data.data.estate.aparat_video}`
-        
-        if ( data.data.estate.tags.length !== 0 )
-          data.data.estate.tags = data.data.estate.tags.map(i => i.name)
+          if (data.data.estate.tags.length !== 0)
+            data.data.estate.tags = data.data.estate.tags.map(i => i.name);
 
-        if ( !data.data.estate.label )
-          data.data.estate.label = { id: null }
+          if (!data.data.estate.label) data.data.estate.label = { id: null };
 
-        if ( data.data.estate.features && data.data.estate.features.length )
-          data.data.estate.features = data.data.estate.features.map(i => i.id)
+          if (data.data.estate.features && data.data.estate.features.length)
+            data.data.estate.features = data.data.estate.features.map(
+              i => i.id
+            );
 
-        if ( !data.data.estate.assignment )
-          data.data.estate.assignment = { id: null }
+          if (!data.data.estate.assignment)
+            data.data.estate.assignment = { id: null };
 
+          if (!data.data.estate.estate_type)
+            data.data.estate.estate_type = { id: null };
+          else this.features = data.data.estate.estate_type.features;
 
-        if ( !data.data.estate.estate_type )
-          data.data.estate.estate_type = { id: null }
+          if (data.data.estate.street) {
+            this.streets = [data.data.estate.street];
+            this.street_id = data.data.estate.street.id;
+            this.area_id = data.data.estate.street.area.id;
+          }
 
-        else
-          this.features = data.data.estate.estate_type.features
+          if (!data.data.estate.spec) data.data.estate.spec = { id: null };
 
-        if ( data.data.estate.street )
-        {
-          this.streets = [ data.data.estate.street ]
-          this.street_id = data.data.estate.street.id
-          this.area_id = data.data.estate.street.area.id
-        }
+          if (data.data.estate.photos.length !== 0) {
+            data.data.estate.photos = data.data.estate.photos.map(i => {
+              return {
+                id: i.id,
+                name: i.file_name,
+                url: i.small
+              };
+            });
+          }
 
-        if ( !data.data.estate.spec )
-          data.data.estate.spec = { id: null }
-        
-        if ( data.data.estate.photos.length !== 0 )
-        {
-          data.data.estate.photos = data.data.estate.photos.map(i => {
-            return {
-              id: i.id,
-              name: i.file_name,
-              url: i.small
-            }
-          })
-        }
-        
-        this.form_data = data.data.estate;
-      })
-      .then(() => setTimeout(() => this.is_loaded = true, 1000))
-      .catch( error => console.log(error.response) )
-    }
-    else 
-    {
+          this.form_data = data.data.estate;
+        })
+        .then(() => setTimeout(() => (this.is_loaded = true), 1000))
+        .catch(error => console.log(error.response));
+    } else {
       setTimeout(() => {
         this.form_data.coordinates = {
           lat: 36.2605,
           lng: 59.6168
-        }
+        };
       }, 1000);
 
-      this.setAttr('selected', { id: null })
-      this.setAttr('is_creating', true)
-      this.is_loaded = true
+      this.setAttr("selected", { id: null });
+      this.setAttr("is_creating", true);
+      this.is_loaded = true;
     }
   },
   methods: {
-    zoomUpdated (zoom) {
-      this.zoom = zoom
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
     },
-    centerUpdated (center) {
-      this.center = center
+    centerUpdated(center) {
+      this.center = center;
     },
-    boundsUpdated (bounds) {
-      this.bounds = bounds
+    boundsUpdated(bounds) {
+      this.bounds = bounds;
     },
-    changeTab(activeTab)
-    {
+    changeTab(activeTab) {
       // console.log( activeTab )
     },
-    handleRemove(file, fileList)
-    {
-      this.form_data.photos = fileList
-      this.deleted_images = [ ...this.deleted_images, file ]
+    handleRemove(file, fileList) {
+      this.form_data.photos = fileList;
+      this.deleted_images = [...this.deleted_images, file];
     },
-    handleSelectPhotos(file, fileList)
-    {
-      this.form_data.photos = _.uniqBy([ ...this.form_data.photos, file ], 'name')
+    handleSelectPhotos(file, fileList) {
+      this.form_data.photos = _.uniqBy(
+        [...this.form_data.photos, file],
+        "name"
+      );
     },
-    getWidthClass(row, index, count)
-    {
-      if ( count % 2 === 1 && index === count - 1)
-        return true
+    getWidthClass(row, index, count) {
+      if (count % 2 === 1 && index === count - 1) return true;
 
-      return row.defaults.length === 0 && row.is_multiple
+      return row.defaults.length === 0 && row.is_multiple;
     },
-    handlePictureCardPreview(file)
-    {
+    handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleChangeSpec(row_id, value)
-    {
-      this.specifications[row_id] = value
+    handleChangeSpec(row_id, value) {
+      this.specifications[row_id] = value;
     },
-    validate()
-    {
+    validate() {
       return true;
     },
-    getVariables()
-    {
+    getVariables() {
       return {
         title: this.form_data.title,
         code: this.form_data.code,
         landlord_fullname: this.form_data.landlord_fullname,
-        landlord_phone_number: this.form_data.landlord_phone_number ? ( Number.isInteger( this.form_data.landlord_phone_number ) ? this.form_data.landlord_phone_number : persianJs(this.form_data.landlord_phone_number).persianNumber() * 1 ) : null,
+        landlord_phone_number: this.form_data.landlord_phone_number
+          ? Number.isInteger(this.form_data.landlord_phone_number)
+            ? this.form_data.landlord_phone_number
+            : persianJs(this.form_data.landlord_phone_number).persianNumber()
+                ._str
+          : null,
         description: this.form_data.description,
-        area: this.form_data.area ? ( Number.isInteger( this.form_data.area ) ? this.form_data.area : persianJs(this.form_data.area).persianNumber() * 1 ) : null,
-        
+        area: this.form_data.area
+          ? Number.isInteger(this.form_data.area)
+            ? this.form_data.area
+            : persianJs(this.form_data.area).persianNumber() * 1
+          : null,
+
         street_id: this.street_id,
         address: this.form_data.address,
         plaque: this.form_data.plaque ? this.form_data.plaque : 0,
@@ -892,13 +985,29 @@ export default {
         lng: this.form_data.coordinates.lng,
 
         label_id: this.form_data.label.id ? this.form_data.label.id : null,
-        assignment_id: this.form_data.assignment.id ? this.form_data.assignment.id : null,
-        estate_type_id: this.form_data.estate_type.id ? this.form_data.estate_type.id : null,
+        assignment_id: this.form_data.assignment.id
+          ? this.form_data.assignment.id
+          : null,
+        estate_type_id: this.form_data.estate_type.id
+          ? this.form_data.estate_type.id
+          : null,
 
-        rental_price: this.form_data.rental_price ? ( Number.isInteger( this.form_data.rental_price ) ? this.form_data.rental_price : persianJs(this.form_data.rental_price).persianNumber() * 1 ) : null,
-        mortgage_price: this.form_data.mortgage_price ? ( Number.isInteger( this.form_data.mortgage_price ) ? this.form_data.mortgage_price : persianJs(this.form_data.mortgage_price).persianNumber() * 1 ) : null,
-        sales_price: this.form_data.sales_price ? ( Number.isInteger( this.form_data.sales_price ) ? this.form_data.sales_price : persianJs(this.form_data.sales_price).persianNumber() * 1 ) : null,
-        
+        rental_price: this.form_data.rental_price
+          ? Number.isInteger(this.form_data.rental_price)
+            ? this.form_data.rental_price
+            : persianJs(this.form_data.rental_price).persianNumber() * 1
+          : null,
+        mortgage_price: this.form_data.mortgage_price
+          ? Number.isInteger(this.form_data.mortgage_price)
+            ? this.form_data.mortgage_price
+            : persianJs(this.form_data.mortgage_price).persianNumber() * 1
+          : null,
+        sales_price: this.form_data.sales_price
+          ? Number.isInteger(this.form_data.sales_price)
+            ? this.form_data.sales_price
+            : persianJs(this.form_data.sales_price).persianNumber() * 1
+          : null,
+
         tags: this.form_data.tags,
         advantages: this.form_data.advantages,
         disadvantages: this.form_data.disadvantages,
@@ -910,127 +1019,123 @@ export default {
         photos: null
       };
     },
-    getSpecificationsInfo()
-    {
-      if ( !this.form_data.spec || !this.form_data.spec.headers.length )
-        return null
+    getSpecificationsInfo() {
+      if (!this.form_data.spec || !this.form_data.spec.headers.length)
+        return null;
 
-      const rows = _.flatten( this.form_data.spec.headers.map(i => i.rows) )
+      const rows = _.flatten(this.form_data.spec.headers.map(i => i.rows));
 
-      let specs = []
+      let specs = [];
 
-      for (let id in this.specifications)
-      {
-        let row = rows.filter(i => i.id == id)[0]
+      for (let id in this.specifications) {
+        let row = rows.filter(i => i.id == id)[0];
 
-        if ( row.defaults.length === 0 && row.is_multiple )
-          specs[id] = { data: JSON.stringify( this.specifications[id] ) }
+        if (row.defaults.length === 0 && row.is_multiple)
+          specs[id] = { data: JSON.stringify(this.specifications[id]) };
+        else if (row.defaults.length === 0 && !row.is_multiple)
+          specs[id] = { data: this.specifications[id] };
+        else if (row.defaults.length !== 0 && row.is_multiple)
+          specs[id] = { values: this.specifications[id] };
+        else specs[id] = { value: this.specifications[id] };
 
-        else if ( row.defaults.length === 0 && !row.is_multiple )
-          specs[id] = { data: this.specifications[id] }
-
-        else if ( row.defaults.length !== 0 && row.is_multiple )
-          specs[id] = { values: this.specifications[id] }
-
-        else
-          specs[id] = { value: this.specifications[id] }
-
-        specs[id].id = id
-        specs[id].is_required = row.is_required
+        specs[id].id = id;
+        specs[id].is_required = row.is_required;
       }
 
-      return Object.values( specs )
+      return Object.values(specs);
     },
-    changeFormData(fd)
-    {
-      if ( this.form_data.photos.filter(i => i.raw).length === 0 )
-        return fd;
+    changeFormData(fd) {
+      if (this.form_data.photos.filter(i => i.raw).length === 0) return fd;
 
-      let map = { images: ['variables.photos'] }
+      let map = { images: ["variables.photos"] };
 
-      this.form_data.photos.filter(i => i.raw).forEach((image, index) => {
-        fd.append(`images[]`, image.raw) 
-      })
+      this.form_data.photos
+        .filter(i => i.raw)
+        .forEach((image, index) => {
+          fd.append(`images[]`, image.raw);
+        });
 
-      fd.delete('map')
-      fd.append('map' , JSON.stringify(map))
+      fd.delete("map");
+      fd.append("map", JSON.stringify(map));
 
       return fd;
     },
-    IsJsonString(str)
-    {
+    IsJsonString(str) {
       try {
-          JSON.parse(str);
+        JSON.parse(str);
       } catch (e) {
-          return false;
+        return false;
       }
       return true;
     },
-    handleSpecification(headers)
-    {
-      this.specifications = {}
+    handleSpecification(headers) {
+      this.specifications = {};
 
-      _.flatten( headers.map(i => i.rows) ).map(i => {
+      _.flatten(headers.map(i => i.rows)).map(i => {
+        if (i.data == null)
+          this.specifications[i.id] = i.is_multiple ? [] : null;
+        else {
+          this.specifications[i.id] =
+            i.data.values.length === 0
+              ? i.data.data
+              : i.data.values.map(i => i.id);
 
-        if ( i.data == null)
-          this.specifications[i.id] = i.is_multiple ? [] : null
-        else
-        {
-          this.specifications[i.id] = i.data.values.length === 0 ? i.data.data : i.data.values.map(i => i.id)
-          
-          if ( i.defaults.length === 0 && i.is_multiple )
-            this.specifications[i.id] = i.data.data ? this.IsJsonString(i.data.data) ? JSON.parse( i.data.data ) : [i.data.data] : []
-
-          else if ( i.defaults.length !== 0 && !i.is_multiple )
-          {
-            if ( Array.isArray(this.specifications[i.id]) )
-              this.specifications[i.id] = this.specifications[i.id][0] ? this.specifications[i.id][0] : null
-
-            else 
-              this.specifications[i.id] = this.specifications[i.id] ? this.specifications[i.id] : null
-          }
-
-          else if ( i.defaults.length !== 0 && i.is_multiple )
-            this.specifications[i.id] = i.data.values.map(i => i.id)
+          if (i.defaults.length === 0 && i.is_multiple)
+            this.specifications[i.id] = i.data.data
+              ? this.IsJsonString(i.data.data)
+                ? JSON.parse(i.data.data)
+                : [i.data.data]
+              : [];
+          else if (i.defaults.length !== 0 && !i.is_multiple) {
+            if (Array.isArray(this.specifications[i.id]))
+              this.specifications[i.id] = this.specifications[i.id][0]
+                ? this.specifications[i.id][0]
+                : null;
+            else
+              this.specifications[i.id] = this.specifications[i.id]
+                ? this.specifications[i.id]
+                : null;
+          } else if (i.defaults.length !== 0 && i.is_multiple)
+            this.specifications[i.id] = i.data.values.map(i => i.id);
         }
-      })
+      });
       // console.log( this.specifications )
     },
-    update()
-    {
-      this.type = 'estate'
-      this.label = 'ملک'
+    update() {
+      this.type = "estate";
+      this.label = "ملک";
 
       this.storeInServer({
-        callback: ({data}) => {
-          this.deleted_images = []
-          
-          const estate = this.$store.state.estate.estate.filter(i => i.id === data.id)
-          const my_estate = this.$store.state.estate.my_estate.filter(i => i.id === data.id)
+        callback: ({ data }) => {
+          this.deleted_images = [];
 
-          if ( !this.$route.params.id && !this.can('create-estate') )
-            this.$store.state.me.remaining_registered_count = this.$store.state.me.remaining_registered_count - 1
+          const estate = this.$store.state.estate.estate.filter(
+            i => i.id === data.id
+          );
+          const my_estate = this.$store.state.estate.my_estate.filter(
+            i => i.id === data.id
+          );
 
-          if ( my_estate.length !== 0 )
-          {
-            my_estate[0].title = data.title
-            my_estate[0].photos = data.photos
-            my_estate[0].address = data.address
-            my_estate[0].rental_price = data.rental_price
-            my_estate[0].mortgage_price = data.mortgage_price
-            my_estate[0].sales_price = data.sales_price
-            my_estate[0].area = data.area
-            my_estate[0].created_at = data.created_at
-            my_estate[0].updated_at = data.updated_at
-            my_estate[0].is_active = !this.can('create-estate')
-            my_estate[0].reject_reason = null
-          }
-          else
-          {
-            let arr = this.$store.state.estate.my_estate
-            
-            if ( arr.length )
-            {
+          if (!this.$route.params.id && !this.can("create-estate"))
+            this.$store.state.me.remaining_registered_count =
+              this.$store.state.me.remaining_registered_count - 1;
+
+          if (my_estate.length !== 0) {
+            my_estate[0].title = data.title;
+            my_estate[0].photos = data.photos;
+            my_estate[0].address = data.address;
+            my_estate[0].rental_price = data.rental_price;
+            my_estate[0].mortgage_price = data.mortgage_price;
+            my_estate[0].sales_price = data.sales_price;
+            my_estate[0].area = data.area;
+            my_estate[0].created_at = data.created_at;
+            my_estate[0].updated_at = data.updated_at;
+            my_estate[0].is_active = !this.can("create-estate");
+            my_estate[0].reject_reason = null;
+          } else {
+            let arr = this.$store.state.estate.my_estate;
+
+            if (arr.length) {
               arr.unshift({
                 id: data.id,
                 title: data.title,
@@ -1042,32 +1147,28 @@ export default {
                 area: data.area,
                 created_at: data.created_at,
                 updated_at: data.updated_at,
-                is_active: !this.can('create-estate'),
-                reject_reason: null,
-              })
+                is_active: !this.can("create-estate"),
+                reject_reason: null
+              });
             }
           }
 
-          if ( estate.length !== 0 )
-          {
-            estate[0].title = data.title
-            estate[0].photos = data.photos
-            estate[0].address = data.address
-            estate[0].rental_price = data.rental_price
-            estate[0].mortgage_price = data.mortgage_price
-            estate[0].sales_price = data.sales_price
-            estate[0].area = data.area
-            estate[0].created_at = data.created_at
-            estate[0].updated_at = data.updated_at
-            estate[0].is_active = false
-            estate[0].reject_reason = null
-          }
-          else
-          {
-            let arr = this.data()
-            
-            if ( arr.length )
-            {
+          if (estate.length !== 0) {
+            estate[0].title = data.title;
+            estate[0].photos = data.photos;
+            estate[0].address = data.address;
+            estate[0].rental_price = data.rental_price;
+            estate[0].mortgage_price = data.mortgage_price;
+            estate[0].sales_price = data.sales_price;
+            estate[0].area = data.area;
+            estate[0].created_at = data.created_at;
+            estate[0].updated_at = data.updated_at;
+            estate[0].is_active = false;
+            estate[0].reject_reason = null;
+          } else {
+            let arr = this.data();
+
+            if (arr.length) {
               arr.unshift({
                 id: data.id,
                 title: data.title,
@@ -1080,29 +1181,28 @@ export default {
                 created_at: data.created_at,
                 updated_at: data.updated_at,
                 is_active: false,
-                reject_reason: null,
-              })
-              this.setData( arr )
+                reject_reason: null
+              });
+              this.setData(arr);
             }
           }
 
-          this.$router.push(`/panel/estate/mine`)  
+          this.$router.push(`/panel/estate/mine`);
         }
-      })
-    },
+      });
+    }
   },
   watch: {
-    'form_data.aparat_video': function(newVal, oldVal)
-    {
-      this.is_loaded_video = false
-      setTimeout(() => this.is_loaded_video = true, 100);
+    "form_data.aparat_video": function(newVal, oldVal) {
+      this.is_loaded_video = false;
+      setTimeout(() => (this.is_loaded_video = true), 100);
     },
-    'form_data.estate_type.id': function(newVal, oldVal)
-    {
-      if ( ! this.is_loaded ) return
+    "form_data.estate_type.id": function(newVal, oldVal) {
+      if (!this.is_loaded) return;
 
-      axios.post('/graphql/auth', {
-        query: `{
+      axios
+        .post("/graphql/auth", {
+          query: `{
           estate_type (id: ${newVal}) {
             spec {
               id title headers {
@@ -1120,33 +1220,37 @@ export default {
             }
           }
         }`
-      })
-      .then(({data}) => {
-        this.handleSpecification(data.data.estate_type.spec ? data.data.estate_type.spec.headers : [])
-        this.form_data.spec = data.data.estate_type.spec;
-        this.features = _.orderBy( data.data.estate_type.features , ['title'], ['asc'])
-      })
-      .catch( error => console.log(error.response) )
+        })
+        .then(({ data }) => {
+          this.handleSpecification(
+            data.data.estate_type.spec ? data.data.estate_type.spec.headers : []
+          );
+          this.form_data.spec = data.data.estate_type.spec;
+          this.features = _.orderBy(
+            data.data.estate_type.features,
+            ["title"],
+            ["asc"]
+          );
+        })
+        .catch(error => console.log(error.response));
     },
-    area_id: function(newVal, oldVal)
-    {
-      if ( !this.is_loaded ) return
+    area_id: function(newVal, oldVal) {
+      if (!this.is_loaded) return;
 
-      this.form_data.coordinates = this.area.coordinates
-      this.$refs.map.setCenter( this.area.coordinates )
+      this.form_data.coordinates = this.area.coordinates;
+      this.$refs.map.setCenter(this.area.coordinates);
 
-      this.street_id = null
-      this.streets = this.area.streets
+      this.street_id = null;
+      this.streets = this.area.streets;
     },
-    street_id: function(newVal, oldVal)
-    {
-      if ( !this.is_loaded || !newVal ) return
+    street_id: function(newVal, oldVal) {
+      if (!this.is_loaded || !newVal) return;
 
-      this.form_data.coordinates = this.street.coordinates
-      this.$refs.map.setCenter( this.street.coordinates )
+      this.form_data.coordinates = this.street.coordinates;
+      this.$refs.map.setCenter(this.street.coordinates);
     }
-  },
-}
+  }
+};
 </script>
 
 <style scope>
@@ -1156,7 +1260,8 @@ export default {
   white-space: nowrap;
   width: 100%;
 }
-#tab-specifications .md-suffix, #tab-specifications .md-prefix {
+#tab-specifications .md-suffix,
+#tab-specifications .md-prefix {
   background: linear-gradient(to bottom right, #ff8d72, #f56c6c);
   padding: 0px 10px;
   color: #fff;
@@ -1175,7 +1280,7 @@ export default {
   position: relative;
   top: 4px;
 }
-.features-checkbox .el-checkbox__input.is-checked+.el-checkbox__label {
+.features-checkbox .el-checkbox__input.is-checked + .el-checkbox__label {
   color: #ff8d72 !important;
 }
 
@@ -1199,7 +1304,9 @@ export default {
   text-align: right;
   direction: rtl;
 }
-.md-button:not([disabled]).md-focused:before, .md-button:not([disabled]):active:before, .md-button:not([disabled]):hover:before {
+.md-button:not([disabled]).md-focused:before,
+.md-button:not([disabled]):active:before,
+.md-button:not([disabled]):hover:before {
   opacity: 0;
 }
 .md-button {

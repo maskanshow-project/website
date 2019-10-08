@@ -25,7 +25,7 @@ class PaymentRequest extends MainRequest
                 Rule::exists('promocodes', 'code')->where(function ($query) {
                     $query
                         ->where(function ($query) {
-                            $query->where('expired_at', '>', now() )->orWhere('expired_at', null);
+                            $query->where('expired_at', '>', now())->orWhere('expired_at', null);
                         })
                         ->where(function ($query) {
                             $query->where('quantity', '>=', '1')->orWhere('quantity', null);

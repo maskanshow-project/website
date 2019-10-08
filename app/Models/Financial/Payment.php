@@ -40,7 +40,7 @@ class Payment extends Model implements AuditableContract
         'paid_at',
         'expired_at'
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -60,7 +60,7 @@ class Payment extends Model implements AuditableContract
             'users.last_name' => 6,
         ],
         'joins' => [
-            'users' => ['users.id','payments.user_id']
+            'users' => ['users.id', 'payments.user_id']
         ],
     ];
 
@@ -81,7 +81,7 @@ class Payment extends Model implements AuditableContract
         'paid_at',
         'expired_at'
     ];
-    
+
     /**
      * The attributes that should be mutated to dates.
      *

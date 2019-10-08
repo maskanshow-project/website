@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\Tags\HasTags;
-use App\Models\Spec\{ SpecData, Spec };
+use App\Models\Spec\{SpecData, Spec};
 use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
@@ -40,7 +40,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -64,10 +64,10 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
         'street_id',
         'role_id',
         'code',
-        
+
         'landlord_fullname',
         'landlord_phone_number',
-        
+
         'sales_price',
         'mortgage_price',
         'rental_price',
@@ -123,7 +123,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
             'landlord_phone_number' => 6,
         ],
         'joins' => [
-            'estate_translations' => ['estates.id','estate_translations.estate_id'],
+            'estate_translations' => ['estates.id', 'estate_translations.estate_id'],
         ],
     ];
 
@@ -165,7 +165,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
         'deleted_at'
     ];
 
-    
+
     /****************************************
      **         Scopes & Mutators
      ***************************************/
@@ -193,7 +193,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
     {
         return $this->belongsToMany(\App\User::class, 'favorites');
     }
-    
+
     /**
      * Get all the specification table data of the product.
      */
@@ -201,7 +201,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
     {
         return $this->hasMany(SpecData::class);
     }
-    
+
     /**
      * Get all the specification table data of the product.
      */
@@ -302,7 +302,7 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
     {
         return $this->morphMany(config('medialibrary.media_model'), 'model');
     }
-    
+
 
     /****************************************
      **              Methods
@@ -347,13 +347,13 @@ class Estate extends Model implements AuditableContract, LikeableContract, HasMe
             ->width(1680)
             ->height(1200);
 
-        
+
         $this
             ->addMediaConversion('watermark')
             ->keepOriginalImageFormat()
             ->width(1024)
             ->height(800)
-            ->watermark( public_path('images/watermark.png') )
+            ->watermark(public_path('images/watermark.png'))
             ->watermarkPosition(Manipulations::POSITION_CENTER)
             ->watermarkOpacity(40)
             ->watermarkHeight(60, Manipulations::UNIT_PERCENT)

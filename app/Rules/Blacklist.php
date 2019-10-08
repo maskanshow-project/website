@@ -28,18 +28,19 @@ class Blacklist implements Rule
      * @return bool
      */
     public function passes($attribute, $value)
-    {   
+    {
         if ( auth()->user()->hasRole('consultant') )
             return true;
 
         $item = DB::table('blacklist_phone_numbers')
-            ->where('phone_number', $value)
+            ->where('phone_number', 'LIKE', "%$value%")
             ->where("deleted_at", null)
             ->first();
 
         if ( !$item ) return true;
         
         $this->error_message = $item->description;
+        
         return false;
     }
 
