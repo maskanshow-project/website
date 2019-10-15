@@ -53,9 +53,7 @@
             }
         @endphp
 
-        {{-- {!! \SEO::generate(false) !!} --}}
-
-        <title>P56HVVO</title>
+        {!! \SEO::generate(false) !!}
 
         
         <link rel="stylesheet" href="/css/app.css">

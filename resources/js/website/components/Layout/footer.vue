@@ -63,6 +63,8 @@
                     <h4 class="web-color bold mt-3"> آدرس </h4>
                     <p> {{ siteSetting.address || 'آدرسی ثبت نشده' }} </p>
 
+                    <img id = 'jxlzfukzjxlzrgvjoeukjxlz' style = 'cursor:pointer' onclick = 'window.open("https://logo.samandehi.ir/Verify.aspx?id=161381&p=rfthgvkarfthxlaomcsirfth", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=161381&p=nbpdwlbqnbpdqftiaqgwnbpd' />
+
                 </div>
 
                 <div class="col-lg-1 d-flex justify-content-around mt-xs-3 text-center"
