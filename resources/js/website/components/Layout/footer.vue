@@ -24,11 +24,13 @@
 
                 <div class="col-lg-2">
 
-                    <h4 class="web-color bold"> دیگر صفحات </h4>
+                    <!-- <h4 class="web-color bold"> دیگر صفحات </h4> -->
+                    <h4 class="web-color bold"> نماد ساماندهی </h4>
 
-                    <div class="other-pages d-flex justify-content-around mb-xs-4 mt-xs-3"
-                        :class="{ 'flex-column' : !Res }">
-                        <router-link to="/properties">
+                    <div class="other-pages d-flex justify-content-around mb-xs-4 mt-xs-3" :class="{ 'flex-column' : !Res }">
+
+                        <img id = 'jxlzfukzjxlzrgvjoeukjxlz' style = 'cursor:pointer' onclick = 'window.open("https://logo.samandehi.ir/Verify.aspx?id=161381&p=rfthgvkarfthxlaomcsirfth", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=161381&p=nbpdwlbqnbpdqftiaqgwnbpd' />
+                        <!-- <router-link to="/properties">
                             <span> خرید </span>
                         </router-link>
 
@@ -38,7 +40,7 @@
 
                         <router-link to="/blog">
                             <span> بلاگ </span>
-                        </router-link>
+                        </router-link> -->
                     </div>
 
                 </div>
@@ -62,8 +64,6 @@
 
                     <h4 class="web-color bold mt-3"> آدرس </h4>
                     <p> {{ siteSetting.address || 'آدرسی ثبت نشده' }} </p>
-
-                    <img id = 'jxlzfukzjxlzrgvjoeukjxlz' style = 'cursor:pointer' onclick = 'window.open("https://logo.samandehi.ir/Verify.aspx?id=161381&p=rfthgvkarfthxlaomcsirfth", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=161381&p=nbpdwlbqnbpdqftiaqgwnbpd' />
 
                 </div>
 
