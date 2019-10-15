@@ -24,10 +24,10 @@ class AssignmentEstateMutation extends BaseEstateMutation
         if ( $this->checkPermission("accept-assignment-estate") )
             return true;
         
-        elseif ( $estate->user_id === auth()->id() )
+        elseif ( auth()->user()->visitedEstates()->where('id', $args['estate'] ?? false)->count() )
             return true;
 
-        elseif ( auth()->user()->visitedEstates()->where('id', $args['estate'] ?? false)->count() )
+        elseif ( (Estate::find($args['estate'])->user_id ?? false) === auth()->id() )
             return true;
     }
 
