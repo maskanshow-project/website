@@ -6,19 +6,21 @@
       :group="group"
       :label="label"
       :fields="getFields"
-      
       :methods="{
         create: create,
         edit: edit,
         store: store,
         update: update
       }"
-      :canCreate="false" 
+      :canCreate="false"
       ref="datatable"
       :ignoreOperations="ignoreOperations"
     >
       <template #avatar-body="slotProps">
-        <img class="tilt" :src="slotProps.row.avatar ? slotProps.row.avatar.thumb : '/images/placeholder-user.png'" />
+        <img
+          class="tilt"
+          :src="slotProps.row.avatar ? slotProps.row.avatar.thumb : '/images/placeholder-user.png'"
+        />
       </template>
 
       <template #plan-body="slotProps">
@@ -28,26 +30,22 @@
               <td>
                 <i class="tim-icons icon-simple-add"></i>
               </td>
-              <td class="text-right">
-                {{ slotProps.row.remaining_registered_count }} آگهی
-              </td>
+              <td class="text-right">{{ slotProps.row.remaining_registered_count }} آگهی</td>
             </tr>
             <tr v-if="slotProps.row.remaining_hits_count">
               <td>
                 <i class="tim-icons icon-tap-02"></i>
               </td>
-              <td class="text-right">
-                {{ slotProps.row.remaining_hits_count }} ملک
-              </td>
+              <td class="text-right">{{ slotProps.row.remaining_hits_count }} ملک</td>
             </tr>
             <tr v-if="slotProps.row.validity_end_at">
               <td>
                 <i class="tim-icons icon-time-alarm"></i>
               </td>
               <td class="text-right">
-                <span v-if="!isBefore(slotProps.row.validity_end_at)">
-                  {{ slotProps.row.validity_end_at | dffInDays }}
-                </span>
+                <span
+                  v-if="!isBefore(slotProps.row.validity_end_at)"
+                >{{ slotProps.row.validity_end_at | dffInDays }}</span>
                 <span class="text-danger" v-else>منقضی شده</span>
               </td>
             </tr>
@@ -56,7 +54,7 @@
       </template>
 
       <template #status-body="slotProps">
-        <i class="tim-icons icon-check-2 text-success ml-2"></i>  
+        <i class="tim-icons icon-check-2 text-success ml-2"></i>
         <el-switch
           :disabled="can(`active-${type}`)"
           @change="accept(slotProps.index, $event)"
@@ -74,18 +72,14 @@
               <td>
                 <i class="tim-icons icon-single-02"></i>
               </td>
-              <td>
-                {{ slotProps.row.full_name }}
-              </td>
+              <td>{{ slotProps.row.full_name }}</td>
             </tr>
 
             <tr>
               <td>
                 <i class="tim-icons icon-badge"></i>
               </td>
-              <td>
-                {{ slotProps.row.username }}
-              </td>
+              <td>{{ slotProps.row.username }}</td>
             </tr>
 
             <tr v-if="!can('see-details-user')">
@@ -114,26 +108,30 @@
           <span
             v-for="item in slotProps.row.roles.filter( (role, index) => index < 3)"
             :key="item.id"
-            class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow">
+            class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow"
+          >
             <i class="tim-icons icon-single-02 hvr-icon"></i>
             {{ item.display_name }}
           </span>
 
-          <el-dropdown v-if="slotProps.row.roles.length > 3" :key="slotProps.row.roles.map((c) => c.id).join(',')">
+          <el-dropdown
+            v-if="slotProps.row.roles.length > 3"
+            :key="slotProps.row.roles.map((c) => c.id).join(',')"
+          >
             <span class="el-dropdown-link badge badge-default">
-              باقی نقش ها <i class="el-icon-arrow-down el-icon--right"></i>
+              باقی نقش ها
+              <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 v-for="item in slotProps.row.roles.filter( (role, index) => index < 3)"
-                :key="item.id">
-                {{ item.display_name }}
-              </el-dropdown-item>
+                :key="item.id"
+              >{{ item.display_name }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </transition-group>
       </template>
-      
+
       <template #custom-buttons>
         <transition name="fade">
           <base-button
@@ -152,20 +150,30 @@
                 useEasing: true,
                 useGrouping: true,
               }"
-            />
-            مورد انتخاب شده
-            <i class="tim-icons" :class="acceptType ? 'icon-check-2' : 'icon-refresh-01'"></i>
+            />مورد انتخاب شده
+            <i
+              class="tim-icons"
+              :class="acceptType ? 'icon-check-2' : 'icon-refresh-01'"
+            ></i>
           </base-button>
         </transition>
 
         <transition name="fade">
-          <el-checkbox-group v-model="selected_roles" v-show="attr('selected_items').length === 0" :style="{
+          <el-checkbox-group
+            v-model="selected_roles"
+            v-show="attr('selected_items').length === 0"
+            :style="{
             position: 'absolute',
             left: '0px',
             top: '0px'
-          }">
+          }"
+          >
             <el-checkbox-button :label="0" :key="0">بدون نقش</el-checkbox-button>
-            <el-checkbox-button v-for="role in $store.state.user.role" :label="role.id" :key="role.id">{{ role.display_name }}</el-checkbox-button>
+            <el-checkbox-button
+              v-for="role in $store.state.user.role"
+              :label="role.id"
+              :key="role.id"
+            >{{ role.display_name }}</el-checkbox-button>
           </el-checkbox-group>
         </transition>
       </template>
@@ -238,14 +246,19 @@
                 action="/"
                 :auto-upload="false"
                 :show-file-list="false"
-                :on-change="addImage">
+                :on-change="addImage"
+              >
                 <div v-if="$store.state[group].form[type].avatar.url">
                   <img :src="$store.state[group].form[type].avatar.url" class="avatar" />
                   <i @click.prevent="deleteImage" class="el-icon-delete avatar-uploader-icon"></i>
                 </div>
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-              <small slot="helperText" id="emailHelp" class="form-text text-muted">تصویر مورد نظر خود را انتخاب کنید</small>
+              <small
+                slot="helperText"
+                id="emailHelp"
+                class="form-text text-muted"
+              >تصویر مورد نظر خود را انتخاب کنید</small>
             </base-input>
           </div>
         </div>
@@ -313,17 +326,23 @@
           <div class="col-md-6">
             <md-field :class="getValidationClass('national_code')">
               <label>کد ملی</label>
-              <md-input v-model="national_code" :maxlength="$v.national_code.$params.maxLength.max" />
+              <md-input
+                v-model="national_code"
+                :maxlength="$v.national_code.$params.maxLength.max"
+              />
               <i class="md-icon tim-icons icon-tag"></i>
               <span class="md-helper-text">برای مثال : ۰۹۲۱۰۲۰۳۴۵</span>
-              <span class="md-error" v-show="!$v.national_code.required">لطفا آدرس کاربر را وارد کنید</span>
+              <span
+                class="md-error"
+                v-show="!$v.national_code.required"
+              >لطفا آدرس کاربر را وارد کنید</span>
             </md-field>
           </div>
 
           <div class="col-md-6">
             <md-field :class="getValidationClass('gender')">
               <label>جنسیت</label>
-              <md-select v-model="gender" >
+              <md-select v-model="gender">
                 <md-option value="false">مونث</md-option>
                 <md-option value="true">مذکر</md-option>
                 <md-option value="null">نا مشخص</md-option>
@@ -347,15 +366,14 @@
               noChecked: '${total}',
               hasChecked: '${checked}/${total}'
             }"
-            :data="$store.state.user.role.map(value => { return { key: value.id, label: value.display_name, description: value.description } } )">
-
+            :data="$store.state.user.role.map(value => { return { key: value.id, label: value.display_name, description: value.description } } )"
+          >
             <template #default="props">
               <span>
                 <p>{{ props.option.label }}</p>
                 <span class="text-muted">{{ props.option.description }}</span>
               </span>
             </template>
-
           </el-transfer>
           <span class="text-muted">نقش های مورد نظر خود انتخاب و آن ها را اعطاء کنید</span>
         </base-input>
@@ -372,15 +390,14 @@
               noChecked: '${total}',
               hasChecked: '${checked}/${total}'
             }"
-            :data="$store.state.permissions_list.map(value => { return { key: value.id, label: value.display_name, description: value.description, disabled: value.disabled } } )">
-
+            :data="$store.state.permissions_list.map(value => { return { key: value.id, label: value.display_name, description: value.description, disabled: value.disabled } } )"
+          >
             <template #default="props">
               <span>
                 <p>{{ props.option.label }}</p>
                 <span class="text-muted">{{ props.option.description }}</span>
               </span>
             </template>
-
           </el-transfer>
           <span class="text-muted">سطح دسترسی های مورد نظر خود انتخاب و آن ها را اعطاء کنید</span>
         </base-input>
@@ -389,9 +406,9 @@
 
     <md-dialog :md-active.sync="is_open" class="text-right" dir="rtl">
       <md-dialog-title>
-        <h2 class="modal-title">
-          مدیریت اعتبار {{ selected_user.full_name && selected_user.full_name.trim() ? selected_user.full_name : selected_user.username }}
-        </h2>
+        <h2
+          class="modal-title"
+        >مدیریت اعتبار {{ selected_user.full_name && selected_user.full_name.trim() ? selected_user.full_name : selected_user.username }}</h2>
         <p>از طریق فرم زیر میتوانید میزان اعتبار کاربر را افزایش یا کاهش دهید</p>
       </md-dialog-title>
 
@@ -402,20 +419,26 @@
               <label>تعداد ملک</label>
               <md-input type="number" v-model="form_data.count" max="10000" />
               <i class="md-icon tim-icons icon-tap-02"></i>
-              <span class="md-helper-text" v-if="form_data.count">{{ form_data.count | numToPersian }} ملک</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.count"
+              >{{ form_data.count | numToPersian }} ملک</span>
               <span class="md-helper-text" v-else>تعداد ملک های قابل بازدید توسط کاربر</span>
             </md-field>
-            <br/>
+            <br />
 
             <md-field>
               <label>تعداد آگهی</label>
               <md-input type="number" v-model="form_data.registered" max="1000" />
               <i class="md-icon tim-icons icon-tap-02"></i>
               <span class="md-helper-text"></span>
-              <span class="md-helper-text" v-if="form_data.registered">{{ form_data.registered | numToPersian }} آگهی</span>
+              <span
+                class="md-helper-text"
+                v-if="form_data.registered"
+              >{{ form_data.registered | numToPersian }} آگهی</span>
               <span class="md-helper-text" v-else>تعداد ملک های قابل ثبت توسط کاربر</span>
             </md-field>
-            <br/>
+            <br />
 
             <md-field>
               <label>تعداد روز</label>
@@ -423,7 +446,7 @@
               <i class="md-icon tim-icons icon-watch-time"></i>
               <span class="md-helper-text">تعداد روز های قابل استفاده از پلن مالی</span>
             </md-field>
-            <br/>
+            <br />
 
             <base-input class="w-100" label="نوع مدیریت اعتبار">
               <el-switch
@@ -432,27 +455,26 @@
                 v-model="form_data.type"
                 active-text="افزایش اعتبار"
                 active-color="#ff8d72"
-                inactive-text="کاهش اعتبار">
-              </el-switch>
-              <small slot="helperText" id="emailHelp" class="form-text text-muted">با انتخاب گزینه بالا مشخص میکنید که اعتبار حساب افزایش پیدا کند یا کاهش</small>
+                inactive-text="کاهش اعتبار"
+              ></el-switch>
+              <small
+                slot="helperText"
+                id="emailHelp"
+                class="form-text text-muted"
+              >با انتخاب گزینه بالا مشخص میکنید که اعتبار حساب افزایش پیدا کند یا کاهش</small>
             </base-input>
           </form>
         </div>
       </div>
 
       <md-dialog-actions>
-        <base-button
-          class="ml-2"
-          type="danger"
-          size="sm"
-          @click="is_open = false"
-        >
+        <base-button class="ml-2" type="danger" size="sm" @click="is_open = false">
           <i class="tim-icons icon-simple-remove"></i>
           لغو
         </base-button>
-        
+
         <base-button
-          size="sm" 
+          size="sm"
           :loading="attr('is_mutation_loading')"
           type="success"
           @click="increaseCredit"
@@ -464,20 +486,19 @@
               color="#fff"
               v-if="attr('is_mutation_loading')"
             />
-            <span v-else class="pull-right ml-2" >
+            <span v-else class="pull-right ml-2">
               <i class="tim-icons icon-simple-add"></i>
             </span>
-          </transition>
-          تغییر اعتبار
+          </transition>تغییر اعتبار
         </base-button>
       </md-dialog-actions>
     </md-dialog>
-    
+
     <md-dialog :md-active.sync="is_show_sessions" class="text-right" dir="rtl">
       <md-dialog-title>
-        <h2 class="modal-title">
-          نشست های {{ selected_user.full_name && selected_user.full_name.trim() ? selected_user.full_name : selected_user.username }}
-        </h2>
+        <h2
+          class="modal-title"
+        >نشست های {{ selected_user.full_name && selected_user.full_name.trim() ? selected_user.full_name : selected_user.username }}</h2>
         <p>از طریق فرم زیر میتوانید نشست های فعال این حساب را مشاهده کنید</p>
       </md-dialog-title>
 
@@ -512,33 +533,22 @@
             :has_times="false"
             :has_operation="false"
           >
-            <template #os-body="props">
-              {{ props.row.os.name }} {{ props.row.os.version }}
-            </template>
-            
+            <template #os-body="props">{{ props.row.os.name }} {{ props.row.os.version }}</template>
+
             <template #device-body="props">
-              <span v-if="props.row.device.type">
-                {{ props.row.device.type }} {{ props.row.device.vendor }} {{ props.row.device.model }}
-              </span>
-              <span v-else>
-                {{ props.row.browser.name }} {{ props.row.browser.version }}
-              </span>
+              <span
+                v-if="props.row.device.type"
+              >{{ props.row.device.type }} {{ props.row.device.vendor }} {{ props.row.device.model }}</span>
+              <span v-else>{{ props.row.browser.name }} {{ props.row.browser.version }}</span>
             </template>
 
-            <template #created_at-body="props">
-              {{ props.row.created_at | ago }}
-            </template>
+            <template #created_at-body="props">{{ props.row.created_at | ago }}</template>
           </base-table>
         </div>
       </div>
 
       <md-dialog-actions>
-        <base-button
-          class="ml-2"
-          type="danger"
-          size="sm"
-          @click="is_show_sessions = false"
-        >
+        <base-button class="ml-2" type="danger" size="sm" @click="is_show_sessions = false">
           <i class="tim-icons icon-simple-remove"></i>
           بستن
         </base-button>
@@ -548,22 +558,22 @@
 </template>
 
 <script>
-import Datatable from '../../components/BaseDatatable.vue'
-import BaseTable from '../../components/BaseTable'
-import ICountUp from 'vue-countup-v2'
+import Datatable from "../../components/BaseDatatable.vue";
+import BaseTable from "../../components/BaseTable";
+import ICountUp from "vue-countup-v2";
 
-import createMixin from '../../mixins/createMixin'
-import initDatatable from '../../mixins/initDatatable'
-import parser from 'ua-parser-js'
+import createMixin from "../../mixins/createMixin";
+import initDatatable from "../../mixins/initDatatable";
+import parser from "ua-parser-js";
 
-import Binding, { bind } from '../../mixins/binding'
+import Binding, { bind } from "../../mixins/binding";
 
-import { validationMixin } from 'vuelidate'
-import { required, maxLength } from 'vuelidate/lib/validators'
-import _ from 'lodash'
-import voca from 'voca'
-import filtersHelper from '../../mixins/filtersHelper';
-import moment from 'moment'
+import { validationMixin } from "vuelidate";
+import { required, maxLength } from "vuelidate/lib/validators";
+import _ from "lodash";
+import voca from "voca";
+import filtersHelper from "../../mixins/filtersHelper";
+import moment from "moment";
 
 export default {
   components: {
@@ -571,27 +581,21 @@ export default {
     BaseTable,
     ICountUp
   },
-  mixins: [
-    initDatatable,
-    createMixin,
-    Binding,
-    validationMixin,
-    filtersHelper
-  ],
+  mixins: [initDatatable, createMixin, Binding, validationMixin, filtersHelper],
   metaInfo: {
-    title: 'کاربران',
+    title: "کاربران"
   },
   validations: {
-    first_name : {
+    first_name: {
       maxLength: maxLength(20)
     },
-    last_name : {
+    last_name: {
       maxLength: maxLength(30)
     },
-    address : {
+    address: {
       maxLength: maxLength(250)
     },
-    email : {
+    email: {
       required,
       maxLength: maxLength(100)
     },
@@ -604,23 +608,23 @@ export default {
       maxLength: maxLength(100)
     },
     phone_number: {
-      required,
+      required
     },
-    national_code : {
+    national_code: {
       maxLength: maxLength(10)
-    },
+    }
   },
   data() {
     return {
-      plural: 'users',
-      type: 'user',
-      group: 'user',
-      label: 'کاربر',
-      ignoreOperations: ['000000000000'],
+      plural: "users",
+      type: "user",
+      group: "user",
+      label: "کاربر",
+      ignoreOperations: ["000000000000"],
 
       is_open: false,
       selected_user: {
-        // 
+        //
       },
       form_data: {
         count: 0,
@@ -629,69 +633,74 @@ export default {
         type: true
       },
       selected_index: null,
-      queryFilters: '',
+      queryFilters: "",
       selected_roles: [],
       sessions: [],
       is_show_sessions: false
-    }
+    };
   },
   mounted() {
-    this.$store.dispatch('getData', {
-      group: 'user',
-      type: 'role',
+    this.$store.dispatch("getData", {
+      group: "user",
+      type: "role",
       query: `roles {
         data {
           id name display_name permissions { id } created_at updated_at
         }
         total trash chart { month count }
       }`
-    })
+    });
   },
   methods: {
     filterMethod(query, item) {
       return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
     },
-    handleRolePermissions(value, direction, movedKeys)
-    {
-      let allPermissions = this.$store.state.user.form.user.permissions.value
+    handleRolePermissions(value, direction, movedKeys) {
+      let allPermissions = this.$store.state.user.form.user.permissions.value;
 
       movedKeys.forEach(value => {
-        _.find(this.$store.state.user.role, ['id', value]).permissions.forEach(value => {
-          
-          _.find(this.$store.state.permissions_list, ['id', value.id]).disabled = direction === 'right' ? true : false
+        _.find(this.$store.state.user.role, ["id", value]).permissions.forEach(
+          value => {
+            _.find(this.$store.state.permissions_list, [
+              "id",
+              value.id
+            ]).disabled = direction === "right" ? true : false;
 
-          if ( direction === 'right' )
-            allPermissions = [...allPermissions, value.id]
-            
-          else
-            allPermissions = allPermissions.filter(item => item !== value.id)
-        })
-      })
+            if (direction === "right")
+              allPermissions = [...allPermissions, value.id];
+            else
+              allPermissions = allPermissions.filter(item => item !== value.id);
+          }
+        );
+      });
 
-      if ( direction === 'left' )
-      {
+      if (direction === "left") {
         value.forEach(value => {
-          _.find(this.$store.state.user.role, ['id', value]).permissions.forEach(value => {
-            
-            _.find(this.$store.state.permissions_list, ['id', value.id]).disabled = true
+          _.find(this.$store.state.user.role, [
+            "id",
+            value
+          ]).permissions.forEach(value => {
+            _.find(this.$store.state.permissions_list, [
+              "id",
+              value.id
+            ]).disabled = true;
 
-            allPermissions = [...allPermissions, value.id]
-          })
-        })
+            allPermissions = [...allPermissions, value.id];
+          });
+        });
       }
 
-      this.$store.commit('setFormData', {
+      this.$store.commit("setFormData", {
         group: this.group,
         type: this.type,
-        field: 'permissions',
+        field: "permissions",
         value: allPermissions
-      })
+      });
     },
-    getRowData(row)
-    {
-      this.setAttr('is_query_loading', true)
+    getRowData(row) {
+      this.setAttr("is_query_loading", true);
 
-      return axios.post('/graphql/auth', {
+      return axios.post("/graphql/auth", {
         query: `{
           singleData: ${this.type} (id: "${row.id}") {
             national_code gender
@@ -700,71 +709,79 @@ export default {
             roles { id }
           }
         }`
-      })
+      });
     },
-    afterEdit(row)
-    {
-      this.setAttr('is_query_loading', false)
+    afterEdit(row) {
+      this.setAttr("is_query_loading", false);
 
-      this.$store.state.permissions_list.forEach(p => p.disabled = false)
+      this.$store.state.permissions_list.forEach(p => (p.disabled = false));
 
-      let allPermissions = []
+      let allPermissions = [];
 
       row.roles.forEach(value => {
-        _.find(this.$store.state.user.role, ['id', value.id]).permissions.forEach(value => {
+        _.find(this.$store.state.user.role, [
+          "id",
+          value.id
+        ]).permissions.forEach(value => {
+          allPermissions.push(value.id);
+          _.find(this.$store.state.permissions_list, [
+            "id",
+            value.id
+          ]).disabled = true;
+        });
+      });
 
-          allPermissions.push(value.id)
-          _.find(this.$store.state.permissions_list, ['id', value.id]).disabled = true
-        })
-      })
-
-      this.$store.commit('setFormData', {
+      this.$store.commit("setFormData", {
         group: this.group,
         type: this.type,
-        field: 'permissions',
+        field: "permissions",
         value: [...allPermissions, ...row.permissions.map(i => i.id)]
-      })
+      });
     },
     isBefore(date) {
-      return moment(date).isBefore( moment() )
+      return moment(date).isBefore(moment());
     },
     validate() {
-      return true
+      return true;
     },
     emptyAuthCode(index, row) {
-      this.setAttr('is_query_loading', true)
+      this.setAttr("is_query_loading", true);
 
-      axios.post(`/graphql/auth`, {
-        query: `
+      axios
+        .post(`/graphql/auth`, {
+          query: `
         mutation {
           emptyAuthCodeUser(user: "${row.id}") {
             status
             message
           }
         }`
-      })
-      .then(({data}) => {
-        this.setAttr('is_query_loading', false)
-        
-        this.$notify({
-          title: data.data.emptyAuthCodeUser.status === 200 ? 'پاک شد' : 'پاک نشد',
-          message: data.data.emptyAuthCodeUser.message,
-          timeout: 3000,
-          type: data.data.emptyAuthCodeUser.status === 200 ? 'success' : 'danger',
-          verticalAlign: 'top',
-          horizontalAlign: 'left',
         })
-      })
-      .catch( error => {
-        this.setAttr('is_query_loading', false)
-        console.log(error)
-      });
+        .then(({ data }) => {
+          this.setAttr("is_query_loading", false);
+
+          this.$notify({
+            title:
+              data.data.emptyAuthCodeUser.status === 200 ? "پاک شد" : "پاک نشد",
+            message: data.data.emptyAuthCodeUser.message,
+            timeout: 3000,
+            type:
+              data.data.emptyAuthCodeUser.status === 200 ? "success" : "danger",
+            verticalAlign: "top",
+            horizontalAlign: "left"
+          });
+        })
+        .catch(error => {
+          this.setAttr("is_query_loading", false);
+          console.log(error);
+        });
     },
     createAccessCode(index, row) {
-      this.setAttr('is_query_loading', true)
+      this.setAttr("is_query_loading", true);
 
-      axios.post(`/graphql/auth`, {
-        query: `
+      axios
+        .post(`/graphql/auth`, {
+          query: `
         mutation {
           createAccessCode(user: "${row.id}") {
             code
@@ -772,42 +789,49 @@ export default {
             message
           }
         }`
-      })
-      .then(({data}) => {
-        this.setAttr('is_query_loading', false)
-
-        this.$swal.fire({
-          title: data.data.createAccessCode.status === 200 ? `کد دسترسی : ${data.data.createAccessCode.code}` : null,
-          text: data.data.createAccessCode.message,
-          type: data.data.createAccessCode.status === 200 ? 'success' : 'error',
-          showConfirmButton: true,
-          confirmButtonText: 'باشه'
         })
-      })
-      .catch( error => {
-        this.setAttr('is_query_loading', false)
-        console.log(error)
-      });
+        .then(({ data }) => {
+          this.setAttr("is_query_loading", false);
+
+          this.$swal.fire({
+            title:
+              data.data.createAccessCode.status === 200
+                ? `کد دسترسی : ${data.data.createAccessCode.code}`
+                : null,
+            text: data.data.createAccessCode.message,
+            type:
+              data.data.createAccessCode.status === 200 ? "success" : "error",
+            showConfirmButton: true,
+            confirmButtonText: "باشه"
+          });
+        })
+        .catch(error => {
+          this.setAttr("is_query_loading", false);
+          console.log(error);
+        });
     },
     resetPassword(index, row) {
-      this.$swal.fire({
-        input: 'password',
-        inputPlaceholder: 'رمز عبور',
-        showCancelButton: true,
-        title: `لطفا رمز عبور مورد نظر خود را وارد کنید`,
-        type: 'warning',
-        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
-        confirmButtonColor: '#0098f0',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'تغییر رمز عبور',
-        cancelButtonText: 'منصرف شدم'
-      })
-      .then(({value}) => {
-        if (value) {
-          this.setAttr('is_query_loading', true)
+      this.$swal
+        .fire({
+          input: "password",
+          inputPlaceholder: "رمز عبور",
+          showCancelButton: true,
+          title: `لطفا رمز عبور مورد نظر خود را وارد کنید`,
+          type: "warning",
+          confirmButtonColor:
+            "linear-gradient(to bottom left, #00f2c3, #0098f0)",
+          confirmButtonColor: "#0098f0",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "تغییر رمز عبور",
+          cancelButtonText: "منصرف شدم"
+        })
+        .then(({ value }) => {
+          if (value) {
+            this.setAttr("is_query_loading", true);
 
-          axios.post(`/graphql/auth`, {
-            query: `
+            axios
+              .post(`/graphql/auth`, {
+                query: `
             mutation {
               updateUserPassword (
                 user: "${row.id}",
@@ -818,42 +842,42 @@ export default {
                 message
               }
             }`
-          })
-          .then(({data}) => {
-            this.setAttr('is_query_loading', false)
-
-            if ( data.data.updateUserPassword.status === 400 )
-            {
-              return this.$swal.fire({
-                title: 'تغییری نکرد',
-                text: data.data.updateUserPassword.message,
-                type: 'error',
-                timer: 2000,
-                showConfirmButton: false
               })
-            }
+              .then(({ data }) => {
+                this.setAttr("is_query_loading", false);
 
-            this.$swal.fire({
-              title: 'تغییر کرد',
-              text: 'رمز عبور کاربر مورد نظر با موفقیت بروزرسانی شد',
-              type: 'success',
-              timer: 2000,
-              showConfirmButton: false
-            })
-          })
-          .catch( error => {
-            this.setAttr('is_query_loading', false)
-            
-            this.errorResolver(error)
-          });
-        }
-      })
+                if (data.data.updateUserPassword.status === 400) {
+                  return this.$swal.fire({
+                    title: "تغییری نکرد",
+                    text: data.data.updateUserPassword.message,
+                    type: "error",
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
+                }
+
+                this.$swal.fire({
+                  title: "تغییر کرد",
+                  text: "رمز عبور کاربر مورد نظر با موفقیت بروزرسانی شد",
+                  type: "success",
+                  timer: 2000,
+                  showConfirmButton: false
+                });
+              })
+              .catch(error => {
+                this.setAttr("is_query_loading", false);
+
+                this.errorResolver(error);
+              });
+          }
+        });
     },
     seeSessions(index, row) {
-      this.setAttr('is_query_loading', true)
+      this.setAttr("is_query_loading", true);
 
-      axios.post(`/graphql/auth`, {
-        query: `{
+      axios
+        .post(`/graphql/auth`, {
+          query: `{
           user(id: "${row.id}") {
             sessions {
               id
@@ -862,151 +886,167 @@ export default {
             }
           }
         }`
-      })
-      .then(({data}) => {
-        this.sessions = data.data.user.sessions.map(i => {
-          
-          const ua = parser(i.user_agent)
-
-          return {
-            id: i.id,
-            browser: ua.browser,
-            device: ua.device,
-            os: ua.os,
-            created_at: i.created_at
-          }
         })
+        .then(({ data }) => {
+          this.sessions = data.data.user.sessions.map(i => {
+            const ua = parser(i.user_agent);
 
-        this.setAttr('is_query_loading', false)
-        
-        console.log( this.sessions )
+            return {
+              id: i.id,
+              browser: ua.browser,
+              device: ua.device,
+              os: ua.os,
+              created_at: i.created_at
+            };
+          });
 
-        this.selected_user = row
-        this.is_show_sessions = true
-      })
-      .catch( error => {
-        this.setAttr('is_query_loading', false)
-        console.log(error)
-      });
+          this.setAttr("is_query_loading", false);
+
+          console.log(this.sessions);
+
+          this.selected_user = row;
+          this.is_show_sessions = true;
+        })
+        .catch(error => {
+          this.setAttr("is_query_loading", false);
+          console.log(error);
+        });
     },
     accept(index, status) {
-      this.setAttr('is_query_loading', true)
+      this.setAttr("is_query_loading", true);
 
-      axios.post(`/graphql/auth`, {
-        query: `
+      axios
+        .post(`/graphql/auth`, {
+          query: `
           mutation {
-            ${ voca.camelCase(`active ${this.type}`) } (id: "${this.data()[index].id}", status: ${status}) {
+            ${voca.camelCase(`active ${this.type}`)} (id: "${
+            this.data()[index].id
+          }", status: ${status}) {
               status
               message
             }
           }
         `
-      })
-      .then(({data}) => {
-        this.setAttr('is_query_loading', false)
-
-        this.data()[index].can_has_member = status
-        
-        this.$notify({
-          title: status ? 'تایید شد' : 'رد شد',
-          message: `${this.label} مورد نظر با موفقیت ${ status ? 'تایید شد' : 'رد شد' } :)`,
-          timeout: 1500,
-          type: status ? 'success' : 'danger',
-          verticalAlign: 'top',
-          horizontalAlign: 'left',
         })
-      })
-      .catch( error => {
-        this.setAttr('is_query_loading', false)
-        console.log(error)
-      });
+        .then(({ data }) => {
+          this.setAttr("is_query_loading", false);
+
+          this.data()[index].can_has_member = status;
+
+          this.$notify({
+            title: status ? "تایید شد" : "رد شد",
+            message: `${this.label} مورد نظر با موفقیت ${
+              status ? "تایید شد" : "رد شد"
+            } :)`,
+            timeout: 1500,
+            type: status ? "success" : "danger",
+            verticalAlign: "top",
+            horizontalAlign: "left"
+          });
+        })
+        .catch(error => {
+          this.setAttr("is_query_loading", false);
+          console.log(error);
+        });
     },
     accept_multiple() {
-      this.$swal.fire({
-        title: `برای ${this.acceptType ? 'تایید' : 'رد'} ${this.label} های انتخاب شده مطمئن هستید ؟`,
-        text: `در صورت ${this.acceptType ? 'تایید' : 'رد'} کردن ، تمامی ${this.label} های انتخاب شده به حالت ${this.acceptType ? 'تایید' : 'رد'} شده درخواهند آمد !`,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
-        confirmButtonColor: '#0098f0',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'بله ، مطمئنم !',
-        cancelButtonText: 'نه ، اشتباه شده'
-      }).then((result) => {
-        if (result.value) {
-          this.setAttr('is_query_loading', true)
+      this.$swal
+        .fire({
+          title: `برای ${this.acceptType ? "تایید" : "رد"} ${
+            this.label
+          } های انتخاب شده مطمئن هستید ؟`,
+          text: `در صورت ${this.acceptType ? "تایید" : "رد"} کردن ، تمامی ${
+            this.label
+          } های انتخاب شده به حالت ${
+            this.acceptType ? "تایید" : "رد"
+          } شده درخواهند آمد !`,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor:
+            "linear-gradient(to bottom left, #00f2c3, #0098f0)",
+          confirmButtonColor: "#0098f0",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "بله ، مطمئنم !",
+          cancelButtonText: "نه ، اشتباه شده"
+        })
+        .then(result => {
+          if (result.value) {
+            this.setAttr("is_query_loading", true);
 
-          var ids = [];
-          this.attr('selected_items').forEach( item => {
-            ids = [...ids, this.data()[item].id]
-          })
+            var ids = [];
+            this.attr("selected_items").forEach(item => {
+              ids = [...ids, this.data()[item].id];
+            });
 
-          axios.post(`/graphql/auth`, {
-            query: `
+            axios
+              .post(`/graphql/auth`, {
+                query: `
               mutation {
-                ${ voca.camelCase(`active ${this.type}`) } (ids: [${'"' + ids.join('", "') + '"'}], status: ${this.acceptType}) {
+                ${voca.camelCase(`active ${this.type}`)} (ids: [${'"' +
+                  ids.join('", "') +
+                  '"'}], status: ${this.acceptType}) {
                   status
                   message
                 }
               }
             `
-          })
-          .then(({data})=> {
-            this.setAttr('is_query_loading', false)
-
-            let used_status = this.acceptType;
-            this.attr('selected_items').forEach(index => {
-              this.data()[index].can_has_member = used_status
-            });
-
-            this.setAttr('selected_items', [], true)
-            this.$refs.datatable.selected_items = [];
-
-            this.$swal.fire({
-              title: `${this.acceptType ? 'تایید' : 'رد'} شدند`,
-              text: `${this.label} هایی که انتخاب کردید با موفقیت ${this.acceptType ? 'تایید' : 'رد'} شدند :)`,
-              type: 'success',
-              timer: 1000,
-              showConfirmButton: false,
-            })
-
-          })
-          .catch(error => {
-            this.setAttr('is_query_loading', false)
-
-            if (error.response) {
-              this.$swal.fire({
-                title: 'خطایی رخ داد !',
-                text: error.response.data.message,
-                type: 'error',
-                timer: 5000,
-                confirmButtonText: 'بسیار خب :('
               })
-            } else {
-              console.log(error)
-            }
-          });
-        }
-      })
+              .then(({ data }) => {
+                this.setAttr("is_query_loading", false);
+
+                let used_status = this.acceptType;
+                this.attr("selected_items").forEach(index => {
+                  this.data()[index].can_has_member = used_status;
+                });
+
+                this.setAttr("selected_items", [], true);
+                this.$refs.datatable.selected_items = [];
+
+                this.$swal.fire({
+                  title: `${this.acceptType ? "تایید" : "رد"} شدند`,
+                  text: `${this.label} هایی که انتخاب کردید با موفقیت ${
+                    this.acceptType ? "تایید" : "رد"
+                  } شدند :)`,
+                  type: "success",
+                  timer: 1000,
+                  showConfirmButton: false
+                });
+              })
+              .catch(error => {
+                this.setAttr("is_query_loading", false);
+
+                if (error.response) {
+                  this.$swal.fire({
+                    title: "خطایی رخ داد !",
+                    text: error.response.data.message,
+                    type: "error",
+                    timer: 5000,
+                    confirmButtonText: "بسیار خب :("
+                  });
+                } else {
+                  console.log(error);
+                }
+              });
+          }
+        });
     },
-    manageCredit(index, row)
-    {
-      this.selected_user = row
-      this.selected_index = index
+    manageCredit(index, row) {
+      this.selected_user = row;
+      this.selected_index = index;
 
       this.form_data = {
         count: 0,
         registered: 0,
         days: 0,
         type: true
-      }
+      };
 
-      this.is_open = true
+      this.is_open = true;
     },
-    increaseCredit()
-    {
-      axios.post('/graphql/auth', {
-        query: `mutation {
+    increaseCredit() {
+      axios
+        .post("/graphql/auth", {
+          query: `mutation {
           changeCreditUser(
             id: "${this.selected_user.id}",
             count: ${this.form_data.count},
@@ -1018,73 +1058,112 @@ export default {
             message
           }
         }`
-      })
-      .then(({data}) => {
-
-        if ( data.data.changeCreditUser.status === 400 ) {
-          return this.$swal.fire({
-            title: 'خطایی رخ داد',
-            text: data.data.changeCreditUser.message,
-            type: 'error',
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-
-        if ( this.form_data.type )
-        {
-          this.selected_user.remaining_hits_count = this.selected_user.remaining_hits_count * 1 + this.form_data.count * 1
-          this.selected_user.remaining_registered_count = this.selected_user.remaining_registered_count * 1 + this.form_data.registered * 1
-
-          this.selected_user.validity_end_at = moment(this.selected_user.validity_end_at)
-            .locale('en')
-            .add(this.form_data.days, 'days')
-            .format('YYYY-MM-DD hh:mm:ss')
-        }
-        else
-        {
-          this.selected_user.remaining_hits_count = this.selected_user.remaining_hits_count * 1 - this.form_data.count * 1
-          this.selected_user.remaining_registered_count = this.selected_user.remaining_registered_count * 1 - this.form_data.registered * 1
-          this.selected_user.validity_end_at = moment(this.selected_user.validity_end_at)
-            .locale('en')
-            .subtract(this.form_data.days, 'days')
-            .format('YYYY-MM-DD hh:mm:ss')
-        }
-
-        this.$swal.fire({
-          title: this.form_data.type ? 'اضافه شد' : 'کاسته شد',
-          text: data.data.changeCreditUser.message,
-          type: 'success',
-          showConfirmButton: false,
-          timer: 1000,
         })
+        .then(({ data }) => {
+          if (data.data.changeCreditUser.status === 400) {
+            return this.$swal.fire({
+              title: "خطایی رخ داد",
+              text: data.data.changeCreditUser.message,
+              type: "error",
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
 
-        this.is_open = false
-      })
+          if (this.form_data.type) {
+            this.selected_user.remaining_hits_count =
+              this.selected_user.remaining_hits_count * 1 +
+              this.form_data.count * 1;
+            this.selected_user.remaining_registered_count =
+              this.selected_user.remaining_registered_count * 1 +
+              this.form_data.registered * 1;
+
+            this.selected_user.validity_end_at = moment(
+              this.selected_user.validity_end_at
+            )
+              .locale("en")
+              .add(this.form_data.days, "days")
+              .format("YYYY-MM-DD hh:mm:ss");
+          } else {
+            this.selected_user.remaining_hits_count =
+              this.selected_user.remaining_hits_count * 1 -
+              this.form_data.count * 1;
+            this.selected_user.remaining_registered_count =
+              this.selected_user.remaining_registered_count * 1 -
+              this.form_data.registered * 1;
+            this.selected_user.validity_end_at = moment(
+              this.selected_user.validity_end_at
+            )
+              .locale("en")
+              .subtract(this.form_data.days, "days")
+              .format("YYYY-MM-DD hh:mm:ss");
+          }
+
+          this.$swal.fire({
+            title: this.form_data.type ? "اضافه شد" : "کاسته شد",
+            text: data.data.changeCreditUser.message,
+            type: "success",
+            showConfirmButton: false,
+            timer: 1000
+          });
+
+          this.is_open = false;
+        });
+    },
+    handlePagination(page) {
+      this.setAttr("is_query_loading", true);
+
+      axios
+        .post("/graphql/auth", {
+          query: `{
+          allData: ${this.plural} (page: ${page} ${
+            this.selected_roles && this.selected_roles.length
+              ? `,roles: [${this.selected_roles.join(",")}]`
+              : ""
+          } ${
+            this.filter("query") ? `,query: "${this.filter("query")}"` : ""
+          }) {
+            data {
+              id ${this.allQuery}
+              created_at updated_at
+            }
+            total
+          }
+        }`
+        })
+        .then(({ data }) => {
+          this.setData(data.data.allData.data);
+          this.setAttr("counts", { total: data.data.allData.total });
+          this.setAttr("page", page);
+          this.setAttr("is_query_loading", false);
+          this.setAttr("selected_items", [], true);
+          this.$refs.datatable.selected_items = [];
+        })
+        .then(() => this.load(true))
+        .catch(error => console.log(error));
     }
   },
   computed: {
-    first_name: bind('first_name'),
-    last_name: bind('last_name'),
-    avatar: bind('avatar'),
-    address: bind('address'),
-    email: bind('email'),
-    username: bind('username'),
-    address: bind('address'),
-    phone_number: bind('phone_number'),
-    national_code: bind('national_code'),
-    gender: bind('gender'),
-    roles: bind('roles'),
-    permissions: bind('permissions'),
+    first_name: bind("first_name"),
+    last_name: bind("last_name"),
+    avatar: bind("avatar"),
+    address: bind("address"),
+    email: bind("email"),
+    username: bind("username"),
+    address: bind("address"),
+    phone_number: bind("phone_number"),
+    national_code: bind("national_code"),
+    gender: bind("gender"),
+    roles: bind("roles"),
+    permissions: bind("permissions"),
 
     acceptType() {
-      var accept_count = 0, rejact_count = 0;
+      var accept_count = 0,
+        rejact_count = 0;
 
-      this.attr('selected_items').forEach(index => {
-        if ( this.data()[index].can_has_member )
-          ++accept_count
-        else
-          ++rejact_count
+      this.attr("selected_items").forEach(index => {
+        if (this.data()[index].can_has_member) ++accept_count;
+        else ++rejact_count;
       });
 
       return accept_count <= rejact_count;
@@ -1092,37 +1171,39 @@ export default {
     getFields() {
       let fields = [
         {
-          field: 'avatar',
-          label: 'آواتار',
-          icon: 'icon-image-02'
-        }, {
-          field: 'info',
-          label: 'اطلاعات',
-          icon: 'icon-badge'
-        }, {
-          field: 'roles',
-          label: 'نقش ها',
-          icon: 'icon-tap-02'
+          field: "avatar",
+          label: "آواتار",
+          icon: "icon-image-02"
+        },
+        {
+          field: "info",
+          label: "اطلاعات",
+          icon: "icon-badge"
+        },
+        {
+          field: "roles",
+          label: "نقش ها",
+          icon: "icon-tap-02"
         }
-      ]
+      ];
 
-      if ( !this.can('active-user') ) {
+      if (!this.can("active-user")) {
         fields.push({
-          field: 'status',
-          label: 'امکان عضوگیری',
-          icon: 'icon-refresh-02',
-        })
+          field: "status",
+          label: "امکان عضوگیری",
+          icon: "icon-refresh-02"
+        });
       }
 
-      if ( !this.can('see-credit-user') ) {
+      if (!this.can("see-credit-user")) {
         fields.push({
-          field: 'plan',
-          label: 'پلن مالی',
-          icon: 'icon-email-85'
-        })
+          field: "plan",
+          label: "پلن مالی",
+          icon: "icon-email-85"
+        });
       }
 
-      return fields
+      return fields;
     },
     allQuery() {
       return `
@@ -1142,27 +1223,23 @@ export default {
           id
           display_name
         }
-      `
-    },
-  },
-  watch: {
-    'selected_roles': function(newVal, oldVal) {
-
-      this.queryFilters = `roles: [${newVal.join(',')}]`
-
-      if ( this.filter('query') )
-        this.handleSearch( this.filter('query') )
-    
-      else
-        this.handleSearch()
+      `;
     }
   },
-  beforeRouteLeave (to, from, next) {
-    this.$refs.datatable.closePanel()
+  watch: {
+    selected_roles: function(newVal, oldVal) {
+      this.queryFilters = `roles: [${newVal.join(",")}]`;
 
-    setTimeout( () => next(), 700);
+      if (this.filter("query")) this.handleSearch(this.filter("query"));
+      else this.handleSearch();
+    }
   },
-}
+  beforeRouteLeave(to, from, next) {
+    this.$refs.datatable.closePanel();
+
+    setTimeout(() => next(), 700);
+  }
+};
 </script>
 
 <style>
