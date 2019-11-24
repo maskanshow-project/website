@@ -3,10 +3,8 @@ import anime from 'animejs'
 import Chart from 'chart.js'
 
 export default {
-  mounted()
-  {
-    if (this.data().length === 0)
-    {
+  mounted() {
+    if (this.data().length === 0) {
       axios.post('/graphql/auth', {
         query: `{
           allData: ${this.plural} ${this.queryFilters ? `(${this.queryFilters})` : ''} {
@@ -20,34 +18,33 @@ export default {
           }
         }`
       })
-      .then(({data}) => {
-        this.setData(data.data.allData.data)
+        .then(({ data }) => {
+          this.setData(data.data.allData.data)
 
-        this.setAttr('counts', {
-          total: data.data.allData.total,
-          trash: data.data.allData.trash,
-        })
+          this.setAttr('counts', {
+            total: data.data.allData.total,
+            trash: data.data.allData.trash,
+          })
 
-        this.setAttr('charts', {
-          labels: data.data.allData.chart.map(period => period.month),
-          data: data.data.allData.chart.map(period => period.count)
+          this.setAttr('charts', {
+            labels: data.data.allData.chart.map(period => period.month),
+            data: data.data.allData.chart.map(period => period.count)
+          })
+        }).then(() => this.load(true))
+        .then(() => $('.tilt').tilt({ scale: 1.05, maxTilt: 3 }))
+        .then(() => {
+          anime({
+            targets: '.card i',
+            rotate: '1turn',
+            easing: 'linear',
+            loop: true,
+            duration: 200000,
+          })
         })
-      }).then(() => this.load(true))
-      .then(() => $('.tilt').tilt({ scale: 1.05, maxTilt: 3 }))
-      .then(() => {
-        anime({
-          targets: '.card i',
-          rotate: '1turn',
-          easing: 'linear',
-          loop: true,
-          duration: 200000,
-        })
-      })
-      .then(() => this.createChart())
-      .catch(error => console.log(error))
+        .then(() => this.createChart())
+        .catch(error => console.log(error))
     }
-    else
-    {
+    else {
       let data = this.data()
       this.setData([])
       this.load(false)
@@ -56,11 +53,11 @@ export default {
 
         this.setData(data)
         this.load(true)
-        
+
         setTimeout(() => {
           this.createChart()
         }, 200);
-        
+
       }, 300)
     }
   },
@@ -83,7 +80,7 @@ export default {
           }
         }
       });
-      
+
       let ctx = document.getElementById("myChart").getContext('2d');
 
       const data = {
@@ -203,13 +200,12 @@ export default {
     load(status) {
       this.setAttr('has_loaded', status)
     },
-    handlePagination(page)
-    {
+    handlePagination(page) {
       this.setAttr('is_query_loading', true)
 
       axios.post('/graphql/auth', {
         query: `{
-          allData: ${this.plural} (page: ${page}) {
+          allData: ${this.plural} (page: ${page} ${this.queryFilters ? `, ${this.queryFilters}` : ''}) {
             data {
               id ${this.allQuery}
               ${ this.attr('has_timestamps') ? 'created_at updated_at' : ''}
@@ -218,21 +214,19 @@ export default {
           }
         }`
       })
-      .then(({data}) => {
-        this.setData(data.data.allData.data)
-        this.setAttr('counts', { total: data.data.allData.total })
-        this.setAttr('page', page)
-        this.setAttr('is_query_loading', false)
-        this.setAttr('selected_items', [], true)
-        this.$refs.datatable.selected_items = []
-      })
-      .then(() => this.load(true) )
-      .catch(error => console.log(error))
+        .then(({ data }) => {
+          this.setData(data.data.allData.data)
+          this.setAttr('counts', { total: data.data.allData.total })
+          this.setAttr('page', page)
+          this.setAttr('is_query_loading', false)
+          this.setAttr('selected_items', [], true)
+          this.$refs.datatable.selected_items = []
+        })
+        .then(() => this.load(true))
+        .catch(error => console.log(error))
     },
-    handleSearch(query = '')
-    {
-      if ( query.length >= 3 || query.length === 0  )
-      {
+    handleSearch(query = '') {
+      if (query.length >= 3 || query.length === 0) {
         axios.post('/graphql/auth', {
           query: `{
             allData: ${this.plural} (query: "${query}" ${this.queryFilters ? `, ${this.queryFilters}` : ''}) {
@@ -244,15 +238,15 @@ export default {
             }
           }`
         })
-        .then(({data}) => {
-          this.setData(data.data.allData.data)
-          this.setAttr('counts', { total: data.data.allData.total })
-          this.setAttr('page', 1)
-          this.setAttr('selected_items', [], true)
-          this.$refs.datatable.selected_items = []
-        })
-        .then(() => this.load(true) )
-        .catch(error => console.log(error))
+          .then(({ data }) => {
+            this.setData(data.data.allData.data)
+            this.setAttr('counts', { total: data.data.allData.total })
+            this.setAttr('page', 1)
+            this.setAttr('selected_items', [], true)
+            this.$refs.datatable.selected_items = []
+          })
+          .then(() => this.load(true))
+          .catch(error => console.log(error))
       }
 
     }

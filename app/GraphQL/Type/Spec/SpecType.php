@@ -30,12 +30,12 @@ class SpecType extends BaseType
             'estate_type' => $this->relationItemField('estate_type'),
             'headers' => $this->relationListField('spec_header', 'is_active', 'read-spec'),
             'filters' => [
-                'type'  => Type::listOf( \GraphQL::type('spec_row') ),
-                'query' => function(array $args, $query) {
-                
+                'type'  => Type::listOf(\GraphQL::type('spec_row')),
+                'query' => function (array $args, $query) {
+
                     // if ( !$this->checkPermission('read-spec') )
                     //     $query->where('spec_rows.is_active', 1);
-            
+
                     // $query->whereHas('defaults');
                     $query->where('is_filterable', true);
 
