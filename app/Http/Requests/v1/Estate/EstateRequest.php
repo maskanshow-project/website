@@ -39,6 +39,7 @@ class EstateRequest extends MainRequest
                 $this->requiredOrFilled(),
                 'string',
                 'regex:/^(\+98|0)?\d\d{9}$/',
+                'size:11',
                 new Blacklist
             ],
             'address'               => [
@@ -49,11 +50,11 @@ class EstateRequest extends MainRequest
             ],
             'plaque'                => ['required', 'string', 'max:20'],
             'aparat_video'          => 'nullable|url|starts_with:https://www.aparat.com/v/',
-            
+
             'sales_price'           => 'nullable|integer|digits_between:1,12',
             'mortgage_price'        => 'nullable|integer|digits_between:1,12',
             'rental_price'          => 'nullable|integer|digits_between:1,10',
-            
+
             'area'                  => [$this->requiredOrFilled(), 'integer', 'digits_between:1,6'],
             'advantages'            => 'nullable|array',
             'advantages.*'          => 'required|string|max:100',
@@ -70,7 +71,7 @@ class EstateRequest extends MainRequest
             'estate_type_id'        => [$this->requiredOrFilled(), 'integer', 'exists:estate_types,id'],
             'lat'                   => 'nullable|numeric',
             'lng'                   => 'nullable|numeric',
-            
+
             'features'              => 'nullable|array',
             'features.*'            => 'required|integer|exists:features,id',
 
@@ -93,9 +94,9 @@ class EstateRequest extends MainRequest
             'deleted_images.*'      => [
                 'required',
                 'integer',
-                Rule::exists('media', 'id')->where(function ($query) use($args) {
+                Rule::exists('media', 'id')->where(function ($query) use ($args) {
                     return $query->where('model_type', 'App\Models\Estate\Estate')
-                                 ->where('model_id', $args['id'] ?? false);
+                        ->where('model_id', $args['id'] ?? false);
                 })
             ],
         ];
