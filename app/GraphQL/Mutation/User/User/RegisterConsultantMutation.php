@@ -25,7 +25,7 @@ class RegisterConsultantMutation extends BaseUserMutation
      */
     protected function rules(array $args = [])
     {
-        return ( new RegisterConsultantRequest )->rules($args, 'REGISTER');
+        return (new RegisterConsultantRequest)->rules($args, 'REGISTER');
     }
 
     public function args()
@@ -93,15 +93,16 @@ class RegisterConsultantMutation extends BaseUserMutation
             ],
         ];
     }
-   
+
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $parent_id = $args['reagent_code'] ?? false ? User::whereUsername( $args['reagent_code'] )->first()->id ?? null : null;
-        
+        $parent_id = $args['reagent_code'] ?? false ? User::whereUsername($args['reagent_code'])->first()->id ?? null : null;
+
         $user = User::create(array_merge(
-            $this->getRequest( collect( $args ) ), [
+            $this->getRequest(collect($args)),
+            [
                 'parent_id' => $parent_id,
-                'password' => bcrypt( $args['password'] )
+                'password' => bcrypt($args['password'])
             ]
         ));
 
@@ -114,15 +115,15 @@ class RegisterConsultantMutation extends BaseUserMutation
             'phone_number' => $args['office_phone_number'] ?? null,
         ]);
 
-        $user->update([ 'office_id' => $office->id ]);
+        $user->update(['office_id' => $office->id]);
 
         $user->attachRole('consultant');
 
-        auth()->login( $user );
+        auth()->login($user);
 
-        auth()->user()->update([ 'system_authentication_code' => str_random(50) ]);
+        auth()->user()->update(['system_authentication_code' => str_random(50)]);
 
-        $data = collect( $user->toArray() );
+        $data = collect($user->toArray());
 
         $data->put('token', $user->createToken('web')->accessToken);
 

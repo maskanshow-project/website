@@ -11,7 +11,7 @@ class EstateType extends BaseType
     private $can_see_detail = null;
 
     private $selected_estate = null;
-    
+
     protected $attributes = [
         'name' => 'EstateType',
         'description' => 'A type',
@@ -20,34 +20,32 @@ class EstateType extends BaseType
 
     public function handleCredit($args)
     {
-        if ( !isset($args['id']) ) return false;
+        if (!isset($args['id'])) return false;
 
-        if ( $this->selected_estate !== $args['id'] )
-        {
+        if ($this->selected_estate !== $args['id']) {
             $this->can_see_detail = null;
             $this->selected_estate = $args['id'];
         }
 
-        if ( $this->can_see_detail !== null )
-            return $this->can_see_detail;    
+        if ($this->can_see_detail !== null)
+            return $this->can_see_detail;
 
-        if ( auth()->guest() )
+        if (auth()->guest())
             return $this->can_see_detail = false;
-        
 
-        $estate = Estate::select('user_id', 'role_id')->findOrFail( $args['id'] );
 
-        if ( $estate->user_id === auth()->id() )
+        $estate = Estate::select('user_id', 'role_id')->findOrFail($args['id']);
+
+        if ($estate->user_id === auth()->id())
             $this->can_see_detail = true;
-            
-        elseif ( $estate->role_id === 2 )
+
+        elseif ($estate->role_id === 2)
             $this->can_see_detail = false;
 
-        elseif ( auth()->user()->visitedEstates()->where('id', $args['id'] ?? false)->count() )
+        elseif (auth()->user()->visitedEstates()->where('id', $args['id'] ?? false)->count())
             $this->can_see_detail = true;
 
-        elseif( auth()->user()->remaining_hits_count > 0 && !auth()->user()->validity_end_at->isPast() )
-        {
+        elseif (auth()->user()->remaining_hits_count > 0 && (!auth()->user()->validity_end_at || !auth()->user()->validity_end_at->isPast())) {
             auth()->user()->increment('visited_estate_count');
             auth()->user()->decrement('remaining_hits_count');
 
@@ -56,8 +54,7 @@ class EstateType extends BaseType
             ]);
 
             $this->can_see_detail = true;
-        }
-        else
+        } else
             $this->can_see_detail = false;
 
         return $this->can_see_detail;
@@ -101,13 +98,13 @@ class EstateType extends BaseType
             ],
             'landlord_fullname' => [
                 'type' => Type::string(),
-                'privacy' => function($args) {
+                'privacy' => function ($args) {
                     return $this->checkPermission("see-details-estate") || $this->handleCredit($args);
                 }
             ],
             'landlord_phone_number' => [
                 'type' => Type::string(),
-                'privacy' => function($args) {
+                'privacy' => function ($args) {
                     return $this->checkPermission("see-details-estate") || $this->handleCredit($args);
                 }
             ],
@@ -118,33 +115,33 @@ class EstateType extends BaseType
             'plaque' => [
                 'type' => Type::float(),
                 'selectable' => false,
-                'privacy' => function($args) {
+                'privacy' => function ($args) {
                     return $this->checkPermission("see-details-estate") || $this->handleCredit($args);
                 }
             ],
             'coordinates' => [
                 'type' => \GraphQL::type('coordinate'),
                 'is_relation' => false,
-                'privacy' => function($args) {
+                'privacy' => function ($args) {
                     return $this->checkPermission("see-details-estate") || $this->handleCredit($args);
                 }
             ],
             'advantages' => [
-                'type' => Type::listOf( Type::string() ),
+                'type' => Type::listOf(Type::string()),
                 'selectable' => false
             ],
             'disadvantages' => [
-                'type' => Type::listOf( Type::string() ),
+                'type' => Type::listOf(Type::string()),
                 'selectable' => false
             ],
             'photos' => [
-                'type' => Type::listOf( \GraphQL::type('single_media') ),
+                'type' => Type::listOf(\GraphQL::type('single_media')),
             ],
             'views_count' => [
                 'type' => Type::int()
             ],
             'tags' => [
-                'type' => Type::listOf( \GraphQl::type('tag') ),
+                'type' => Type::listOf(\GraphQl::type('tag')),
             ],
             'assignment_count' => [
                 'type' => Type::int(),
@@ -160,10 +157,10 @@ class EstateType extends BaseType
             ],
             'votes' => $this->votes(),
             'specifications' => [
-                'type'  => Type::listOf( \GraphQL::type('spec_data') ),
-                'query' => function(array $args, $query) {
+                'type'  => Type::listOf(\GraphQL::type('spec_data')),
+                'query' => function (array $args, $query) {
 
-                    return $query->whereHas('row', function($query) {
+                    return $query->whereHas('row', function ($query) {
                         return $query->where('is_detailable', true);
                     });
                 }
@@ -183,16 +180,16 @@ class EstateType extends BaseType
             'is_favorite' => [
                 'type' => Type::boolean(),
                 'selectable' => false,
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
 
                     return auth()->check() ? auth()->user()->favorites()->where('id', $data['id'] ?? false)->count() : false;
                 }
             ],
             'reject_reason' => [
                 'type' => Type::string(),
-                'privacy' => function($args) {
+                'privacy' => function ($args) {
 
-                    return $this->checkPermission("active-estate") || ( $args['registered_by_me'] ?? false );
+                    return $this->checkPermission("active-estate") || ($args['registered_by_me'] ?? false);
                 }
             ]
         ];

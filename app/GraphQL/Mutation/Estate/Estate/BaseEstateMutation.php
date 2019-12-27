@@ -13,9 +13,9 @@ use App\Models\Estate\EstateType;
 class BaseEstateMutation extends MainMutation
 {
     use EstateProps;
-    
+
     protected $old_spec;
-    
+
     protected $attributes = [
         'name' => 'EstateMutation',
         'description' => 'A mutation'
@@ -23,7 +23,7 @@ class BaseEstateMutation extends MainMutation
 
     public function getArgs()
     {
-        return [            
+        return [
             'code' => [
                 'type' => Type::string()
             ],
@@ -79,37 +79,37 @@ class BaseEstateMutation extends MainMutation
                 'type' => Type::int()
             ],
             'specs' => [
-                'type' => Type::listOf( \GraphQL::type('spec_input') )
+                'type' => Type::listOf(\GraphQL::type('spec_input'))
             ],
-            
+
 
             'aparat_video' => [
                 'type' => Type::string()
             ],
             'tags' => [
-                'type' => Type::listOf( Type::string() )
+                'type' => Type::listOf(Type::string())
             ],
             'advantages' => [
-                'type' => Type::listOf( Type::string() )
+                'type' => Type::listOf(Type::string())
             ],
             'disadvantages' => [
-                'type' => Type::listOf( Type::string() )
+                'type' => Type::listOf(Type::string())
             ],
             'photos' => [
-                'type' => Type::listOf( UploadType::getInstance() )
+                'type' => Type::listOf(UploadType::getInstance())
             ],
             'features' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'deleted_images' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'want_cooperation' => [
                 'type' => Type::boolean()
             ]
         ];
     }
-    
+
 
     /**
      * Get the portion of request class
@@ -117,13 +117,13 @@ class BaseEstateMutation extends MainMutation
      * @param Request $request
      * @return Array $request
      */
-    public function getRequest( $request)
+    public function getRequest($request)
     {
         $id = $request->get('estate_type_id');
 
-        return array_merge( $request->all(), [
-            'spec_id'       => $id ? ( EstateType::find( $id )->spec->id ?? null ) : null,
-            'coordinates'   => new Point( $request->get('lat'), $request->get('lng') ),
+        return array_merge($request->all(), [
+            'spec_id'       => $id ? (EstateType::find($id)->spec->id ?? null) : null,
+            'coordinates'   => new Point($request->get('lat'), $request->get('lng')),
             'is_active'     => auth()->user()->can('active-estate'),
             'reject_reason' => null
         ]);
@@ -138,13 +138,11 @@ class BaseEstateMutation extends MainMutation
      */
     public function storeData($request)
     {
-        if ( !auth()->user()->can('create-estate') )
-        {
-            if ( auth()->user()->remaining_registered_count > 0 && !auth()->user()->validity_end_at->isPast() )
+        if (!auth()->user()->can('create-estate')) {
+            if (auth()->user()->remaining_registered_count > 0 && (!auth()->user()->validity_end_at || !auth()->user()->validity_end_at->isPast()))
                 auth()->user()->decrement('remaining_registered_count');
 
-            else
-            {
+            else {
                 die(json_encode([
                     'status' => 400,
                     'true' => 'متاسفانه اعتبار شما برای ثبت ملک کافی نیست',
@@ -153,16 +151,15 @@ class BaseEstateMutation extends MainMutation
         }
 
         $estate = $this->createNewModel(
-            array_merge($this->getRequest( $request ), [
+            array_merge($this->getRequest($request), [
                 'role_id' => auth()->user()->roles()->first()->id ?? null,
                 'office_id' => auth()->user()->workplace->id ?? null,
             ])
         );
 
-        if ( $request->get('photos') )
-        {
-            foreach ( $request->get('photos') as $item )
-                $estate->addMedia( $item )->toMediaCollection('photos');
+        if ($request->get('photos')) {
+            foreach ($request->get('photos') as $item)
+                $estate->addMedia($item)->toMediaCollection('photos');
         }
 
         auth()->user()->increment('registered_estate_count');
@@ -181,15 +178,14 @@ class BaseEstateMutation extends MainMutation
     {
         $this->old_spec = $estate->spec_id;
 
-        $estate->update( $this->getRequest( $request ) );
+        $estate->update($this->getRequest($request));
 
-        if ( $request->get('photos') )
-        {
-            foreach ( $request->get('photos') as $item )
-                $estate->addMedia( $item )->toMediaCollection('photos');
+        if ($request->get('photos')) {
+            foreach ($request->get('photos') as $item)
+                $estate->addMedia($item)->toMediaCollection('photos');
         }
 
-        if ( $request->get('deleted_images') )
+        if ($request->get('deleted_images'))
             Media::whereIn('id', $request->get('deleted_images'))->delete();
 
         return $estate;
@@ -204,10 +200,10 @@ class BaseEstateMutation extends MainMutation
      */
     public function afterCreate($request, $estate)
     {
-        $estate->attachTags( $request->get('tags') );
-        $estate->features()->attach( $request->get('features') );
+        $estate->attachTags($request->get('tags'));
+        $estate->features()->attach($request->get('features'));
 
-        if ( $request->get('specs', false) && count( $request->get('specs', []) ) )
+        if ($request->get('specs', false) && count($request->get('specs', [])))
             $this->createSpecData($request, $estate);
     }
 
@@ -220,13 +216,13 @@ class BaseEstateMutation extends MainMutation
      */
     public function afterUpdate($request, $estate)
     {
-        $estate->syncTags( $request->get('tags') );
-        $estate->features()->sync( $request->get('features') );
-        
-        if ( $this->old_spec !== $estate->spec_id )
+        $estate->syncTags($request->get('tags'));
+        $estate->features()->sync($request->get('features'));
+
+        if ($this->old_spec !== $estate->spec_id)
             $estate->spec_data()->delete();
 
-        if ( $request->get('specs', false) && count( $request->get('specs', []) ) )
+        if ($request->get('specs', false) && count($request->get('specs', [])))
             $this->createSpecData($request, $estate);
     }
 
@@ -241,66 +237,58 @@ class BaseEstateMutation extends MainMutation
     {
         $spec = $estate->spec;
 
-        if ( !$spec ) return;
-        
+        if (!$spec) return;
+
         $spec->load([
             'headers:id,spec_id',
             'headers.rows:id,spec_header_id',
             'headers.rows.defaults:id,spec_row_id',
-            'headers.rows.data' => function($query) use($estate) {
+            'headers.rows.data' => function ($query) use ($estate) {
                 return $query->where('estate_id', $estate->id);
             }
         ]);
 
-        $rows = $spec->headers->map(function($item) {
+        $rows = $spec->headers->map(function ($item) {
             return $item->rows;
         })->flatten(1)->keyBy('id');
 
 
-        foreach ( $request->get('specs') as $key => $item )
-        {
-            $row = $rows[ $item['id'] ];
+        foreach ($request->get('specs') as $key => $item) {
+            $row = $rows[$item['id']];
 
-            if ( $row->defaults()->count() !== 0 )
-            {
+            if ($row->defaults()->count() !== 0) {
                 $values = $row->defaults;
 
-                if ( $item['values'] ?? false )
+                if ($item['values'] ?? false)
                     $values = $values->whereIn('id', $item['values']);
-                    
-                elseif ( $item['value'] ?? false )
+
+                elseif ($item['value'] ?? false)
                     $values = $values->where('id', $item['value']);
-                
+
                 else
                     $values = collect([]);
-                
+
                 $this->createNewSpecData($row, $estate, null, $values->pluck('id'));
-            }
-            else
+            } else
                 $this->createNewSpecData($row, $estate, $item['data']);
         }
     }
 
     public function createNewSpecData($row, $estate, $data = null, $values = [])
     {
-        if ( $row->data )
-        {
-            if ( count($values ?? []) !== 0 || ( ( $data && $data !== '[]' ) || $data == 0 ) )
-            {
-                $row->data->update([ 'data' => $data ]);
-                $row->data->values()->sync( $values );
-            }
-            else
+        if ($row->data) {
+            if (count($values ?? []) !== 0 || (($data && $data !== '[]') || $data == 0)) {
+                $row->data->update(['data' => $data]);
+                $row->data->values()->sync($values);
+            } else
                 $row->data->delete();
-        }
-        else if ( count($values ?? []) !== 0 || ( ( $data && $data !== '[]' ) || $data == 0 ) ) 
-        {
+        } else if (count($values ?? []) !== 0 || (($data && $data !== '[]') || $data == 0)) {
             $spec_data = $row->data()->create([
                 'estate_id' => $estate->id,
                 'data' => $data
             ]);
 
-            $spec_data->values()->sync( $values );
+            $spec_data->values()->sync($values);
         }
     }
 }

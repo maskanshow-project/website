@@ -26,14 +26,14 @@ class RegisterConsultantRequest extends MainRequest
                 'min:6',
                 'max:30',
                 'alpha_dash',
-                Rule::unique('users')->where(function ($query) use($args) {
+                Rule::unique('users')->where(function ($query) use ($args) {
                     return $query->where('deleted_at', null);
                 }),
             ],
             'email'             => [
                 'nullable',
                 'email',
-                Rule::unique('users')->where(function ($query) use($args) {
+                Rule::unique('users')->where(function ($query) use ($args) {
                     return $query->where('deleted_at', null);
                 }),
             ],
@@ -42,7 +42,7 @@ class RegisterConsultantRequest extends MainRequest
                 'required',
                 'string',
                 'regex:/^(\+98|0)?9\d{9}$/',
-                Rule::unique('users')->where(function ($query) use($args) {
+                Rule::unique('users')->where(function ($query) use ($args) {
                     return $query->where('deleted_at', null);
                 }),
             ],
@@ -59,7 +59,7 @@ class RegisterConsultantRequest extends MainRequest
                 'string',
                 'min:6',
                 'max:30',
-                Rule::unique('offices', 'username')->where(function ($query) use($args) {
+                Rule::unique('offices', 'username')->where(function ($query) use ($args) {
                     return $query->where('deleted_at', null);
                 }),
             ],
@@ -69,11 +69,11 @@ class RegisterConsultantRequest extends MainRequest
                 'required',
                 'string',
                 'regex:/^(\+98|0)?9\d{9}$/',
-                Rule::unique('offices', 'phone_number')->where(function ($query) use($args) {
+                Rule::unique('offices', 'phone_number')->where(function ($query) use ($args) {
                     return $query->where('deleted_at', null);
                 }),
             ],
-            
+
             // relations
             'city_id'           => 'nullable|integer|exists:cities,id',
             'area_id'           => 'required|integer|exists:areas,id',
