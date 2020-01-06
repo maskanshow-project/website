@@ -2,12 +2,14 @@
 
 // Group Queries
 use App\GraphQL\Query\Group\{
-    Subject\SubjectQuery, Subject\SubjectsQuery
+    Subject\SubjectQuery,
+    Subject\SubjectsQuery
 };
 
 // Opinion Queries
 use App\GraphQL\Query\Opinion\{
-    Comment\CommentQuery, Comment\CommentsQuery
+    Comment\CommentQuery,
+    Comment\CommentsQuery
 };
 
 // Option Queries
@@ -18,86 +20,140 @@ use App\GraphQL\Query\Option\{
 
 // Shop Queries
 use App\GraphQL\Query\Shop\{
-    Spec\SpecQuery, Spec\SpecsQuery,
-    Label\LabelQuery, Label\LabelsQuery,
-    Estate\EstateQuery, Estate\EstatesQuery, Estate\VisitedEstatesQuery, Estate\RegisteredEstatesQuery,
-    Assignment\AssignmentQuery, Assignment\AssignmentsQuery,
-    EstateType\EstateTypeQuery, EstateType\EstateTypesQuery,
-    Feature\FeatureQuery, Feature\FeaturesQuery
+    Spec\SpecQuery,
+    Spec\SpecsQuery,
+    Label\LabelQuery,
+    Label\LabelsQuery,
+    Estate\EstateQuery,
+    Estate\EstatesQuery,
+    Estate\VisitedEstatesQuery,
+    Estate\RegisteredEstatesQuery,
+    Assignment\AssignmentQuery,
+    Assignment\AssignmentsQuery,
+    EstateType\EstateTypeQuery,
+    EstateType\EstateTypesQuery,
+    Feature\FeatureQuery,
+    Feature\FeaturesQuery
 };
 
 // Blog Queries
-use App\GraphQL\Query\Blog\Article\{ ArticlesQuery, ArticleQuery };
+use App\GraphQL\Query\Blog\Article\{ArticlesQuery, ArticleQuery};
 
 // Place Queries
 use App\GraphQL\Query\Place\{
-    Country\CountryQuery, Country\CountriesQuery,
-    Province\ProvinceQuery, Province\ProvincesQuery,
-    City\CityQuery, City\CitiesQuery,
-    Area\AreaQuery, Area\AreasQuery,
-    Street\StreetQuery, Street\StreetsQuery
+    Country\CountryQuery,
+    Country\CountriesQuery,
+    Province\ProvinceQuery,
+    Province\ProvincesQuery,
+    City\CityQuery,
+    City\CitiesQuery,
+    Area\AreaQuery,
+    Area\AreasQuery,
+    Street\StreetQuery,
+    Street\StreetsQuery
 };
 
 // User Queries
 use App\GraphQL\Query\User\{
-    User\UserQuery, User\UsersQuery,
-    Role\RoleQuery, Role\RolesQuery,
+    User\UserQuery,
+    User\UsersQuery,
+    Role\RoleQuery,
+    Role\RolesQuery,
     User\MeQuery,
     Favorite\FavoriteQuery,
-    BlacklistPhoneNumber\BlacklistPhoneNumbersQuery, BlacklistPhoneNumber\BlacklistPhoneNumberQuery,
-    Message\MessageQuery, Message\MessagesQuery,
-    Office\OfficeQuery, Office\OfficesQuery
+    BlacklistPhoneNumber\BlacklistPhoneNumbersQuery,
+    BlacklistPhoneNumber\BlacklistPhoneNumberQuery,
+    Message\MessageQuery,
+    Message\MessagesQuery,
+    Office\OfficeQuery,
+    Office\OfficesQuery
 };
 
 // Group Mutations
 use App\GraphQL\Mutation\Group\{
-    Subject\CreateSubjectMutation, Subject\UpdateSubjectMutation, Subject\DeleteSubjectMutation
+    Subject\CreateSubjectMutation,
+    Subject\UpdateSubjectMutation,
+    Subject\DeleteSubjectMutation
 };
 
 // Opinion Mutations
 use App\GraphQL\Mutation\Opinion\{
-    Comment\CreateCommentMutation, Comment\UpdateCommentMutation, Comment\DeleteCommentMutation, Comment\ActiveCommentMutation
+    Comment\CreateCommentMutation,
+    Comment\UpdateCommentMutation,
+    Comment\DeleteCommentMutation,
+    Comment\ActiveCommentMutation
 };
 
 // Estate Mutations
 use App\GraphQL\Mutation\Estate\{
-    Label\CreateLabelMutation, Label\UpdateLabelMutation, Label\DeleteLabelMutation,
-    Feature\CreateFeatureMutation, Feature\UpdateFeatureMutation, Feature\DeleteFeatureMutation,
-    Estate\AssignmentEstateMutation, Estate\AcceptAssignmentEstateMutation,
+    Label\CreateLabelMutation,
+    Label\UpdateLabelMutation,
+    Label\DeleteLabelMutation,
+    Feature\CreateFeatureMutation,
+    Feature\UpdateFeatureMutation,
+    Feature\DeleteFeatureMutation,
+    Estate\AssignmentEstateMutation,
+    Estate\AcceptAssignmentEstateMutation,
     Estate\ActiveEstateMutation
 };
 
 // Blog Mutations
 use App\GraphQL\Mutation\Blog\{
-    Article\ActiveArticleMutation, Article\CreateArticleMutation, Article\UpdateArticleMutation, Article\DeleteArticleMutation
+    Article\ActiveArticleMutation,
+    Article\CreateArticleMutation,
+    Article\UpdateArticleMutation,
+    Article\DeleteArticleMutation
 };
 
 // User Mutations
 use App\GraphQL\Mutation\User\{
-    User\ActiveUserMutation, User\UpdateUserMutation, User\DeleteUserMutation,
-    User\LoginUserMutation, User\RegisterUserMutation, User\UpdateUserPasswordMutation,
-    User\ChangeCreditUserMutation, User\LogoutUserMutation,
+    User\ActiveUserMutation,
+    User\UpdateUserMutation,
+    User\DeleteUserMutation,
+    User\LoginUserMutation,
+    User\RegisterUserMutation,
+    User\UpdateUserPasswordMutation,
+    User\ChangeCreditUserMutation,
+    User\LogoutUserMutation,
 
-    AccessCode\CreateAccessCodeMutation, AccessCode\LoginWithAccessCodeMutation,
+    AccessCode\CreateAccessCodeMutation,
+    AccessCode\LoginWithAccessCodeMutation,
 
-    Password\RequestResetPasswordMutation, Password\ResetPasswordMutation,
+    Password\RequestResetPasswordMutation,
+    Password\ResetPasswordMutation,
 
-    Role\CreateRoleMutation, Role\UpdateRoleMutation, Role\DeleteRoleMutation,
-    
-    Favorite\AddFavoriteMutation, Favorite\RemoveFavoriteMutation,
-    BlacklistPhoneNumber\CreateBlacklistPhoneNumberMutation, BlacklistPhoneNumber\UpdateBlacklistPhoneNumberMutation, BlacklistPhoneNumber\DeleteBlacklistPhoneNumberMutation,
-    Message\CreateMessageMutation, Message\UpdateMessageMutation, Message\DeleteMessageMutation,
+    Role\CreateRoleMutation,
+    Role\UpdateRoleMutation,
+    Role\DeleteRoleMutation,
+
+    Favorite\AddFavoriteMutation,
+    Favorite\RemoveFavoriteMutation,
+    BlacklistPhoneNumber\CreateBlacklistPhoneNumberMutation,
+    BlacklistPhoneNumber\UpdateBlacklistPhoneNumberMutation,
+    BlacklistPhoneNumber\DeleteBlacklistPhoneNumberMutation,
+    Message\CreateMessageMutation,
+    Message\UpdateMessageMutation,
+    Message\DeleteMessageMutation,
     User\RegisterConsultantMutation,
     User\EmptyAuthCodeUserMutation,
-    Office\UpdateOfficeMutation, Office\DeleteOfficeMutation
+    Office\UpdateOfficeMutation,
+    Office\DeleteOfficeMutation
 };
 
 // Spec Mutations
 use App\GraphQL\Mutation\Spec\{
-    Spec\CreateSpecMutation, Spec\UpdateSpecMutation, Spec\DeleteSpecMutation,
-    SpecHeader\CreateSpecHeaderMutation, SpecHeader\UpdateSpecHeaderMutation, SpecHeader\DeleteSpecHeaderMutation,
-    SpecRow\CreateSpecRowMutation, SpecRow\UpdateSpecRowMutation, SpecRow\DeleteSpecRowMutation,
-    SpecDefault\CreateSpecDefaultMutation, SpecDefault\UpdateSpecDefaultMutation, SpecDefault\DeleteSpecDefaultMutation
+    Spec\CreateSpecMutation,
+    Spec\UpdateSpecMutation,
+    Spec\DeleteSpecMutation,
+    SpecHeader\CreateSpecHeaderMutation,
+    SpecHeader\UpdateSpecHeaderMutation,
+    SpecHeader\DeleteSpecHeaderMutation,
+    SpecRow\CreateSpecRowMutation,
+    SpecRow\UpdateSpecRowMutation,
+    SpecRow\DeleteSpecRowMutation,
+    SpecDefault\CreateSpecDefaultMutation,
+    SpecDefault\UpdateSpecDefaultMutation,
+    SpecDefault\DeleteSpecDefaultMutation
 };
 
 
@@ -184,6 +240,7 @@ use App\GraphQL\Mutation\Financial\Plan\ValidatePromocodeMutation;
 use App\GraphQL\Type\User\OfficeType;
 use App\GraphQL\Type\Option\CustomerOpinionType;
 use App\GraphQL\Input\CustomerOpinionInput;
+use App\GraphQL\Mutation\Option\SiteSetting\AdvertisingSiteSettingMutation;
 use App\GraphQL\Mutation\Option\SiteSetting\OpinionsSiteSettingMutation;
 
 return [
@@ -299,7 +356,7 @@ return [
                 // Opinion
                 'comment' => CommentQuery::class,
                 'comments' => CommentsQuery::class,
-                
+
                 // Option
                 'siteSetting' => SiteSettingQuery::class,
                 'userSetting' => UserSettingQuery::class,
@@ -369,7 +426,7 @@ return [
                 'updateArticle' => UpdateArticleMutation::class,
                 'deleteArticle' => DeleteArticleMutation::class,
 
-                
+
                 // Group
                 'createSubject' => CreateSubjectMutation::class,
                 'updateSubject' => UpdateSubjectMutation::class,
@@ -400,6 +457,7 @@ return [
                 'updateSiteInfo' => InfoSiteSettingMutation::class,
                 'updateSitePosters' => PostersSiteSettingMutation::class,
                 'updateSiteOpinions' => OpinionsSiteSettingMutation::class,
+                'updateSiteAds' => AdvertisingSiteSettingMutation::class,
 
                 // Place
                 'createArea' => CreateAreaMutation::class,
@@ -409,7 +467,7 @@ return [
                 'createStreet' => CreateStreetMutation::class,
                 'updateStreet' => UpdateStreetMutation::class,
                 'deleteStreet' => DeleteStreetMutation::class,
-                
+
                 // Estate
                 'assignmentEstate' => AssignmentEstateMutation::class,
                 'acceptAssignmentEstate' => AcceptAssignmentEstateMutation::class,
@@ -434,16 +492,16 @@ return [
                 'updateEstateType' => UpdateEstateTypeMutation::class,
                 'deleteEstateType' => DeleteEstateTypeMutation::class,
 
-                
+
                 // Spec
                 'createSpec' => CreateSpecMutation::class,
                 'updateSpec' => UpdateSpecMutation::class,
                 'deleteSpec' => DeleteSpecMutation::class,
-                
+
                 'createSpecHeader' => CreateSpecHeaderMutation::class,
                 'updateSpecHeader' => UpdateSpecHeaderMutation::class,
                 'deleteSpecHeader' => DeleteSpecHeaderMutation::class,
-                
+
                 'createSpecRow' => CreateSpecRowMutation::class,
                 'updateSpecRow' => UpdateSpecRowMutation::class,
                 'deleteSpecRow' => DeleteSpecRowMutation::class,
@@ -452,7 +510,7 @@ return [
                 'updateSpecDefault' => UpdateSpecDefaultMutation::class,
                 'deleteSpecDefault' => DeleteSpecDefaultMutation::class,
 
-                
+
                 // User
                 'activeUser'    => ActiveUserMutation::class,
                 'updateUser'    => UpdateUserMutation::class,
@@ -481,7 +539,7 @@ return [
 
                 // Favorite
                 'addFavorite'   => AddFavoriteMutation::class,
-                'removeFavorite'=> RemoveFavoriteMutation::class,
+                'removeFavorite' => RemoveFavoriteMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post', 'put', 'delete']
@@ -497,10 +555,10 @@ return [
     //     'user' => 'App\GraphQL\Type\UserType'
     // ]
     //
-    'types' => [        
+    'types' => [
         // Opinion
         'comment'           => CommentType::class,
-        
+
         // Option
         'site_settings'     => SiteSettingType::class,
         'user_settings'     => UserSettingType::class,
@@ -609,7 +667,7 @@ return [
      */
     'graphiql' => [
         'prefix' => '/graphiql/{graphql_schema?}',
-        'controller' => \Rebing\GraphQL\GraphQLController::class.'@graphiql',
+        'controller' => \Rebing\GraphQL\GraphQLController::class . '@graphiql',
         'middleware' => [],
         'view' => 'graphql::graphiql',
         'display' => env('ENABLE_GRAPHIQL', true),

@@ -173,10 +173,10 @@ export default {
 
       if (!this.attr('is_creating') && this.group !== 'setting') {
         if (this.attr('is_incrementing'))
-          form.args = `id: "${ this.attr('selected').id }", ` + form.args
+          form.args = `id: "${this.attr('selected').id}", ` + form.args
 
         else
-          form.args = `id: ${ this.attr('selected').id }, ` + form.args
+          form.args = `id: ${this.attr('selected').id}, ` + form.args
       }
 
       const query = {
@@ -218,31 +218,31 @@ export default {
 
 
       axios.post('/graphql/auth', fd).then(({
-          data
-        }) => {
-          // this.setAttr('is_mutation_loading', false)
-          // return console.log( data )
+        data
+      }) => {
+        // this.setAttr('is_mutation_loading', false)
+        // return console.log( data )
 
-          var msg = this.attr('is_creating') ? 'ثبت شد' : 'بروزرسانی شد'
+        var msg = this.attr('is_creating') ? 'ثبت شد' : 'بروزرسانی شد'
 
-          if (this.attr('is_creating')) {
-            this.setAttr('counts', {
-              total: this.attr('counts').total + 1,
-            })
-          }
-
-          this.$swal.fire({
-            title: msg,
-            text: `${this.label} با موفقیت ${msg}:)`,
-            type: 'success',
-            showConfirmButton: false,
-            timer: 1000,
+        if (this.attr('is_creating')) {
+          this.setAttr('counts', {
+            total: this.attr('counts').total + 1,
           })
+        }
 
-          this.setAttr('is_mutation_loading', false)
-
-          options.callback(data.data)
+        this.$swal.fire({
+          title: msg,
+          text: `${this.label} با موفقیت ${msg}:)`,
+          type: 'success',
+          showConfirmButton: false,
+          timer: 1000,
         })
+
+        this.setAttr('is_mutation_loading', false)
+
+        options.callback(data.data)
+      })
         .catch((error) => {
           console.log(error)
 

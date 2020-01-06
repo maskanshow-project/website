@@ -40,7 +40,7 @@ export default {
             site_slider: false,
             site_posters: false,
         },
-        
+
         is_creating: {
             site_info: false,
             site_slider: false,
@@ -54,7 +54,7 @@ export default {
             user_info: false,
             user_password: false,
         },
-        
+
         is_query_loading: {
             site_info: false,
             site_slider: false,
@@ -62,7 +62,7 @@ export default {
             user_info: false,
             user_password: false,
         },
-        
+
         is_loading: {
             site_info: false,
             site_slider: false,
@@ -112,15 +112,15 @@ export default {
             site_info: {
                 labels: [],
                 data: [],
-            },       
+            },
             site_slider: {
                 labels: [],
                 data: [],
-            },       
+            },
             site_posters: {
                 labels: [],
                 data: [],
-            },       
+            },
         },
 
         selected_items: {
@@ -178,6 +178,12 @@ export default {
             },
             site_posters: {
                 posters: {
+                    type: '[SliderItemInput]',
+                    value: null
+                },
+            },
+            site_ads: {
+                ads: {
                     type: '[SliderItemInput]',
                     value: null
                 },

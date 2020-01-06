@@ -40,31 +40,43 @@ class SiteSettingType extends BaseType
             ],
             'is_enabled' => [
                 'type' => Type::boolean(),
-                'resolve' => function($data) {                    
-                    return is_null( $data['is_enabled'] ?? null ) ? true : $data['is_enabled'];
+                'resolve' => function ($data) {
+                    return is_null($data['is_enabled'] ?? null) ? true : $data['is_enabled'];
                 }
             ],
             'opinions' => [
-                'type' => Type::listOf( \GraphQL::type('customer_opinion') ),
+                'type' => Type::listOf(\GraphQL::type('customer_opinion')),
                 'is_relation' => false,
-                'resolve' => function($data) {
-                    $opinions = json_decode( $data[ 'opinions' ]['value'] ?? '[]' );
-                    
-                    foreach ( $opinions as $opinion )
-                        $opinion->avatar = $data[ 'opinions' ]->media->where('id', $opinion->avatar ?? null)->first();
-    
+                'resolve' => function ($data) {
+                    $opinions = json_decode($data['opinions']['value'] ?? '[]');
+
+                    foreach ($opinions as $opinion)
+                        $opinion->avatar = $data['opinions']->media->where('id', $opinion->avatar ?? null)->first();
+
                     return $opinions;
                 }
             ],
             'posters' => [
-                'type' => Type::listOf( \GraphQL::type('slider_item') ),
+                'type' => Type::listOf(\GraphQL::type('slider_item')),
                 'is_relation' => false,
-                'resolve' => function($data) {
-                    $posters = json_decode( $data[ 'posters' ]['value'] ?? '[]' );
-                    
-                    foreach ( $posters as $poster )
-                        $poster->image = $data[ 'posters' ]->media->where('id', $poster->image ?? null)->first();
-    
+                'resolve' => function ($data) {
+                    $posters = json_decode($data['posters']['value'] ?? '[]');
+
+                    foreach ($posters as $poster)
+                        $poster->image = $data['posters']->media->where('id', $poster->image ?? null)->first();
+
+                    return $posters;
+                }
+            ],
+            'ads' => [
+                'type' => Type::listOf(\GraphQL::type('slider_item')),
+                'is_relation' => false,
+                'resolve' => function ($data) {
+                    $posters = json_decode($data['ads']['value'] ?? '[]');
+
+                    foreach ($posters as $poster)
+                        $poster->image = $data['ads']->media->where('id', $poster->image ?? null)->first();
+
                     return $posters;
                 }
             ],
@@ -76,8 +88,8 @@ class SiteSettingType extends BaseType
         return [
             'type' => \GraphQL::type('single_media'),
             'is_relation' => false,
-            'resolve' => function($data) use($field) {
-                return $data[ $field ][0] ?? null;
+            'resolve' => function ($data) use ($field) {
+                return $data[$field][0] ?? null;
             }
         ];
     }

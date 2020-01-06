@@ -29,7 +29,7 @@ class SiteSettingRequest extends MainRequest
 
             'banner'                => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             'header_banner'         => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
-            
+
             'opinions'              => 'nullable|array',
             'opinions.*'            => 'required|array',
             'opinions.*.avatar'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
@@ -43,6 +43,11 @@ class SiteSettingRequest extends MainRequest
             'posters.*.title'       => 'nullable|string|max:50',
             'posters.*.description' => 'nullable|string|max:100',
             'posters.*.link'        => 'nullable|url|max:200',
+
+            'ads'                   => 'nullable|array',
+            'ads.*'                 => 'required|array',
+            'ads.*.image'           => 'nullable|image|mimes:jpeg,jpg,png,gif|max:3072',
+            'ads.*.link'            => 'nullable|url|max:200',
         ];
     }
 }
