@@ -36,6 +36,19 @@ class SingleMediaType extends GraphQLType
             'large' => $this->imageType('large'),
             'wide' => $this->imageType('wide'),
             'watermark' => $this->imageType('watermark'),
+            'original' => [
+                'type' => Type::string(),
+                'selectable' => false,
+                'resolve' => function ($image) {
+                    $file = pathinfo($image->file_name ?? $image->name);
+
+                    $ext = $file['extension'] ?? 'jpg';
+
+                    if ($ext === 'jpeg') $ext = 'jpg';
+
+                    return "/uploads/images/{$image->id}/{$file['filename']}.{$ext}";
+                }
+            ]
         ];
     }
 
@@ -44,7 +57,7 @@ class SingleMediaType extends GraphQLType
         return [
             'type' => Type::string(),
             'selectable' => false,
-            'resolve' => function($image) use($type) {
+            'resolve' => function ($image) use ($type) {
                 return $this->getUrl($image, $type);
             }
         ];
@@ -56,8 +69,8 @@ class SingleMediaType extends GraphQLType
 
         $ext = $file['extension'] ?? 'jpg';
 
-        if ( $ext === 'jpeg') $ext = 'jpg';
-                    
+        if ($ext === 'jpeg') $ext = 'jpg';
+
         return "/uploads/images/{$image->id}/conversions/{$file['filename']}-{$type}.{$ext}";
     }
 }

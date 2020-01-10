@@ -47,7 +47,7 @@ class SiteSettingRequest extends MainRequest
             'ads'                   => 'nullable|array',
             'ads.*'                 => 'required|array',
             'ads.*.image'           => 'nullable|image|mimes:jpeg,jpg,png,gif|max:3072',
-            'ads.*.link'            => 'nullable|url|max:200',
+            'ads.*.link'            => 'nullable|max:200',
         ];
     }
 }

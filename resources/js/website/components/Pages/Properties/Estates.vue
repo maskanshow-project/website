@@ -57,7 +57,7 @@
                 <a :href="$store.state.siteSetting.ads[(index - 3) / 4].link">
                   <v-img
                     v-if="$store.state.siteSetting.ads[(index - 3) / 4].image"
-                    :src="$store.state.siteSetting.ads[(index - 3) / 4].image.large"
+                    :src="$store.state.siteSetting.ads[(index - 3) / 4].image.original"
                     max-height="300"
                     class="w-100 mb-4 shadow rounded"
                   ></v-img>

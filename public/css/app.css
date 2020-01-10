@@ -10642,3 +10642,15 @@ a.text-dark:focus {
   }
 }
 
+input.el-input__inner::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #898989;
+  opacity: 1; /* Firefox */
+}
+
+input.el-input__inner:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #898989;
+}
+
+input.el-input__inner::-ms-input-placeholder { /* Microsoft Edge */
+  color: #898989;
+}

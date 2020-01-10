@@ -33,6 +33,9 @@ class SliderItemInput extends GraphQLType
             'link' => [
                 'type' => Type::string()
             ],
+            'delete_image' => [
+                'type' => Type::boolean()
+            ],
         ];
     }
 }

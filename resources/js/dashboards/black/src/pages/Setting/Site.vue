@@ -189,6 +189,17 @@
                   />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
+                <div
+                  class="text-left ml-2"
+                  :style="{
+                  marginTop: '-45px',
+                  zIndex: 10000,
+                  position: 'relative',
+                  marginBottom: '15px'
+                }"
+                >
+                  <el-button @click="removeImage(ad)" type="danger" size="mini">حذف تصویر</el-button>
+                </div>
                 <small
                   slot="helperText"
                   id="emailHelp"
@@ -600,6 +611,12 @@ export default {
       else if (type === "ads") this.ads[index].image = fileObj;
       else this.info[type] = fileObj;
     },
+    removeImage(ad) {
+      if (!ad.image.file) ad.delete_image = true;
+
+      ad.image.file = null;
+      ad.image.url = null;
+    },
     validate() {
       return true;
     },
@@ -673,6 +690,7 @@ export default {
         return {
           ads: this.ads.map(i => {
             return {
+              delete_image: i.delete_image || false,
               link: i.link,
               image: null
             };

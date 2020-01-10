@@ -822,7 +822,7 @@ export default {
                                 image {
                                     id
                                     file_name
-                                    large
+                                    original
                                 }
                             }
                         }

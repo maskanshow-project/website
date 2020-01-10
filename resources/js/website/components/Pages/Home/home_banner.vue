@@ -1,27 +1,27 @@
 <template>
-    <section class="home_banner_area">
-
-        <div class="banner_inner d-flex align-items-start"
-            :style=" siteSetting.banner
+  <section class="home_banner_area">
+    <div
+      class="banner_inner d-flex align-items-start"
+      :style=" siteSetting.banner
                 ? `background: url(${url+siteSetting.banner.large})` + style_bg
-                : 'background: url(/img/banner/home-banner.jpg)' + style_bg ">
-            <div class="container mt-100" :class="{ 'mt-3' : Res }">
-                <div class="banner_content text-center">
-                    <div class="rtl title">
-                        <h3 class="d-inline-block typed " id="typed"></h3>
-                    </div>
-                    <h5 class="web-color"> ... لذت داشتن یک  خونه </h5>
-                </div>
-            </div>
+                : 'background: url(/img/banner/home-banner.jpg)' + style_bg "
+    >
+      <div class="container mt-100" :class="{ 'mt-3' : Res }">
+        <div class="banner_content text-center">
+          <div class="rtl title">
+            <h3 class="d-inline-block typed" id="typed"></h3>
+          </div>
+          <h5 class="web-color">... لذت داشتن یک خونه</h5>
         </div>
+      </div>
+    </div>
 
-        <div class="container banner-items" :class="{ 'mv-100' : Res }">
-            <div class="advanced_search">
-                <div class="mt-30">
-                    <div class="row col-lg-10 m-auto d-flex">
-                    
-                        <div class="col-md-4 text-center">
-                            <!-- <router-link to="">
+    <div class="container banner-items" :class="{ 'mv-100' : Res }">
+      <div class="advanced_search">
+        <div>
+          <div class="row col-lg-10 m-auto d-flex">
+            <div class="col-md-4 text-center">
+              <!-- <router-link to="">
                                 <div class="items d-inline-table">
                                     <svg class="banner-svg" viewBox="-1 0 484 484.5522" xmlns="http://www.w3.org/2000/svg"><path d="m477.980469 348.800781-45.105469-16.417969c-4.15625-1.503906-8.742188.644532-10.246094 4.800782l-2.738281 7.511718-52.253906-19.054687c-1.3125-.492187-2.734375-.613281-4.113281-.359375l-108.71875 19.199219c-9.855469 1.753906-18.320313 8.011719-22.898438 16.910156l-49.871094-18.191406c-7.964844-2.929688-16.777344-2.539063-24.453125 1.082031-9.753906 4.550781-16.570312 13.683594-18.160156 24.328125-1.992187 15.40625 7.132813 30.089844 21.832031 35.125l164.277344 59.792969c.875.324218 1.804688.492187 2.738281.488281.871094 0 1.734375-.144531 2.558594-.421875l45.878906-15.488281 4.882813 1.773437-2.738282 7.519532c-1.503906 4.15625.644532 8.746093 4.800782 10.25l45.113281 16.414062c.871094.324219 1.796875.492188 2.726563.488281 3.363281.003907 6.371093-2.101562 7.519531-5.261719l43.777343-120.289062c1.472657-4.144531-.675781-8.699219-4.808593-10.199219zm-103.738281 83.269531-45.878907 15.488282-161.640625-58.839844c-7.476562-2.488281-12.246094-9.816406-11.488281-17.664062.675781-4.78125 3.472656-9 7.613281-11.488282 4.140625-2.484375 9.179688-2.964844 13.714844-1.308594l51.90625 18.886719c.027344 1.476563.144531 2.949219.359375 4.40625 3.136719 17.351563 19.667969 28.9375 37.046875 25.960938l90.066406-15.878907-2.785156-15.761718-90.023438 15.882812c-8.667968 1.472656-16.917968-4.277344-18.535156-12.921875-.332031-1.824219-.320312-3.699219.039063-5.519531.058593-.265625.105469-.53125.136719-.800781.105468-.683594.289062-1.351563.550781-1.992188 1.964843-5.371093 6.636719-9.289062 12.265625-10.296875l106.589844-18.796875 50.242187 18.277344-27.363281 75.199219-7.519532-2.726563c-1.703124-.632812-3.570312-.671875-5.296874-.105469zm52.433593 34.25-30.070312-10.945312 38.300781-105.246094 30.074219 10.941406zm0 0"/><path d="m186.621094 129.046875c2.582031 9.453125 7.34375 18.171875 13.902344 25.449219-.121094.640625-.207032 1.285156-.246094 1.9375v43.566406c0 13.253906 10.742187 24 24 24v80c-.019532 3.046875 1.699218 5.839844 4.421875 7.199219l16 8c2.253906 1.125 4.902343 1.125 7.152343 0l16-8c2.726563-1.359375 4.441407-4.152344 4.425782-7.199219v-80c13.253906 0 24-10.746094 24-24v-43.566406c-.042969-.699219-.132813-1.394532-.265625-2.082032 5.34375-5.878906 9.507812-12.730468 12.265625-20.183593 11.8125 1.984375 23.636718-3.441407 29.839844-13.6875 7.605468-12.582031 5.523437-28.75-5.023438-38.992188l-65.105469-65.089843c-10.476562-10.53125-24.734375-16.4375005-39.59375-16.398438h-84.117187c-1.085938-.00390625-2.15625.21875-3.152344.648438l-54.449219 23.351562h-6.398437v-16c0-4.417969-3.582032-8-8-8h-64c-4.417969 0-8 3.582031-8 8v128c0 4.417969 3.582031 8 8 8h64c4.417968 0 8-3.582031 8-8v-16h1.167968c5.726563 19.199219 31.453126 32 54.832032 32 19.394531.398438 37.921875-8.046875 50.34375-22.953125zm-122.34375-1.046875h-48v-112h48zm192 171.054688-8 4-8-4v-75.054688h16zm24-99.054688c0 4.417969-3.582032 8-8 8h-48c-4.417969 0-8-3.582031-8-8v-32.65625c5.378906 3.132812 11.195312 5.453125 17.253906 6.878906 2.765625 6.730469 9.699219 10.769532 16.914062 9.855469 7.21875-.910156 12.929688-6.546875 13.933594-13.753906 1.003906-7.203125-2.949218-14.1875-9.640625-17.039063-6.695312-2.847656-14.46875-.859375-18.964843 4.859375-4.511719-1.183593-8.828126-3.023437-12.800782-5.464843 7.710938-4.675782 16.34375-7.636719 25.304688-8.679688 11.484375 1.613281 22.4375 5.871094 32 12.433594zm5.957031-58.617188c-11.4375-7.355468-24.433594-11.9375-37.957031-13.382812-13.5 1.4375-26.476563 6.011719-37.898438 13.351562-4.878906-6.210937-8.109375-13.554687-9.390625-21.351562h39.289063c11.71875.117188 22.515625-6.34375 27.949218-16.726562l22.402344 22.398437c.894532.835937 1.839844 1.613281 2.832032 2.328125-1.648438 4.832031-4.089844 9.355469-7.226563 13.382812zm-14.335937-57.070312c-.746094-6.546875-3.519532-12.699219-7.925782-17.601562 18.09375 6.285156 30.722656 22.722656 32.128906 41.824218zm-95.621094 27.6875c0 12.113281-19.816406 24-40 24s-40-11.886719-40-24c0-4.417969-3.582032-8-8-8h-8v-64h8c1.082031.003906 2.15625-.21875 3.152344-.648438l54.445312-23.351562h82.480469c10.625-.039062 20.828125 4.179688 28.320312 11.710938l65.089844 65.089843c5.261719 4.914063 6.445313 12.804688 2.855469 19.046875-2.671875 4.230469-7.34375 6.769532-12.34375 6.710938-.128906 0-.25 0-.378906 0 .242187-2.175782.367187-4.367188.378906-6.558594-.039063-35.328125-28.671875-63.960938-64-64-10.75.015625-21.320313 2.769531-30.714844 8h-65.285156v16h88c8.835937 0 16 7.164062 16 16s-7.164063 16-16 16h-56c-4.417969 0-8 3.582031-8 8zm0 0"/></svg>
                                     <div>
@@ -30,185 +30,192 @@
                                     </div>
                                     <span class="comming-soon">به زودی</span>
                                 </div>
-                            </!-->
-                        </div>
+              </!-->
+            </div>
 
-                        <div class="col-md-4 text-center">
-                            <router-link to="/properties">
-                                <div class="items d-inline-table">
-                                    <svg class="banner-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-                                        <g>
-                                            <g>
-                                                <path d="M0,490.667v10.667C0,507.224,4.776,512,10.667,512h490.667c5.891,0,10.667-4.776,10.667-10.667v-10.667H0z"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path d="M202.667,192H32c-5.891,0-10.667,4.776-10.667,10.667v298.667C21.333,507.224,26.109,512,32,512h170.667
+            <div class="col-md-4 text-center">
+              <router-link to="/properties">
+                <div class="items d-inline-table">
+                  <svg
+                    class="banner-svg"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 512 512"
+                    style="enable-background:new 0 0 512 512;"
+                    xml:space="preserve"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          d="M0,490.667v10.667C0,507.224,4.776,512,10.667,512h490.667c5.891,0,10.667-4.776,10.667-10.667v-10.667H0z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M202.667,192H32c-5.891,0-10.667,4.776-10.667,10.667v298.667C21.333,507.224,26.109,512,32,512h170.667
                                                     c5.891,0,10.667-4.776,10.667-10.667V202.667C213.333,196.776,208.558,192,202.667,192z M192,490.667H42.667V213.333H192V490.667z
-                                                    "/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path d="M480,64H309.333c-5.891,0-10.667,4.776-10.667,10.667v426.667c0,5.891,4.776,10.667,10.667,10.667H480
-                                                    c5.891,0,10.667-4.776,10.667-10.667V74.667C490.667,68.776,485.891,64,480,64z M469.333,490.667H320V85.333h149.333V490.667z"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path d="M405.333,0h-288c-5.891,0-10.667,4.776-10.667,10.667v160H128V21.333h266.667v21.333H416v-32
-                                                    C416,4.776,411.224,0,405.333,0z"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="64" y="234.667" width="21.333" height="192"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="106.667" y="234.667" width="21.333" height="192"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="149.333" y="234.667" width="21.333" height="192"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="117.333" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="170.667" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="224" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="277.333" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="330.667" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="309.333" y="384" width="117.333" height="21.333"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="160" y="53.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="160" y="117.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="202.667" y="117.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="202.667" y="53.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="53.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="117.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="181.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="245.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="309.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <rect x="245.333" y="373.333" width="21.333" height="32"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path d="M405.333,437.333H352c-5.891,0-10.667,4.776-10.667,10.667v53.333h21.333v-42.667h32v42.667H416V448
-                                                    C416,442.109,411.224,437.333,405.333,437.333z"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                            <g>
-                                                <path d="M160,448H74.667C68.776,448,64,452.776,64,458.667v42.667h21.333v-32h64v32h21.333v-42.667
-                                                    C170.667,452.776,165.891,448,160,448z"/>
-                                            </g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                        <g>
-                                        </g>
-                                    </svg>
-                                    <div>
-                                        <h4 class="mt-4 mt-xs-0 bold web-color mb-0"> املاک </h4>
-                                        <p class="text-muted text-center mt-2 mb-0 fs-10"> ورود به صفحه املاک </p>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
+                                                    "
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M480,64H309.333c-5.891,0-10.667,4.776-10.667,10.667v426.667c0,5.891,4.776,10.667,10.667,10.667H480
+                                                    c5.891,0,10.667-4.776,10.667-10.667V74.667C490.667,68.776,485.891,64,480,64z M469.333,490.667H320V85.333h149.333V490.667z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M405.333,0h-288c-5.891,0-10.667,4.776-10.667,10.667v160H128V21.333h266.667v21.333H416v-32
+                                                    C416,4.776,411.224,0,405.333,0z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="64" y="234.667" width="21.333" height="192" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="106.667" y="234.667" width="21.333" height="192" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="149.333" y="234.667" width="21.333" height="192" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="117.333" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="170.667" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="224" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="277.333" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="330.667" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="309.333" y="384" width="117.333" height="21.333" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="160" y="53.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="160" y="117.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="202.667" y="117.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="202.667" y="53.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="53.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="117.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="181.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="245.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="309.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <rect x="245.333" y="373.333" width="21.333" height="32" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M405.333,437.333H352c-5.891,0-10.667,4.776-10.667,10.667v53.333h21.333v-42.667h32v42.667H416V448
+                                                    C416,442.109,411.224,437.333,405.333,437.333z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M160,448H74.667C68.776,448,64,452.776,64,458.667v42.667h21.333v-32h64v32h21.333v-42.667
+                                                    C170.667,452.776,165.891,448,160,448z"
+                        />
+                      </g>
+                    </g>
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                    <g />
+                  </svg>
+                  <div>
+                    <h4 class="mt-4 mt-xs-0 bold web-color mb-0">املاک</h4>
+                    <p class="text-muted text-center mt-2 mb-0 fs-10">ورود به صفحه املاک</p>
+                  </div>
+                </div>
+              </router-link>
+            </div>
 
-                        <!-- <div class="col-md-4 text-center">
+            <!-- <div class="col-md-4 text-center">
                             <router-link to="">
                                 <div class="items d-inline-table">
                                     <svg class="banner-svg" viewBox="0 0 480.00345 480" xmlns="http://www.w3.org/2000/svg"><path d="m136 272h16v16h-16zm0 0"/><path d="m168 272h16v16h-16zm0 0"/><path d="m200 272h16v16h-16zm0 0"/><path d="m136 304h16v16h-16zm0 0"/><path d="m168 304h16v16h-16zm0 0"/><path d="m200 304h16v16h-16zm0 0"/><path d="m232 304h16v16h-16zm0 0"/><path d="m264 304h16v16h-16zm0 0"/><path d="m136 336h16v16h-16zm0 0"/><path d="m168 336h16v16h-16zm0 0"/><path d="m200 336h16v16h-16zm0 0"/><path d="m232 336h16v16h-16zm0 0"/><path d="m264 336h16v16h-16zm0 0"/><path d="m136 368h16v16h-16zm0 0"/><path d="m168 368h16v16h-16zm0 0"/><path d="m200 368h16v16h-16zm0 0"/><path d="m232 368h16v16h-16zm0 0"/><path d="m264 368h16v16h-16zm0 0"/><path d="m136 400h16v16h-16zm0 0"/><path d="m168 400h16v16h-16zm0 0"/><path d="m200 400h16v16h-16zm0 0"/><path d="m232 400h16v16h-16zm0 0"/><path d="m264 400h16v16h-16zm0 0"/><path d="m136 432h16v16h-16zm0 0"/><path d="m168 432h16v16h-16zm0 0"/><path d="m200 432h16v16h-16zm0 0"/><path d="m232 432h16v16h-16zm0 0"/><path d="m264 432h16v16h-16zm0 0"/><path d="m472 24h-56v-16c0-4.417969-3.582031-8-8-8h-80c-4.417969 0-8 3.582031-8 8v16h-312c-4.417969 0-8 3.582031-8 8v32c0 4.421875 3.582031 8 8 8h24v152c0 4.421875 3.582031 8 8 8s8 3.582031 8 8c0 4.421875-3.582031 8-8 8s-8-3.578125-8-8h-16c.023438 5.855469 2.199219 11.5 6.121094 15.851562l-20.519532 27.351563.101563.078125c-1.070313 1.34375-1.6679688 3.003906-1.703125 4.71875v32c0 2.125.84375 4.15625 2.34375 5.65625l16 16c1.5 1.5 3.535156 2.34375 5.65625 2.34375h32c2.121094 0 4.15625-.84375 5.65625-2.34375l16-16c1.5-1.5 2.34375-3.53125 2.34375-5.65625v-32c-.035156-1.714844-.632812-3.375-1.703125-4.71875l.101563-.078125-20.519532-27.351563c5.34375-5.9375 7.359375-14.15625 5.371094-21.890624-1.984375-7.734376-7.710938-13.960938-15.25-16.589844v-145.371094h272v8c0 4.421875 3.582031 8 8 8h16v376h-32v-320h-16v32h-48v-16h-16v16h-48v-8h-16v8h-48v-24h104v-16h-104v-32h-16v360h-12.6875l-37.65625-37.652344c-3.125-3.125-8.1875-3.125-11.3125 0l-37.65625 37.652344h-4.6875v16h480v-16h-6.238281c5.628906-6.144531 7.628906-14.792969 5.269531-22.789062-2.355469-7.992188-8.726562-14.171876-16.792969-16.28125 4.066407-10.027344.925781-21.53125-7.675781-28.097657-8.597656-6.566406-20.527344-6.566406-29.125 0-8.601562 6.566407-11.742188 18.070313-7.675781 28.097657-8.066407 2.109374-14.4375 8.289062-16.792969 16.28125-2.359375 7.996093-.359375 16.644531 5.269531 22.789062h-14.238281v-376h16c4.417969 0 8-3.578125 8-8v-8h56c4.417969 0 8-3.578125 8-8v-32c0-4.417969-3.582031-8-8-8zm-428 240 12 16h-32l12-16zm20 52.691406-11.3125 11.308594h-25.375l-11.3125-11.308594v-20.691406h48zm373.601562-276.691406-21.601562 14.402344v-14.402344zm-101.601562-24h32v32h-32zm-216 25.601562 21.601562 14.398438h-43.203124zm-48 12.800782-21.601562-14.402344h43.203124zm74.398438-14.402344h43.203124l-21.601562 14.402344zm69.601562 1.601562 21.601562 14.398438h-43.203124zm26.398438-1.601562h43.203124l-21.601562 14.402344zm-226.398438 0h5.601562l24 16h-29.601562zm274.398438 16 24-16h5.601562v16zm85.601562 381.601562-14.398438-21.601562 14.398438-21.597656zm0-192-14.398438-21.601562 14.398438-21.597656zm-16 4.800782 14.398438 21.597656-14.398438 21.601562zm0-52.800782v-43.199218l14.398438 21.597656zm0 148.800782 14.398438 21.597656-14.398438 21.601562zm16-4.847656-14.398438-21.554688 14.398438-21.597656zm-14.398438-213.554688 14.398438-21.597656v43.199218zm-1.601562-26.398438v-13.601562h9.054688zm-64 90.398438v80h-48v-80zm-64 0v68.800781l-18.398438-18.183593c-1.492187-1.472657-3.503906-2.304688-5.601562-2.3125h-24v-48.304688zm-64 0v13.335938h-48v-13.335938zm-120 251.3125 20.6875 20.6875h-41.375zm72 20.6875v-242.664062h48v27c0 4.421874 3.582031 8 8 8h28.710938l29.6875 29.355468c1.492187 1.472656 3.503906 2.304688 5.601562 2.308594h56v176zm240-21.597656 14.398438 21.597656h-14.398438zm96 13.597656c-4.417969 0-8-3.578125-8-8 0-4.417969 3.582031-8 8-8s8 3.582031 8 8c0 4.421875-3.582031 8-8 8zm-16-48c4.417969 0 8 3.582031 8 8 0 4.421875-3.582031 8-8 8s-8-3.578125-8-8c0-4.417969 3.582031-8 8-8zm-16 32c4.417969 0 8 3.582031 8 8 0 4.421875-3.582031 8-8 8s-8-3.578125-8-8c0-4.417969 3.582031-8 8-8zm-24-368h-64v-8h40c4.417969 0 8-3.578125 8-8v-40h16zm42.398438-16 21.601562-14.398438v14.398438zm0 0"/></svg>
@@ -219,236 +226,222 @@
                                     <span class="comming-soon">به زودی</span>
                                 </div>
                             </router-link>
-                        </div> -->
-
-                    </div>
-                </div>
-            </div>
+            </div>-->
+          </div>
         </div>
-
-    </section>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
+import mixin from "../../../mixin";
+import { mapState } from "vuex";
 
-    import mixin from '../../../mixin';
-    import { mapState } from 'vuex';
+export default {
+  mixins: [mixin],
 
-    export default {
+  mounted() {
+    var typed = new Typed("#typed", {
+      strings: [" خونه جدیدت رو پیدا کن ", "^250 به مسکن شو خوش آمدید"],
+      startDelay: 1000,
+      typeSpeed: 70,
+      backDelay: 2000,
+      backSpeed: 100,
+      loop: true
+    });
+  },
 
-        mixins : [mixin] ,
+  data() {
+    return {
+      style_bg: " no-repeat scroll center center;"
+    };
+  },
 
-        mounted() {
-
-            var typed = new Typed('#typed', {
-                strings: [" خونه جدیدت رو پیدا کن " , "^250 به مسکن شو خوش آمدید"],
-                startDelay : 1000 ,
-                typeSpeed: 70 ,
-                backDelay : 2000 ,
-                backSpeed: 100 ,
-                loop:true
-            });
-
-        } ,
-
-        data() {
-            return {
-                style_bg : ' no-repeat scroll center center;'
-            }
-        } ,
-
-        computed : {
-            ...mapState([
-                'siteSetting' ,
-                'url'
-            ])
-        }
-        
-    }
-
+  computed: {
+    ...mapState(["siteSetting", "url"])
+  }
+};
 </script>
 
 <style scoped>
+.banner-items .items {
+  position: relative;
+  overflow: hidden;
+}
 
-    .banner-items .items {
-        position: relative;
-        overflow: hidden;
-    }
+.items:hover .comming-soon {
+  background: #fff;
+  color: #29b6f6;
+}
 
-    .items:hover .comming-soon {
-        background: #fff;
-        color: #29B6F6;
-    }
+svg path,
+.items h4,
+.items p,
+.items {
+  -webkit-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
+}
 
-    svg path , .items h4 , .items p , .items {
-        -webkit-transition: all 300ms;
-        -o-transition: all 300ms;
-        transition: all 300ms;
-    }
+.items:hover svg path,
+.items:hover g rect {
+  fill: #fff;
+}
 
-    .items:hover svg path , .items:hover g rect {
-        fill: #fff;
-    }
+.items:hover h4,
+.items:hover p {
+  color: #fff !important;
+}
 
-    .items:hover h4 , .items:hover p {
-        color: #fff !important;
-    }
+.items:hover {
+  transform: scale(1.02);
+}
 
-    .items:hover {
-        transform : scale(1.02);
-    }
+.feature_item {
+  border-radius: 10px;
+  padding: 10px;
+  -webkit-transition: all 300ms linear 0s;
+  -o-transition: all 300ms linear 0s;
+  transition: all 300ms linear 0s;
+  text-align: right;
+}
 
-    .feature_item {
-        border-radius: 10px;
-        padding: 10px;
-        -webkit-transition: all 300ms linear 0s;
-        -o-transition: all 300ms linear 0s;
-        transition: all 300ms linear 0s;
-        text-align: right;
-    }
+@media (min-width: 770px) {
+  .mb-320 {
+    margin-bottom: 320px;
+  }
+}
 
-    @media (min-width: 770px) {
-        .mb-320 {
-            margin-bottom: 320px;
-        }
-    }
+.mt-30 {
+  margin-top: 30px;
+}
 
-    .mt-30 {
-        margin-top: 30px
-    }
-
-    .mt-100 {
-        margin-top: 100px
-    }
-
+.mt-100 {
+  margin-top: 100px;
+}
 </style>
 
 <style>
+.mv-100 {
+  max-width: 100% !important;
+}
 
-    .mv-100 {
-        max-width: 100% !important;
-    }
+svg path {
+  fill: #3d3d3d;
+}
 
-    svg path {
-        fill: #3d3d3d;
-    }
+svg g rect {
+  fill: #3d3d3d;
+}
 
-    svg g rect {
-        fill: #3d3d3d;
-    }
+.typed-cursor {
+  margin-right: 5px;
+  font-size: 50px;
+  color: #ffffff78;
+}
 
-    .typed-cursor {
-        margin-right: 5px;
-        font-size: 50px;
-        color: #ffffff78;
-    }
+.fs-10 {
+  font-size: 10px;
+}
 
-    .fs-10 {
-        font-size: 10px;
-    }
+.d-inline-table {
+  display: inline-table;
+}
 
-    .d-inline-table {
-        display: inline-table;  
-    }
-    
-    .items {
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        color: #222222;
-        text-align: center;
-        -webkit-transition: all 300ms linear 0s;
-        -o-transition: all 300ms linear 0s;
-        transition: all 300ms linear 0s;
-        width: 90%;
-        height: 100%;
-        margin: auto;
-        box-shadow: 0px 7px 20px -10px;
+.items {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  color: #222222;
+  text-align: center;
+  -webkit-transition: all 300ms linear 0s;
+  -o-transition: all 300ms linear 0s;
+  transition: all 300ms linear 0s;
+  width: 90%;
+  height: 100%;
+  margin: auto;
+  box-shadow: 0px 7px 20px -10px;
+}
 
-    }
+.comming-soon {
+  position: absolute;
+  top: 15px;
+  right: -32px;
+  color: #fff;
+  background: #29b6f6;
+  padding: 3px 36px;
+  transform: rotate(45deg);
+  transition: all 300ms;
+}
 
-    .comming-soon {
-        position: absolute;
-        top: 15px;
-        right: -32px;
-        color: #fff;
-        background: #29B6F6;
-        padding: 3px 36px;
-        transform: rotate(45deg);
-        transition: all 300ms;
-    }
+.items:hover {
+  background: #29b6f6;
+}
 
-    .items:hover {
-        background: #29B6F6;
-    }
+.banner_content .title {
+  min-height: 95px;
+}
 
-    .banner_content .title {
-        min-height : 95px;
-    }
+.banner-svg {
+  height: 80px;
+  width: 80px;
+}
 
-    .banner-svg {
-        height: 80px;
-        width: 80px;
-    }
+@media (min-width: 500px) and (max-width: 770px) {
+  .banner-items .items {
+    min-width: 305px;
+  }
+}
 
-    @media (min-width: 500px) and (max-width: 770px) {
-        .banner-items .items {
-            min-width: 305px;
-        }
-    }
+@media (max-width: 770px) {
+  .banner-items {
+    position: absolute;
+    top: 170px;
+  }
 
-    @media (max-width: 770px) {
-        
-        .banner-items {
-            position: absolute;
-            top: 170px;
-        }
+  .banner-items .row.col-lg-10 {
+    padding: 0px;
+    flex-direction: column;
+    align-items: center;
+  }
 
-        .banner-items .row.col-lg-10 {
-            padding: 0px;
-            flex-direction: column;
-            align-items: center;
-        }
+  .banner-items .col-md-4 {
+    padding: 0px;
+    margin-bottom: 15px;
+  }
 
-        .banner-items .col-md-4 {
-            padding: 0px;
-            margin-bottom: 15px;
-        }
+  .banner-items .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 
-        .banner-items .items {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-        }
+  .banner-items .items h4 {
+    font-size: 16px;
+  }
 
-        .banner-items .items h4 {
-            font-size: 16px;
-        }
+  .banner-items .items p {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        .banner-items .items p {
-            max-width: 150px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow:ellipsis; 
-        }
+  .banner-svg {
+    height: 60px;
+    width: 60px;
+  }
 
-        .banner-svg {
-            height: 60px;
-            width: 60px;
-        }
+  .comming-soon {
+    top: 10px;
+    right: -30px;
+    font-size: 11px;
+  }
 
-        .comming-soon {
-            top: 10px;
-            right: -30px;
-            font-size: 11px;
-        }
-
-        .typed-cursor {
-            position: absolute;
-            top: 35px;
-        }
-
-    }
-
-
+  .typed-cursor {
+    position: absolute;
+    top: 35px;
+  }
+}
 </style>

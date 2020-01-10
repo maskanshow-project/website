@@ -55,6 +55,10 @@ class AdvertisingSiteSettingMutation extends BaseSiteSettingMutation
             $image = null;
 
             if ($slider_item[$index] ?? false) {
+                if ($slide['delete_image'] ?? false)
+                    if ($slider_item[$index]['image'] ?? false)
+                        Media::where('id', $slider_item[$index]['image'])->delete();
+
                 if ($slide['image'] ?? false) {
                     if ($slider_item[$index]['image'] ?? false)
                         Media::where('id', $slider_item[$index]['image'])->delete();
@@ -63,9 +67,6 @@ class AdvertisingSiteSettingMutation extends BaseSiteSettingMutation
                 }
 
                 $slider_item[$index] = [
-                    // 'title' => $slide['title'] ?? $slider_item[$index]['title'] ?? null,
-                    // 'description' => $slide['description'] ?? $slider_item[$index]['description'] ?? null,
-                    // 'button' => $slide['button'] ?? $slider_item[$index]['button'] ?? null,
                     'link' => $slide['link'] ?? $slider_item[$index]['link'] ?? null,
                     'image' => $image->id ?? $slider_item[$index]['image'] ?? null
                 ];
@@ -74,9 +75,6 @@ class AdvertisingSiteSettingMutation extends BaseSiteSettingMutation
                     $image = $slider->addMedia($slide['image'])->toMediaCollection();
 
                 $slider_item[$index] = [
-                    // 'title' => $slide['title'] ?? null,
-                    // 'description' => $slide['description'] ?? null,
-                    // 'button' => $slide['button'] ?? null,
                     'link' => $slide['link'] ?? null,
                     'image' => $image->id ?? null
                 ];

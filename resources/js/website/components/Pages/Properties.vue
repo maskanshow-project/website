@@ -2374,8 +2374,16 @@ export default {
 }
 
 .btn-range span {
-  color: #c0c4cc;
+  color: #898989;
   /* font-size: 12px; */
+}
+
+.el-scrollbar.el-cascader-menu {
+  height: 280px !important;
+}
+
+.el-cascader-menu__wrap.el-scrollbar__wrap {
+  height: 110% !important;
 }
 
 /*  */
