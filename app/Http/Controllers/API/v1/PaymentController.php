@@ -66,9 +66,11 @@ class PaymentController extends Controller
             $promocode = $payment->promocode;
             $payer = $payment->payer;
 
+            $date = $payer->validity_end_at && !$payer->validity_end_at->isPast() ? $payer->validity_end_at : now();
+
             $payer->update([
                 'plan_id' => $plan->id,
-                'validity_end_at' => (new Carbon($payer->validity_end_at))->addDays($plan->credit_days_count),
+                'validity_end_at' => (new Carbon($date))->addDays($plan->credit_days_count),
                 'last_payment' => now()
             ]);
             $payer->increment('remaining_hits_count', $plan->visited_estate_count);

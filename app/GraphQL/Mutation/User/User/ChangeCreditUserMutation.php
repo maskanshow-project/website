@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class ChangeCreditUserMutation extends BaseUserMutation
 {
     public function type()
-    {   
+    {
         return \GraphQL::type('result');
     }
 
@@ -33,14 +33,14 @@ class ChangeCreditUserMutation extends BaseUserMutation
      */
     protected function rules(array $args = [])
     {
-        return ( new ChangeCreditRequest )->rules($args, 'UPDATE');
+        return (new ChangeCreditRequest)->rules($args, 'UPDATE');
     }
 
     public function args()
     {
         return [
             'id' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
             'count' => [
                 'type' => Type::int()
@@ -56,17 +56,15 @@ class ChangeCreditUserMutation extends BaseUserMutation
             ]
         ];
     }
-   
+
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $user = User::findOrFail( $args['id'] ?? null );
+        $user = User::findOrFail($args['id'] ?? null);
 
         if (
             !$args['type'] &&
-            (
-                $user->remaining_hits_count <= $args['count']
-             || $user->remaining_registered_count <= $args['registered']
-            )
+            ($user->remaining_hits_count <= $args['count']
+                || $user->remaining_registered_count <= $args['registered'])
         ) {
             return [
                 'status' => 400,
@@ -74,12 +72,13 @@ class ChangeCreditUserMutation extends BaseUserMutation
             ];
         }
 
+        $date = $user->validity_end_at && !$user->validity_end_at->isPast() ? $user->validity_end_at : now();
         $user->update([
-            'validity_end_at' => ( new Carbon( $user->validity_end_at ) )->{$args['type'] ? 'addDays' : 'subDays'}( $args['days'] )
+            'validity_end_at' => (new Carbon($date))->{$args['type'] ? 'addDays' : 'subDays'}($args['days'])
         ]);
 
-        $user->{$args['type'] ? 'increment' : 'decrement'}('remaining_hits_count', $args['count'] );
-        $user->{$args['type'] ? 'increment' : 'decrement'}('remaining_registered_count', $args['registered'] );
+        $user->{$args['type'] ? 'increment' : 'decrement'}('remaining_hits_count', $args['count']);
+        $user->{$args['type'] ? 'increment' : 'decrement'}('remaining_registered_count', $args['registered']);
 
         return [
             'status' => 200,
