@@ -819,14 +819,18 @@ export default {
       .post("/graphql/auth", {
         query: `{ areas (per_page: 20) {
         data {
-          id name coordinates { lat lng }
+          id name coordinates { lat lng } created_at
           streets { id name coordinates { lat lng } }
         }
       } }`
       })
       .then(
         ({ data }) =>
-          (this.areas = _.orderBy(data.data.areas.data, ["name"], ["asc"]))
+          (this.areas = _.orderBy(
+            data.data.areas.data,
+            ["created_at"],
+            ["asc"]
+          ))
       );
 
     this.$store.dispatch("getData", {
