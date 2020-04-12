@@ -6,10 +6,11 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\User;
+use Closure;
 
 class EmptyAuthCodeUserMutation extends BaseUserMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -19,33 +20,32 @@ class EmptyAuthCodeUserMutation extends BaseUserMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission("empty-auth-code-user");
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'user' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        $user = User::findOrFail( $args['user'] );
-        
-        if ( !$user->system_authentication_code )
-        {
+        $user = User::findOrFail($args['user']);
+
+        if (!$user->system_authentication_code) {
             return [
                 'status' => 400,
                 'message' => 'حساب این کاربر روی هیچ سیستمی قفل نشده است'
             ];
         }
 
-        $user->update([ 'system_authentication_code' => null ]);
+        $user->update(['system_authentication_code' => null]);
         $user->sessions()->delete();
 
         return [

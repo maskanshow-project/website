@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Opinion\CommentProps;
 
-class BaseCommentMutation extends MainMutation
+abstract class BaseCommentMutation extends MainMutation
 {
     use CommentProps;
-    
+
     protected $attributes = [
         'name' => 'CommentMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'article_id' => [

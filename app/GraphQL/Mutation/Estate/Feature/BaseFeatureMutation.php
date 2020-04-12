@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Estate\FeatureProps;
 
-class BaseFeatureMutation extends MainMutation
+abstract class BaseFeatureMutation extends MainMutation
 {
     use FeatureProps;
-    
+
     protected $attributes = [
         'name' => 'FeatureMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [
@@ -28,7 +28,7 @@ class BaseFeatureMutation extends MainMutation
                 'type' => Type::string()
             ],
             'estate_types' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'is_detailable' => [
                 'type' => Type::boolean()
@@ -48,7 +48,7 @@ class BaseFeatureMutation extends MainMutation
      */
     public function afterCreate($request, $feature)
     {
-        $feature->estate_types()->attach( $request->get('estate_types') );
+        $feature->estate_types()->attach($request->get('estate_types'));
     }
 
     /**
@@ -60,6 +60,6 @@ class BaseFeatureMutation extends MainMutation
      */
     public function afterUpdate($request, $feature)
     {
-        $feature->estate_types()->sync( $request->get('estate_types') );
+        $feature->estate_types()->sync($request->get('estate_types'));
     }
 }

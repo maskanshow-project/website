@@ -9,7 +9,7 @@ use App\Models\Places\Province;
 class ProvinceType extends BaseType
 {
     protected $attributes = [
-        'name' => 'ProvinceType',
+        'name' => 'province',
         'description' => 'A type',
         'model' => Province::class
     ];
@@ -28,7 +28,7 @@ class ProvinceType extends BaseType
                 'type' => \GraphQL::type('country')
             ],
             'cities' => [
-                'type' => Type::listOf( \GraphQL::type('city') )
+                'type' => Type::listOf(\GraphQL::type('city'))
             ]
         ];
     }

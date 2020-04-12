@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\ModelHelpersTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -29,10 +29,10 @@ class Label extends Model implements AuditableContract
      * @var array
      */
     protected $fillable = [
-        'color', 
+        'color',
         'is_active'
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -42,7 +42,7 @@ class Label extends Model implements AuditableContract
         'title',
         'description',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -58,7 +58,7 @@ class Label extends Model implements AuditableContract
             'label_translations.description' => 5,
         ],
         'joins' => [
-            'label_translations' => ['labels.id','label_translations.label_id'],
+            'label_translations' => ['labels.id', 'label_translations.label_id'],
         ],
     ];
 
@@ -68,10 +68,10 @@ class Label extends Model implements AuditableContract
      * @var array
      */
     protected $auditInclude = [
-        'color', 
+        'color',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *

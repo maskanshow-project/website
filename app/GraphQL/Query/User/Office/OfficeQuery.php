@@ -9,7 +9,7 @@ class OfficeQuery extends BaseOfficeQuery
 {
     use SingleQuery;
 
-    public function args()
+    public function args(): array
     {
         return [
             'id' => [
@@ -32,17 +32,17 @@ class OfficeQuery extends BaseOfficeQuery
      */
     public function getSingleData($args, $fields)
     {
-        $data = $this->model::select( $this->getSelectFields($fields) )
-            ->with( $fields->getRelations() );
-            
+        $data = $this->model::select($this->getSelectFields($fields))
+            ->with($fields->getRelations());
+
 
         $this->showOnlyAtiveData($data);
 
-        
-        if ( $args['id'] ?? false )
+
+        if ($args['id'] ?? false)
             return $data->findOrFail($args['id']);
-            
-        elseif ( $args['username'] ?? false )
-            return $data->whereUsername( $args['username'] )->firstOrFail();
+
+        elseif ($args['username'] ?? false)
+            return $data->whereUsername($args['username'])->firstOrFail();
     }
 }

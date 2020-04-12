@@ -9,7 +9,7 @@ use App\Models\Places\Street;
 class StreetType extends BaseType
 {
     protected $attributes = [
-        'name' => 'StreetType',
+        'name' => 'street',
         'description' => 'A type',
         'model' => Street::class
     ];

@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\User\OfficeProps;
 
-class BaseOfficeMutation extends MainMutation
+abstract class BaseOfficeMutation extends MainMutation
 {
     use OfficeProps;
-    
+
     protected $attributes = [
         'name' => 'OfficeMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'area_id' => [
@@ -45,10 +45,9 @@ class BaseOfficeMutation extends MainMutation
      * @param Request $request
      * @return Array $request
      */
-    public function getRequest( $request)
+    public function getRequest($request)
     {
-        if ( $request->get('id') === auth()->user()->office_id )
-        {
+        if ($request->get('id') === auth()->user()->office_id) {
             return $request->only(
                 'area_id',
                 'name',
@@ -57,7 +56,7 @@ class BaseOfficeMutation extends MainMutation
                 'description'
             )->all();
         }
-        
+
         return $request->only(
             'area_id',
             'name',

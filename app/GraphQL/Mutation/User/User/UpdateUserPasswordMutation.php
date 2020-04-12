@@ -7,10 +7,11 @@ use App\User;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Http\Requests\User\v1\PasswordResetRequest;
+use Closure;
 
 class UpdateUserPasswordMutation extends BaseUserMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -20,10 +21,10 @@ class UpdateUserPasswordMutation extends BaseUserMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return
-              $args['user'] ?? false
+            $args['user'] ?? false
             ? auth()->id() !== $args['user'] && $this->checkPermission('reset-password-user')
             : true;
     }
@@ -33,12 +34,12 @@ class UpdateUserPasswordMutation extends BaseUserMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
-        return ( new PasswordResetRequest )->rules();
+        return (new PasswordResetRequest)->rules();
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'user' => [
@@ -55,10 +56,10 @@ class UpdateUserPasswordMutation extends BaseUserMutation
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        if ( $args['user'] ?? false )
+        if ($args['user'] ?? false)
             return $this->updateUserPassword($args);
 
         else
@@ -68,11 +69,11 @@ class UpdateUserPasswordMutation extends BaseUserMutation
     public function updateUserPassword($args)
     {
         $user = User::findOrFail($args['user']);
-        
+
         $user->tokens()->whereName('web')->delete();
 
         $user->update([
-            'password' => \Hash::make( $args['password'] )
+            'password' => \Hash::make($args['password'])
         ]);
 
         return [
@@ -83,18 +84,17 @@ class UpdateUserPasswordMutation extends BaseUserMutation
 
     public function updateMyPassword($args)
     {
-        if ( !\Hash::check( $args['current_password'], auth()->user()->password ) )
-        {
+        if (!\Hash::check($args['current_password'], auth()->user()->password)) {
             return [
                 'status' => 400,
                 'message' => 'رمز عبور فعلی معتبر نمیباشد'
             ];
         }
-        
+
         auth()->user()->tokens()->whereName('web')->delete();
 
         auth()->user()->update([
-            'password' => \Hash::make( $args['password'] )
+            'password' => \Hash::make($args['password'])
         ]);
 
         return [

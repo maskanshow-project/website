@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Models\Product\Product;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 
 class SpecData extends Model implements AuditableContract
 {
@@ -16,7 +16,7 @@ class SpecData extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The table associated with the model.
      *
@@ -33,7 +33,7 @@ class SpecData extends Model implements AuditableContract
         'estate_id',
         'spec_row_id',
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -71,20 +71,12 @@ class SpecData extends Model implements AuditableContract
     {
         return $this->belongsTo(SpecRow::class, 'spec_row_id');
     }
-    
+
     /**
      * Get the spec row that relate spec data
      */
     public function values()
     {
         return $this->belongsToMany(SpecDefault::class, 'spec_data_values');
-    }
-
-    /**
-     * Get the product that owned spec dara
-     */
-    public function product ()
-    {
-        return $this->belongsTo(Product::class, 'product_id');
     }
 }

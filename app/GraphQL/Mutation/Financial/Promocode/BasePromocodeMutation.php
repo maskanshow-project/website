@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Financial\PromocodeProps;
 
-class BasePromocodeMutation extends MainMutation
+abstract class BasePromocodeMutation extends MainMutation
 {
     use PromocodeProps;
-    
+
     protected $attributes = [
         'name' => 'PromocodeMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [
@@ -40,7 +40,7 @@ class BasePromocodeMutation extends MainMutation
                 'type' => Type::string()
             ],
             'plans' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'is_active' => [
                 'type' => Type::boolean()
@@ -57,7 +57,7 @@ class BasePromocodeMutation extends MainMutation
      */
     public function afterCreate($request, $promocode)
     {
-        $promocode->plans()->attach( $request->get('plans') );
+        $promocode->plans()->attach($request->get('plans'));
     }
 
     /**
@@ -69,6 +69,6 @@ class BasePromocodeMutation extends MainMutation
      */
     public function afterUpdate($request, $promocode)
     {
-        $promocode->plans()->sync( $request->get('plans') );
+        $promocode->plans()->sync($request->get('plans'));
     }
 }

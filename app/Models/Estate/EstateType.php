@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\ModelHelpersTrait;
 use App\Models\Spec\Spec;
@@ -43,7 +43,7 @@ class EstateType extends Model implements AuditableContract
         'icon',
         'is_active'
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -69,7 +69,7 @@ class EstateType extends Model implements AuditableContract
             'estate_type_translations.description' => 5,
         ],
         'joins' => [
-            'estate_type_translations' => ['estate_types.id','estate_type_translations.estate_type_id'],
+            'estate_type_translations' => ['estate_types.id', 'estate_type_translations.estate_type_id'],
         ],
     ];
 
@@ -82,7 +82,7 @@ class EstateType extends Model implements AuditableContract
         'icon',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *

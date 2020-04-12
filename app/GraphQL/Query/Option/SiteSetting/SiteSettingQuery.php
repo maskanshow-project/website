@@ -4,25 +4,28 @@ namespace App\GraphQL\Query\Option\SiteSetting;
 
 use App\GraphQL\Query\MainQuery;
 use App\Models\Option\SiteSetting;
+use Closure;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 
 class SiteSettingQuery extends MainQuery
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('site_settings');
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             // 
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
+        $fields = $getSelectFields();
+
         $options = SiteSetting::select('id', 'name')
             ->whereIn('name', $fields->getSelect())
             ->with('media:id,model_type,model_id,file_name')

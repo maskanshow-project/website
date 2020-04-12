@@ -12,7 +12,7 @@ use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Helpers\ModelHelpersTrait;
 use App\Models\Estate\EstateType;
@@ -26,7 +26,7 @@ class Spec extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -55,7 +55,7 @@ class Spec extends Model implements AuditableContract
         'title',
         'description',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -71,7 +71,7 @@ class Spec extends Model implements AuditableContract
             'spec_translations.description' => 5,
         ],
         'joins' => [
-            'spec_translations' => ['specs.id','spec_translations.spec_id']
+            'spec_translations' => ['specs.id', 'spec_translations.spec_id']
         ],
     ];
 
@@ -85,7 +85,7 @@ class Spec extends Model implements AuditableContract
         'description',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -130,24 +130,16 @@ class Spec extends Model implements AuditableContract
         return $this->hasManyThrough(SpecRow::class, SpecHeader::class);
     }
 
-    /**
-     * Get all the products of the spec.
-     */
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
-
     public static function compare()
     {
-        if ( !session('compare_table') || !session('compare') ) return null;
+        if (!session('compare_table') || !session('compare')) return null;
 
-        return Static::find( session('compare_table') )
+        return static::find(session('compare_table'))
             ->load([
                 'specHeaders:id,spec_id,title,description',
                 'specHeaders.specRows:id,spec_header_id,title,label,values,help,multiple',
                 'specHeaders.specRows.specDatas' => function ($query) {
-                    $query->whereIn('product_id', session( 'compare' ) );
+                    $query->whereIn('product_id', session('compare'));
                 }
             ]);
     }

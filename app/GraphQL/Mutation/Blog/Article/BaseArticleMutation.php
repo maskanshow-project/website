@@ -7,18 +7,18 @@ use Rebing\GraphQL\Support\UploadType;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Blog\ArticleProps;
 
-class BaseArticleMutation extends MainMutation
+abstract class BaseArticleMutation extends MainMutation
 {
     use ArticleProps;
 
     protected $incrementing = false;
-    
+
     protected $attributes = [
         'name' => 'ArticleMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [
@@ -31,16 +31,16 @@ class BaseArticleMutation extends MainMutation
                 'type' => Type::string()
             ],
             'image' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'reading_time' => [
                 'type' => Type::int()
             ],
             'subjects' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'tags' => [
-                'type' => Type::listOf( Type::string() )
+                'type' => Type::listOf(Type::string())
             ],
             'is_active' => [
                 'type' => Type::boolean()
@@ -57,8 +57,8 @@ class BaseArticleMutation extends MainMutation
      */
     public function afterCreate($request, $article)
     {
-        $article->subjects()->attach( $request->get('subjects') );
-        $article->attachTags( $request->get('tags') );
+        $article->subjects()->attach($request->get('subjects'));
+        $article->attachTags($request->get('tags'));
     }
 
     /**
@@ -70,7 +70,7 @@ class BaseArticleMutation extends MainMutation
      */
     public function afterUpdate($request, $article)
     {
-        $article->subjects()->sync( $request->get('subjects') );
-        $article->syncTags( $request->get('tags') );
+        $article->subjects()->sync($request->get('subjects'));
+        $article->syncTags($request->get('tags'));
     }
 }

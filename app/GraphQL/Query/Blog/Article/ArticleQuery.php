@@ -9,7 +9,7 @@ class ArticleQuery extends BaseArticleQuery
 {
     use SingleQuery;
 
-    public function args()
+    public function args(): array
     {
         return [
             'id' => [

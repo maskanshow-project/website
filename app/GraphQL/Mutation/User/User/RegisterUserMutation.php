@@ -5,13 +5,14 @@ namespace App\GraphQL\Mutation\User\User;
 use GraphQL\Type\Definition\Type;
 use App\Http\Requests\v1\RegisterRequest;
 use App\User;
+use Closure;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\UploadType;
 
 class RegisterUserMutation extends BaseUserMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('me');
     }
@@ -21,12 +22,12 @@ class RegisterUserMutation extends BaseUserMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
-        return ( new RegisterRequest )->rules($args, 'REGISTER');
+        return (new RegisterRequest)->rules($args, 'REGISTER');
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'city_id' => [
@@ -57,7 +58,7 @@ class RegisterUserMutation extends BaseUserMutation
                 'type' => Type::string()
             ],
             'avatar' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'national_code' => [
                 'type' => Type::string()
@@ -67,21 +68,22 @@ class RegisterUserMutation extends BaseUserMutation
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $user = User::create(array_merge(
-            $this->getRequest( collect( $args ) ), [
-                'password' => bcrypt( $args['password'] )
+            $this->getRequest(collect($args)),
+            [
+                'password' => bcrypt($args['password'])
             ]
         ));
 
-        auth()->login( $user );
+        auth()->login($user);
 
-        auth()->user()->update([ 'system_authentication_code' => str_random(50) ]);
+        auth()->user()->update(['system_authentication_code' => str_random(50)]);
 
-        $data = collect( $user->toArray() );
-            
+        $data = collect($user->toArray());
+
         $data->put('token', $user->createToken('web')->accessToken);
 
         return $data;

@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Financial\Promocode;
 
 class PromocodeType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'PromocodeType',
+        'name' => 'promocode',
         'description' => 'A type',
         'model' => Promocode::class
     ];

@@ -11,15 +11,15 @@ class SliderItemInput extends GraphQLType
     protected $inputObject = true;
 
     protected $attributes = [
-        'name' => 'SliderItemInput',
+        'name' => 'slider_item_input',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'image' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'title' => [
                 'type' => Type::string()

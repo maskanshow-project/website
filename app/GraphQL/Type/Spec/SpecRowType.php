@@ -9,7 +9,7 @@ use App\Models\Spec\SpecRow;
 class SpecRowType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SpecRowType',
+        'name' => 'spec_row',
         'description' => 'A type',
         'model' => SpecRow::class
     ];
@@ -36,16 +36,16 @@ class SpecRowType extends BaseType
                 'selectable' => false
             ],
             'defaults' => [
-                'type' => Type::listOf( \GraphQL::type('spec_default') ),
+                'type' => Type::listOf(\GraphQL::type('spec_default')),
             ],
             'data' => [
                 'type' => \GraphQL::type('spec_data'),
-                'query' => function($args, $query) {
+                'query' => function ($args, $query) {
                     return $query->where('estate_id', $args['id'] ?? false);
                 },
             ],
             'compareData' => [
-                'type' => Type::listOf( \GraphQL::type('spec_data') ),
+                'type' => Type::listOf(\GraphQL::type('spec_data')),
             ],
             'help' => [
                 'type' => Type::string(),

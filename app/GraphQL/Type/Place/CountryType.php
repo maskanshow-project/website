@@ -9,7 +9,7 @@ use App\Models\Places\Country;
 class CountryType extends BaseType
 {
     protected $attributes = [
-        'name' => 'CountryType',
+        'name' => 'country',
         'description' => 'A type',
         'model' => Country::class
     ];
@@ -25,7 +25,7 @@ class CountryType extends BaseType
                 'type' => Type::string()
             ],
             'provinces' => [
-                'type' => Type::listOf( \GraphQL::type('province') )
+                'type' => Type::listOf(\GraphQL::type('province'))
             ]
         ];
     }

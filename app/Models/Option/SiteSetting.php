@@ -5,7 +5,7 @@ namespace App\Models\Option;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use App\Models\Tenant;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -46,14 +46,4 @@ class SiteSetting extends Model implements AuditableContract, HasMedia
     /****************************************
      **             Relations
      ***************************************/
-
-    /**
-     * Get the site tenant of the option
-     *
-     * @return void
-     */
-    public function site()
-    {
-        return $this->belongsTo(Tenant::class, 'tenant_id');
-    }
 }

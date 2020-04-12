@@ -2,8 +2,6 @@
 
 namespace App\Models\Opinion;
 
-use Cog\Likeable\Contracts\Likeable as LikeableContract;
-use Cog\Likeable\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
@@ -15,15 +13,15 @@ use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Helpers\ModelHelpersTrait;
 
-class Comment extends Model implements AuditableContract , LikeableContract
+class Comment extends Model implements AuditableContract
 {
-    use SoftDeletes, Auditable, Likeable, SearchableTrait;
+    use SoftDeletes, Auditable, SearchableTrait;
     use Filterable, CreateTimeline, SoftCascadeTrait, ModelHelpersTrait;
 
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -45,7 +43,7 @@ class Comment extends Model implements AuditableContract , LikeableContract
         'message',
         'is_accept'
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -63,8 +61,8 @@ class Comment extends Model implements AuditableContract , LikeableContract
             'users.last_name' => 8,
         ],
         'joins' => [
-            'article_translations' => ['comments.article_id','article_translations.article_id'],
-            'users' => ['comments.user_id','users.id'],
+            'article_translations' => ['comments.article_id', 'article_translations.article_id'],
+            'users' => ['comments.user_id', 'users.id'],
         ],
     ];
 
@@ -77,7 +75,7 @@ class Comment extends Model implements AuditableContract , LikeableContract
         'message',
         'is_accept'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -86,19 +84,19 @@ class Comment extends Model implements AuditableContract , LikeableContract
     protected $casts = [
         'is_active' => 'boolean',
     ];
-    
+
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [ 'deleted_at' ];
-    
+    protected $dates = ['deleted_at'];
+
 
     /****************************************
      **             Relations
      ***************************************/
-    
+
     /**
      * Get the article that the comment has belongs to that
      */
@@ -120,16 +118,18 @@ class Comment extends Model implements AuditableContract , LikeableContract
     /**
      * This function for answer's comments
      */
-    public function answers() {
-  
+    public function answers()
+    {
+
         return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
      * This function for answer's comments
      */
-    public function question() {
-  
+    public function question()
+    {
+
         return $this->belongsTo(self::class, 'parent_id');
     }
 }

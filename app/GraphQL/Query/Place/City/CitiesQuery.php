@@ -15,14 +15,14 @@ class CitiesQuery extends BaseCityQuery
     {
         return [
             'province' => [
-                'type' => Type::nonNull( Type::int() )
+                'type' => Type::nonNull(Type::int())
             ],
         ];
     }
 
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
-        return Type::listOf( \GraphQL::type('city') );
+        return Type::listOf(\GraphQL::type('city'));
     }
 
     public function getPortionOfData($data, $args)

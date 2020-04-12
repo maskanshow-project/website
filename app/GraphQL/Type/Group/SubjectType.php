@@ -9,7 +9,7 @@ use GraphQL\Type\Definition\Type;
 class SubjectType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SubjectType',
+        'name' => 'subject',
         'description' => 'A type',
         'model' => Subject::class
     ];

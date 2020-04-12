@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\ModelHelpersTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -33,7 +33,7 @@ class Feature extends Model implements AuditableContract
         'is_detailable',
         'is_active'
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -59,7 +59,7 @@ class Feature extends Model implements AuditableContract
             'feature_translations.description' => 5,
         ],
         'joins' => [
-            'feature_translations' => ['features.id','feature_translations.feature_id'],
+            'feature_translations' => ['features.id', 'feature_translations.feature_id'],
         ],
     ];
 
@@ -74,7 +74,7 @@ class Feature extends Model implements AuditableContract
         'description',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -89,7 +89,7 @@ class Feature extends Model implements AuditableContract
      *
      * @var array
      */
-    protected $dates = [ 'deleted_at' ];
+    protected $dates = ['deleted_at'];
 
 
     /****************************************

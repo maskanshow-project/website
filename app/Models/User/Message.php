@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Helpers\ModelHelpersTrait;
 use App\Role;
@@ -45,7 +45,7 @@ class Message extends Model implements AuditableContract
         'title',
         'message',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -61,7 +61,7 @@ class Message extends Model implements AuditableContract
             'message_translations.message' => 5,
         ],
         'joins' => [
-            'message_translations' => ['messages.id','message_translations.message_id']
+            'message_translations' => ['messages.id', 'message_translations.message_id']
         ],
     ];
 
@@ -76,7 +76,7 @@ class Message extends Model implements AuditableContract
         'expired_at',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *

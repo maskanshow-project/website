@@ -9,11 +9,11 @@ use function GuzzleHttp\json_decode;
 class SiteSettingType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SiteSetting',
+        'name' => 'site_settings',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'title' => [

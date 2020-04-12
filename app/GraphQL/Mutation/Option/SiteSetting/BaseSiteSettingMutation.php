@@ -5,19 +5,20 @@ namespace App\GraphQL\Mutation\Option\SiteSetting;
 use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Option\SiteSettingProps;
+use Closure;
 use Rebing\GraphQL\Support\UploadType;
 
-class BaseSiteSettingMutation extends MainMutation
+abstract class BaseSiteSettingMutation extends MainMutation
 {
     use SiteSettingProps;
-    
+
     protected $attributes = [
         'name' => 'SiteSettingMutation',
         'description' => 'A mutation'
     ];
-    
-    public function type()
-    {   
+
+    public function type(): \GraphQL\Type\Definition\Type
+    {
         return \GraphQL::type('result');
     }
 
@@ -26,7 +27,7 @@ class BaseSiteSettingMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission("update-setting");
     }
@@ -36,13 +37,13 @@ class BaseSiteSettingMutation extends MainMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
-        return ( new $this->request )->rules($args, 'UPDATE');
+        return (new $this->request)->rules($args, 'UPDATE');
     }
-    
+
     public function attributes()
     {
-        return ( new $this->request )->attributes();
+        return (new $this->request)->attributes();
     }
 }

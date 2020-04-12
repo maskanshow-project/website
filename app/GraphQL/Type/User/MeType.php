@@ -11,7 +11,7 @@ class MeType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'MeType',
+        'name' => 'me',
         'description' => 'A type',
         'model' => User::class
     ];
@@ -86,16 +86,16 @@ class MeType extends BaseType
             ],
             'favorites' => $this->relationListField('estate'),
             'comments' => [
-                'type' => Type::listOf( \GraphQL::type("comment") ),
-                'query' => function($args, $query) {
-                    return $query->offset( (($args['page'] ?? 1 ) - 1) * 10 )->take(10);
+                'type' => Type::listOf(\GraphQL::type("comment")),
+                'query' => function ($args, $query) {
+                    return $query->offset((($args['page'] ?? 1) - 1) * 10)->take(10);
                 }
             ],
             'workplace' => [
                 'type' => \GraphQL::type('office')
             ],
             'offices' => [
-                'type' => Type::listOf( \GraphQL::type('office') )
+                'type' => Type::listOf(\GraphQL::type('office'))
             ],
             'roles' => $this->relationListField('role'),
             'parent' => [
@@ -103,13 +103,13 @@ class MeType extends BaseType
             ],
             'plan' => $this->relationItemField('plan'),
             'messages' => [
-                'type' => Type::listOf( \GraphQL::type('message') ),
+                'type' => Type::listOf(\GraphQL::type('message')),
                 'selectable' => false,
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     $allMessages = $data->load([
                         'roles:id',
-                        'roles.messages' => function($query) {
-                            return $query->where('expired_at', '>', now() );
+                        'roles.messages' => function ($query) {
+                            return $query->where('expired_at', '>', now());
                         }
                     ])->roles;
 
@@ -122,15 +122,15 @@ class MeType extends BaseType
                 },
             ],
             'members' => [
-                'type' => Type::listOf( \GraphQL::type('user') ),
+                'type' => Type::listOf(\GraphQL::type('user')),
             ],
             'permissions' => [
-                'type' => Type::listOf( \GraphQL::type('permission') ),
+                'type' => Type::listOf(\GraphQL::type('permission')),
             ],
             'allPermissions' => [
-                'type' => Type::listOf( \GraphQL::type('permission') ),
+                'type' => Type::listOf(\GraphQL::type('permission')),
                 'selectable' => false,
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     return $data->allPermissions();
                 }
             ],

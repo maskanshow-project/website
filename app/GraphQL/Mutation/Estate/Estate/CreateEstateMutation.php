@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutation\Estate\Estate;
 
 use App\GraphQL\Helpers\CreateMutation;
+use Closure;
 
 class CreateEstateMutation extends BaseEstateMutation
 {
@@ -13,7 +14,7 @@ class CreateEstateMutation extends BaseEstateMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return auth()->check();
     }

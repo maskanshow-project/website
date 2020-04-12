@@ -11,11 +11,12 @@ use App\User;
 use App\Models\User\AccessCode;
 use App\Models\User\ActiveSession;
 use Carbon\Carbon;
+use Closure;
 
 class LoginWithAccessCodeMutation extends MainMutation
 {
-    public function type()
-    {   
+    public function type(): \GraphQL\Type\Definition\Type
+    {
         return \GraphQL::type('me');
     }
 
@@ -24,37 +25,35 @@ class LoginWithAccessCodeMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return auth()->guest();
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'username' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
             'access_code' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ]
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $code = AccessCode::whereCode($args['access_code'])->with('user')->first();
 
-        if ( !$code )
-        {
+        if (!$code) {
             die(json_encode([
                 'status' => 400,
                 'message' => 'کد دسترسی شما معتبر نمیباشد'
             ]));
         }
 
-        if ( $code->expired_at->isPast() )
-        {
+        if ($code->expired_at->isPast()) {
             $code->delete();
 
             die(json_encode([
@@ -65,8 +64,7 @@ class LoginWithAccessCodeMutation extends MainMutation
 
         $user = $code->user;
 
-        if ( $user->username !== strtolower( $args['username'] ) )
-        {
+        if ($user->username !== strtolower($args['username'])) {
             $code->delete();
 
             die(json_encode([
@@ -76,14 +74,14 @@ class LoginWithAccessCodeMutation extends MainMutation
         }
 
         $code->delete();
-        
+
         ActiveSession::create([
             'user_id' => $user->id,
             'user_agent' => request()->header('User-Agent'),
             'created_at' => now()
         ]);
 
-        $data = collect( $user->toArray() );
+        $data = collect($user->toArray());
         $data->put('token', $user->createToken('web')->accessToken);
 
         return $data;

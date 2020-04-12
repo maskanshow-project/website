@@ -8,16 +8,16 @@ use Rebing\GraphQL\Support\UploadType;
 use App\GraphQL\Props\Group\SubjectProps;
 use App\GraphQL\Mutation\Group\GroupTags;
 
-class BaseSubjectMutation extends MainMutation
+abstract class BaseSubjectMutation extends MainMutation
 {
     use SubjectProps;
-    
+
     protected $attributes = [
         'name' => 'SubjectMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'parent_id' => [
@@ -36,7 +36,7 @@ class BaseSubjectMutation extends MainMutation
                 'type' => Type::boolean()
             ],
             'logo' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'is_active' => [
                 'type' => Type::boolean()

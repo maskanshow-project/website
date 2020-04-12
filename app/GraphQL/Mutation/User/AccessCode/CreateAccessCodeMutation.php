@@ -10,11 +10,12 @@ use GraphQL\Type\Definition\ResolveInfo;
 use App\User;
 use App\Models\User\AccessCode;
 use Carbon\Carbon;
+use Closure;
 
 class CreateAccessCodeMutation extends MainMutation
 {
-    public function type()
-    {   
+    public function type(): \GraphQL\Type\Definition\Type
+    {
         return \GraphQL::type('result');
     }
 
@@ -23,26 +24,25 @@ class CreateAccessCodeMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission("create-access-code");
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'user' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        $user = User::findOrFail( $args['user'] ?? null );
-        
-        if ( !$user->system_authentication_code )
-        {
+        $user = User::findOrFail($args['user'] ?? null);
+
+        if (!$user->system_authentication_code) {
             return [
                 'status' => 400,
                 'message' => "تا زمانی که حساب روی سیستمی قفل نشود امکان ساخت کد دسترسی وجود ندارد"

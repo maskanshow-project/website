@@ -2,13 +2,14 @@
 
 namespace App\GraphQL\Helpers;
 
+use Closure;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
 
 trait DeleteMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -18,12 +19,12 @@ trait DeleteMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->checkPermission("delete-". ($this->permission_label ? $this->permission_label : $this->type));
+        return $this->checkPermission("delete-" . ($this->permission_label ? $this->permission_label : $this->type));
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'id'    => [
@@ -31,14 +32,14 @@ trait DeleteMutation
                 'rules' => 'required_without:ids'
             ],
             'ids'    => [
-                'type' => Type::listOf( $this->incrementing ? Type::int() : Type::string() ),
+                'type' => Type::listOf($this->incrementing ? Type::int() : Type::string()),
                 'rules' => 'required_without:id'
             ]
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        return $this->destroy($args, $fields);
+        return $this->destroy($args, $getSelectFields());
     }
 }

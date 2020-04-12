@@ -10,11 +10,11 @@ class SpecInput extends GraphQLType
     protected $inputObject = true;
 
     protected $attributes = [
-        'name' => 'SpecInput',
+        'name' => 'spec_input',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'id' => [
@@ -27,7 +27,7 @@ class SpecInput extends GraphQLType
                 'type' => Type::int()
             ],
             'values' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'data' => [
                 'type' => Type::string()

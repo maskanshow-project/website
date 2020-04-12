@@ -8,7 +8,7 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class SpecRow extends Model implements AuditableContract
@@ -25,7 +25,7 @@ class SpecRow extends Model implements AuditableContract
     {
         parent::boot();
 
-        static::creating(function($model) {
+        static::creating(function ($model) {
             $model->user_id = auth()->user()->id ?? null;
         });
     }
@@ -33,7 +33,7 @@ class SpecRow extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -42,7 +42,7 @@ class SpecRow extends Model implements AuditableContract
     protected $softCascade = [
         'datas',
     ];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -88,7 +88,7 @@ class SpecRow extends Model implements AuditableContract
             'spec_row_translations.help' => 6,
         ],
         'joins' => [
-            'spec_row_translations' => ['spec_rows.id','spec_row_translations.spec_row_id'],
+            'spec_row_translations' => ['spec_rows.id', 'spec_row_translations.spec_row_id'],
         ],
     ];
 

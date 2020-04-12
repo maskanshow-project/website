@@ -9,9 +9,9 @@ class CountriesQuery extends BaseCountryQuery
 {
     use AllQuery;
 
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
-        return Type::listOf( \GraphQL::type('country') );
+        return Type::listOf(\GraphQL::type('country'));
     }
 
     public function getPortionOfData($data, $args)

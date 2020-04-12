@@ -10,7 +10,7 @@ use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Helpers\ModelHelpersTrait;
 
@@ -23,7 +23,7 @@ class Plan extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -56,7 +56,7 @@ class Plan extends Model implements AuditableContract
         'title',
         'description',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -72,7 +72,7 @@ class Plan extends Model implements AuditableContract
             'plan_translations.description' => 5,
         ],
         'joins' => [
-            'plan_translations' => ['plans.id','plan_translations.plan_id']
+            'plan_translations' => ['plans.id', 'plan_translations.plan_id']
         ],
     ];
 
@@ -91,7 +91,7 @@ class Plan extends Model implements AuditableContract
         'is_active',
         'is_active',
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *

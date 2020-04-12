@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutation\Option\SiteSetting;
 
+use Closure;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -11,28 +12,27 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
 {
     public $field = 'opinions';
 
-    public function args()
+    public function args(): array
     {
         return [
             $this->field => [
-                'type' => Type::listOf( \GraphQL::type('customer_opinion_input') )
+                'type' => Type::listOf(\GraphQL::type('customer_opinion_input'))
             ],
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $args = collect($args);
 
-        if ( is_array( $args->get( $this->field ) ) && count( $args->get( $this->field ) ) === 0 )
-        {
-            $slider = $this->model::whereName( $this->field )->first();
-            $slider->update([ 'value' => '[]' ]);
+        if (is_array($args->get($this->field)) && count($args->get($this->field)) === 0) {
+            $slider = $this->model::whereName($this->field)->first();
+            $slider->update(['value' => '[]']);
 
             return $this->result();
         }
 
-        if ( !$args->get( $this->field ) )
+        if (!$args->get($this->field))
             return $this->result(false);
 
         $this->updateSlider($args);
@@ -50,27 +50,24 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
 
     public function updateSlider($args)
     {
-        $slider = $this->model::whereName( $this->field )->first();
+        $slider = $this->model::whereName($this->field)->first();
 
         if (!$slider)
-            $slider = $this->model::create([ 'name' => $this->field ]);
+            $slider = $this->model::create(['name' => $this->field]);
 
-        $slider_item = $slider->value ? collect( json_decode($slider->value, true) ) : collect([]);
+        $slider_item = $slider->value ? collect(json_decode($slider->value, true)) : collect([]);
 
-        foreach ( $args->get( $this->field ) as $index => $slide )
-        {
+        foreach ($args->get($this->field) as $index => $slide) {
             if (!$slide) continue;
 
             $avatar = null;
 
-            if ( $slider_item[$index] ?? false )
-            {
-                if ( $slide['avatar'] ?? false )
-                {
-                    if ( $slider_item[$index]['avatar'] ?? false )
+            if ($slider_item[$index] ?? false) {
+                if ($slide['avatar'] ?? false) {
+                    if ($slider_item[$index]['avatar'] ?? false)
                         Media::where('id', $slider_item[$index]['avatar'])->delete();
-                        
-                    $avatar = $slider->addMedia( $slide['avatar'] )->toMediaCollection();
+
+                    $avatar = $slider->addMedia($slide['avatar'])->toMediaCollection();
                 }
 
                 $slider_item[$index] = [
@@ -79,11 +76,9 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
                     'opinion' => $slide['opinion'] ?? $slider_item[$index]['opinion'] ?? null,
                     'avatar' => $avatar->id ?? $slider_item[$index]['avatar'] ?? null
                 ];
-            }
-            else
-            {
-                if ( $slide['avatar'] ?? false )
-                    $avatar = $slider->addMedia( $slide['avatar'] )->toMediaCollection();
+            } else {
+                if ($slide['avatar'] ?? false)
+                    $avatar = $slider->addMedia($slide['avatar'])->toMediaCollection();
 
                 $slider_item[$index] = [
                     'post' => $slide['post'] ?? null,
@@ -95,7 +90,7 @@ class OpinionsSiteSettingMutation extends BaseSiteSettingMutation
         }
 
         $slider->update([
-            'value' => json_encode($slider_item->take( count( $args->get( $this->field ) ) ), true)
+            'value' => json_encode($slider_item->take(count($args->get($this->field))), true)
         ]);
     }
 }

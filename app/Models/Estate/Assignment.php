@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\ModelHelpersTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -46,7 +46,7 @@ class Assignment extends Model implements AuditableContract
         'jalali_created_at',
         'is_active'
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -72,7 +72,7 @@ class Assignment extends Model implements AuditableContract
             'assignment_translations.description' => 5,
         ],
         'joins' => [
-            'assignment_translations' => ['assignments.id','assignment_translations.assignment_id'],
+            'assignment_translations' => ['assignments.id', 'assignment_translations.assignment_id'],
         ],
     ];
 
@@ -88,7 +88,7 @@ class Assignment extends Model implements AuditableContract
         'jalali_created_at',
         'is_active'
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *

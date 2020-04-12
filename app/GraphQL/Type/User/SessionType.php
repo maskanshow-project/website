@@ -11,7 +11,7 @@ class SessionType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'SessionType',
+        'name' => 'session',
         'description' => 'A type',
         'model' => ActiveSession::class
     ];

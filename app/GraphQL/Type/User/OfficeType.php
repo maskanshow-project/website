@@ -11,7 +11,7 @@ class OfficeType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'OfficeType',
+        'name' => 'office',
         'description' => 'A type',
         'model' => Office::class
     ];

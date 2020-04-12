@@ -9,7 +9,7 @@ use App\Models\Places\City;
 class CityType extends BaseType
 {
     protected $attributes = [
-        'name' => 'CityType',
+        'name' => 'city',
         'description' => 'A type',
         'model' => City::class
     ];

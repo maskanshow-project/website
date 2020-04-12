@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Spec\SpecProps;
 
-class BaseSpecMutation extends MainMutation
+abstract class BaseSpecMutation extends MainMutation
 {
     use SpecProps;
-    
+
     protected $attributes = [
         'name' => 'SpecMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'estate_type_id' => [

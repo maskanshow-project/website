@@ -8,14 +8,14 @@ use Laratrust\Models\LaratrustRole;
 use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Helpers\ModelHelpersTrait;
 use App\Models\User\Message;
 
 class Role extends LaratrustRole implements AuditableContract
 {
-    use SoftDeletes ,Auditable, Filterable, CreateTimeline;
+    use SoftDeletes, Auditable, Filterable, CreateTimeline;
     use Translatable, ModelHelpersTrait, SearchableTrait;
 
     /****************************************
@@ -47,7 +47,7 @@ class Role extends LaratrustRole implements AuditableContract
             'role_translations.description' => 8,
         ],
         'joins' => [
-            'role_translations' => ['roles.id','role_translations.role_id']
+            'role_translations' => ['roles.id', 'role_translations.role_id']
         ],
     ];
 
@@ -82,7 +82,7 @@ class Role extends LaratrustRole implements AuditableContract
         'is_active' => 'boolean'
     ];
 
-    
+
     /****************************************
      **             Relations
      ****************************************/

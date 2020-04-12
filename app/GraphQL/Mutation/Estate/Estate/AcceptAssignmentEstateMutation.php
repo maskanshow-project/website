@@ -6,10 +6,11 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\Estate\Estate;
+use Closure;
 
 class AcceptAssignmentEstateMutation extends BaseEstateMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -19,37 +20,37 @@ class AcceptAssignmentEstateMutation extends BaseEstateMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission("accept-assignment-estate");
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'estate' => [
                 'type' => Type::int()
             ],
             'estates' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $result = false;
 
-        if ( $args['estate'] ?? false )
+        if ($args['estate'] ?? false)
             $result = $this->model::where('assignmented_at', null)
                 ->where('id', $args['estate'] ?? false)
-                ->update([ 'assignmented_at' => now() ]);
+                ->update(['assignmented_at' => now()]);
 
-        elseif ( $args['estates'] ?? false )
+        elseif ($args['estates'] ?? false)
             $result = $this->model::where('assignmented_at', null)
                 ->whereIn('id', $args['estates'] ?? false)
-                ->update([ 'assignmented_at' => now() ]);
-        
+                ->update(['assignmented_at' => now()]);
+
         return [
             'status' => $result ? 200 : 400,
             'message' => $result ? 'ملک با موفقیت واگذار شد' : 'متاسفانه هیچ ملکی واگذار نشد'

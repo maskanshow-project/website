@@ -3,17 +3,18 @@
 namespace App\GraphQL\Mutation\User\Office;
 
 use App\GraphQL\Helpers\DeleteMutation;
+use Closure;
 
 class DeleteOfficeMutation extends BaseOfficeMutation
 {
     use DeleteMutation;
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return auth()->check();
     }
@@ -28,17 +29,17 @@ class DeleteOfficeMutation extends BaseOfficeMutation
     {
         $result = false;
 
-        if ( $args['id'] ?? false )
+        if ($args['id'] ?? false)
             $result = $this->model::where('id', $args['id'] ?? false);
 
-        elseif ( $args['ids'] ?? false )
+        elseif ($args['ids'] ?? false)
             $result = $this->model::whereIn('id', $args['ids'] ?? false);
 
 
-        $result = $result->when( !auth()->user()->can('delete-office'), function($query) {
+        $result = $result->when(!auth()->user()->can('delete-office'), function ($query) {
             $query->where('user_id', auth()->id());
         })->delete();
-        
+
         return [
             'status' => $result ? 200 : 400,
             'message' => $result ? 'با موفقیت حذف شد' : 'متاسفانه اطلاعاتی حذف نشد'

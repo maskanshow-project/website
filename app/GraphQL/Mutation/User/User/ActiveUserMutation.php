@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutation\User\User;
 
 use App\GraphQL\Helpers\ActiveMutation;
+use Closure;
 
 class ActiveUserMutation extends BaseUserMutation
 {
@@ -15,7 +16,7 @@ class ActiveUserMutation extends BaseUserMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission('active-user');
     }

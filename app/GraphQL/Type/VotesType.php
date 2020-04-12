@@ -9,11 +9,11 @@ use OwenIt\Auditing\Models\Audit;
 class VotesType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'VotesType',
+        'name' => 'votes',
         'description' => 'A type',
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'likes' => [

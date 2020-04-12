@@ -6,7 +6,7 @@ use Rebing\GraphQL\Support\Mutation;
 use App\Traits\ImageTools;
 use App\Traits\CheckPermissions;
 
-class MainMutation extends Mutation
+abstract class MainMutation extends Mutation
 {
     use ImageTools, CheckPermissions;
 
@@ -20,11 +20,11 @@ class MainMutation extends Mutation
     {
         $args = collect($args);
 
-        $data = $this->storeData( $args );
+        $data = $this->storeData($args);
 
-        if ( method_exists($this, 'afterCreate') )
+        if (method_exists($this, 'afterCreate'))
             $this->afterCreate($args, $data);
-        
+
         return $data;
     }
 
@@ -32,13 +32,13 @@ class MainMutation extends Mutation
     {
         $args = collect($args);
 
-        $data = $this->getModel( $args->get('id') );
+        $data = $this->getModel($args->get('id'));
 
-        $this->updateData( $args, $data );
+        $this->updateData($args, $data);
 
-        if ( method_exists($this, 'afterUpdate') )
-            $this->afterUpdate( $args, $data );
-        
+        if (method_exists($this, 'afterUpdate'))
+            $this->afterUpdate($args, $data);
+
         return $data;
     }
 
@@ -52,12 +52,12 @@ class MainMutation extends Mutation
     {
         $result = false;
 
-        if ( $args['id'] ?? false )
+        if ($args['id'] ?? false)
             $result = $this->model::where('id', $args['id'] ?? false)->delete();
 
-        elseif ( $args['ids'] ?? false )
+        elseif ($args['ids'] ?? false)
             $result = $this->model::whereIn('id', $args['ids'] ?? false)->delete();
-        
+
         return [
             'status' => $result ? 200 : 400,
             'message' => $result ? 'با موفقیت حذف شد' : 'متاسفانه اطلاعاتی حذف نشد'
@@ -74,25 +74,24 @@ class MainMutation extends Mutation
     {
         $result = false;
 
-        if ( $args['id'] ?? false )
+        if ($args['id'] ?? false)
             $model = $this->model::where('id', $args['id'] ?? false);
 
-        elseif ( $args['ids'] ?? false )
+        elseif ($args['ids'] ?? false)
             $model = $this->model::whereIn('id', $args['ids'] ?? false);
 
 
-        if ( $model ?? false )
-        {
+        if ($model ?? false) {
             $result = $model->update([
                 $this->acceptable_field => $args['status']
             ]);
         }
-        
+
         return [
             'count'     => $result ? $result : 0,
             'status'    => $result ? 200 : 400,
             'message'   => $result
-                ? 'با موفقیت '.( $args['status'] ? 'تایید' : 'رد' ).' '.( $result === 1 ? 'شد' : 'شدند' )
+                ? 'با موفقیت ' . ($args['status'] ? 'تایید' : 'رد') . ' ' . ($result === 1 ? 'شد' : 'شدند')
                 : 'متاسفانه اطلاعاتی حذف نشد'
         ];
     }
@@ -106,12 +105,11 @@ class MainMutation extends Mutation
      */
     public function storeData($request)
     {
-        $model = $this->createNewModel( $this->getRequest( $request ) );
+        $model = $this->createNewModel($this->getRequest($request));
 
-        if ( isset($this->image_field) && $request->get( $this->image_field ) )
-        {
-            $model->addMedia( $request->get( $this->image_field ) )
-                  ->toMediaCollection( $this->image_field );
+        if (isset($this->image_field) && $request->get($this->image_field)) {
+            $model->addMedia($request->get($this->image_field))
+                ->toMediaCollection($this->image_field);
         }
 
         return $model;
@@ -126,17 +124,15 @@ class MainMutation extends Mutation
      */
     public function updateData($request, $model)
     {
-        $model->update( $this->getRequest( $request ) );
+        $model->update($this->getRequest($request));
 
-        if ( isset($this->image_field) && $request->get( $this->image_field ) )
-        {
-            $model->clearMediaCollection( $this->image_field );
-            
-            $model->addMedia( $request->get( $this->image_field ) )
-                  ->toMediaCollection( $this->image_field );
-        }
-        elseif ( isset($this->image_field) && $request->get('is_deleted_image') )
-            $model->clearMediaCollection( $this->image_field );
+        if (isset($this->image_field) && $request->get($this->image_field)) {
+            $model->clearMediaCollection($this->image_field);
+
+            $model->addMedia($request->get($this->image_field))
+                ->toMediaCollection($this->image_field);
+        } elseif (isset($this->image_field) && $request->get('is_deleted_image'))
+            $model->clearMediaCollection($this->image_field);
 
         return $model;
     }
@@ -149,10 +145,10 @@ class MainMutation extends Mutation
      * @return Model
      */
     public function createNewModel($data)
-    {   
-        return $this->model::create( $data );
+    {
+        return $this->model::create($data);
     }
-    
+
     /**
      * Find an get a data from Database,
      * or abort 404 not found exception if can't find
@@ -171,7 +167,7 @@ class MainMutation extends Mutation
      * @param Request $request
      * @return Array $request
      */
-    public function getRequest( $request)
+    public function getRequest($request)
     {
         return $request->all();
     }

@@ -8,14 +8,12 @@ use GraphQL\Type\Definition\Type;
 class UserSettingType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'UserSetting',
+        'name' => 'user_settings',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
-        return [
-
-        ];
+        return [];
     }
 }

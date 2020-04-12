@@ -2,8 +2,6 @@
 
 namespace App\Models\Blog;
 
-use Cog\Likeable\Contracts\Likeable as LikeableContract;
-use Cog\Likeable\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
@@ -15,16 +13,16 @@ use App\Helpers\CreateTimeline;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use App\Helpers\MediaConversionsTrait;
 use App\Helpers\ModelHelpersTrait;
 
-class Article extends Model implements AuditableContract , LikeableContract, HasMedia
+class Article extends Model implements AuditableContract, HasMedia
 {
-    use Auditable, SoftDeletes, HasTags, Likeable, Filterable;
+    use Auditable, SoftDeletes, HasTags, Filterable;
     use CreateTimeline, CreatorRelationship, ModelHelpersTrait;
     use SoftCascadeTrait, Translatable, SearchableTrait;
     use HasMediaTrait, MediaConversionsTrait;
@@ -32,7 +30,7 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -41,14 +39,14 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
     protected $softCascade = [
         'comments',
     ];
-    
+
     /**
      * The attributes specifies that table has char type id
      *
      * @var boolean
      */
     public $incrementing = false;
-    
+
     /**
      * The attributes defines use uuid when creating
      * or auto increment integer
@@ -81,7 +79,7 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
         'description',
         'body'
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -97,7 +95,7 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
             'article_translations.description' => 5,
         ],
         'joins' => [
-            'article_translations' => ['articles.id','article_translations.article_id'],
+            'article_translations' => ['articles.id', 'article_translations.article_id'],
         ],
     ];
 
@@ -142,20 +140,20 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
         'deleted_at'
     ];
 
-    
+
     /****************************************
      **             Relations
      ***************************************/
 
     /**
-    * Get all of the article's user.
-    */
+     * Get all of the article's user.
+     */
     public function writer()
     {
         return $this->belongsTo(\App\User::class, 'user_id');
     }
 
-    
+
     /**
      * Get all of the article's comments.
      */
@@ -172,7 +170,7 @@ class Article extends Model implements AuditableContract , LikeableContract, Has
     {
         return $this->belongsToMany(Subject::class);
     }
-    
+
     /**
      * Get the media field of the model
      */

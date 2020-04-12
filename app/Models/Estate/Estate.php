@@ -2,8 +2,6 @@
 
 namespace App\Models\Estate;
 
-use Cog\Likeable\Contracts\Likeable as LikeableContract;
-use Cog\Likeable\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
@@ -14,7 +12,7 @@ use EloquentFilter\Filterable;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -30,10 +28,10 @@ use App\Models\Places\Street;
 use App\User;
 use App\Models\User\Office;
 
-class Estate extends Model implements AuditableContract, LikeableContract, HasMedia
+class Estate extends Model implements AuditableContract, HasMedia
 {
     use SoftDeletes, Auditable, HasTags;
-    use Filterable, Likeable, CreateTimeline, CreatorRelationship;
+    use Filterable, CreateTimeline, CreatorRelationship;
     use SoftCascadeTrait, Translatable, SearchableTrait;
     use HasMediaTrait, ModelHelpersTrait, SpatialTrait;
 

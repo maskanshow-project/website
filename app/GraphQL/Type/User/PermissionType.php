@@ -11,7 +11,7 @@ class PermissionType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'PermissionType',
+        'name' => 'permission',
         'description' => 'A type',
         'model' => Permission::class
     ];

@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\User\RoleProps;
 
-class BaseRoleMutation extends MainMutation
+abstract class BaseRoleMutation extends MainMutation
 {
     use RoleProps;
-    
+
     protected $attributes = [
         'name' => 'RoleMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'name' => [
@@ -28,7 +28,7 @@ class BaseRoleMutation extends MainMutation
                 'type' => Type::string()
             ],
             'permissions' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'is_active' => [
                 'type' => Type::boolean()
@@ -45,7 +45,7 @@ class BaseRoleMutation extends MainMutation
      */
     public function afterCreate($request, $role)
     {
-        $role->attachPermissions( $request->get('permissions') );        
+        $role->attachPermissions($request->get('permissions'));
     }
 
     /**
@@ -57,6 +57,6 @@ class BaseRoleMutation extends MainMutation
      */
     public function afterUpdate($request, $role)
     {
-        $role->syncPermissions( $request->get('permissions') );
+        $role->syncPermissions($request->get('permissions'));
     }
 }

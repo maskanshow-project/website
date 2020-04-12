@@ -9,7 +9,7 @@ use App\Models\Spec\Spec;
 class SpecType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SpecType',
+        'name' => 'spec',
         'description' => 'A type',
         'model' => Spec::class
     ];

@@ -8,7 +8,7 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class SpecHeader extends Model implements AuditableContract
@@ -25,7 +25,7 @@ class SpecHeader extends Model implements AuditableContract
     {
         parent::boot();
 
-        static::creating(function($model) {
+        static::creating(function ($model) {
             $model->user_id = auth()->user()->id ?? null;
         });
     }
@@ -33,7 +33,7 @@ class SpecHeader extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -42,7 +42,7 @@ class SpecHeader extends Model implements AuditableContract
     protected $softCascade = [
         'rows',
     ];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -54,7 +54,7 @@ class SpecHeader extends Model implements AuditableContract
         // 'description',
         'is_active'
     ];
-    
+
     /**
      * The attributes that are store in the transltion model.
      *
@@ -64,7 +64,7 @@ class SpecHeader extends Model implements AuditableContract
         'title',
         'description',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -80,7 +80,7 @@ class SpecHeader extends Model implements AuditableContract
             'spec_header_translations.description' => 5,
         ],
         'joins' => [
-            'spec_header_translations' => ['spec_headers.id','spec_header_translations.spec_header_id'],
+            'spec_header_translations' => ['spec_headers.id', 'spec_header_translations.spec_header_id'],
         ],
     ];
 

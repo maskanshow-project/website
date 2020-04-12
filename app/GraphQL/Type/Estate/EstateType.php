@@ -13,7 +13,7 @@ class EstateType extends BaseType
     private $selected_estate = null;
 
     protected $attributes = [
-        'name' => 'EstateType',
+        'name' => 'estate',
         'description' => 'A type',
         'model' => Estate::class
     ];

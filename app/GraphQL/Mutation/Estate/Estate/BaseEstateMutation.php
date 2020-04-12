@@ -10,7 +10,7 @@ use Spatie\MediaLibrary\Models\Media;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use App\Models\Estate\EstateType;
 
-class BaseEstateMutation extends MainMutation
+abstract class BaseEstateMutation extends MainMutation
 {
     use EstateProps;
 
@@ -21,7 +21,7 @@ class BaseEstateMutation extends MainMutation
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'code' => [
@@ -96,7 +96,7 @@ class BaseEstateMutation extends MainMutation
                 'type' => Type::listOf(Type::string())
             ],
             'photos' => [
-                'type' => Type::listOf(UploadType::getInstance())
+                'type' => Type::listOf(\GraphQL::type('Upload'))
             ],
             'features' => [
                 'type' => Type::listOf(Type::int())

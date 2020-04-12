@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Estate\Label;
 
 class LabelType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'LabelType',
+        'name' => 'label',
         'description' => 'A type',
         'model' => Label::class
     ];

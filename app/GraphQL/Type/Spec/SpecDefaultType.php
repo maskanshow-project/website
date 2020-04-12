@@ -9,12 +9,12 @@ use App\Models\Spec\SpecDefault;
 class SpecDefaultType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SpecDefaultType',
+        'name' => 'spec_default',
         'description' => 'A type',
         'model' => SpecDefault::class
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'id' => [

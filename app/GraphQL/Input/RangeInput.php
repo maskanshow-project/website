@@ -10,11 +10,11 @@ class RangeInput extends GraphQLType
     protected $inputObject = true;
 
     protected $attributes = [
-        'name' => 'RangeInput',
+        'name' => 'range_input',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'min' => [

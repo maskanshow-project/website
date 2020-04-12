@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class ChartRecordType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'ChartRecordType',
+        'name' => 'chart_record',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'month' => [

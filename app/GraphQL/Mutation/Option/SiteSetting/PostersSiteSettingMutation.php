@@ -11,20 +11,20 @@ class PostersSiteSettingMutation extends BaseSiteSettingMutation
 {
     public $field = 'posters';
 
-    public function args()
+    public function args(): array
     {
         return [
             $this->field => [
-                'type' => Type::listOf( \GraphQL::type('slider_item_input') )
+                'type' => Type::listOf(\GraphQL::type('slider_item_input'))
             ],
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $args = collect($args);
 
-        if ( !$args->get( $this->field ) )
+        if (!$args->get($this->field))
             return $this->result(false);
 
         $this->updateSlider($args);
@@ -42,27 +42,24 @@ class PostersSiteSettingMutation extends BaseSiteSettingMutation
 
     public function updateSlider($args)
     {
-        $slider = $this->model::whereName( $this->field )->first();
+        $slider = $this->model::whereName($this->field)->first();
 
         if (!$slider)
-            $slider = $this->model::create([ 'name' => $this->field ]);
+            $slider = $this->model::create(['name' => $this->field]);
 
-        $slider_item = $slider->value ? collect( json_decode($slider->value, true) ) : collect([]);
+        $slider_item = $slider->value ? collect(json_decode($slider->value, true)) : collect([]);
 
-        foreach ( $args->get( $this->field ) as $index => $slide )
-        {
+        foreach ($args->get($this->field) as $index => $slide) {
             if (!$slide) continue;
 
             $image = null;
 
-            if ( $slider_item[$index] ?? false )
-            {
-                if ( $slide['image'] ?? false )
-                {
-                    if ( $slider_item[$index]['image'] ?? false )
+            if ($slider_item[$index] ?? false) {
+                if ($slide['image'] ?? false) {
+                    if ($slider_item[$index]['image'] ?? false)
                         Media::where('id', $slider_item[$index]['image'])->delete();
-                        
-                    $image = $slider->addMedia( $slide['image'] )->toMediaCollection();
+
+                    $image = $slider->addMedia($slide['image'])->toMediaCollection();
                 }
 
                 $slider_item[$index] = [
@@ -72,11 +69,9 @@ class PostersSiteSettingMutation extends BaseSiteSettingMutation
                     'link' => $slide['link'] ?? $slider_item[$index]['link'] ?? null,
                     'image' => $image->id ?? $slider_item[$index]['image'] ?? null
                 ];
-            }
-            else
-            {
-                if ( $slide['image'] ?? false )
-                    $image = $slider->addMedia( $slide['image'] )->toMediaCollection();
+            } else {
+                if ($slide['image'] ?? false)
+                    $image = $slider->addMedia($slide['image'])->toMediaCollection();
 
                 $slider_item[$index] = [
                     'title' => $slide['title'] ?? null,
@@ -88,6 +83,6 @@ class PostersSiteSettingMutation extends BaseSiteSettingMutation
             }
         }
 
-        $slider->update([ 'value' => json_encode($slider_item->take( count( $args->get( $this->field ) ) ), true) ]);
+        $slider->update(['value' => json_encode($slider_item->take(count($args->get($this->field))), true)]);
     }
 }

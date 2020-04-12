@@ -9,12 +9,12 @@ use OwenIt\Auditing\Models\Audit;
 class AuditType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'AuditType',
+        'name' => 'audit',
         'description' => 'A type',
         'model' => Audit::class
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'id' => [
@@ -28,14 +28,14 @@ class AuditType extends GraphQLType
             ],
             'old_values' => [
                 'type' => Type::string(),
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     return json_encode($data->old_values);
                 },
                 'is_relation' => false,
             ],
             'new_values' => [
                 'type' => Type::string(),
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     return json_encode($data->new_values);
                 },
                 'is_relation' => false,

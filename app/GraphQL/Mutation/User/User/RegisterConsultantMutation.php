@@ -10,10 +10,11 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\UploadType;
 use App\Http\Requests\v1\RegisterConsultantRequest;
 use App\Models\User\Office;
+use Closure;
 
 class RegisterConsultantMutation extends BaseUserMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('me');
     }
@@ -23,12 +24,12 @@ class RegisterConsultantMutation extends BaseUserMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
         return (new RegisterConsultantRequest)->rules($args, 'REGISTER');
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             // User info
@@ -63,7 +64,7 @@ class RegisterConsultantMutation extends BaseUserMutation
                 'type' => Type::string()
             ],
             'avatar' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'national_code' => [
                 'type' => Type::string()
@@ -94,7 +95,7 @@ class RegisterConsultantMutation extends BaseUserMutation
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $parent_id = $args['reagent_code'] ?? false ? User::whereUsername($args['reagent_code'])->first()->id ?? null : null;
 

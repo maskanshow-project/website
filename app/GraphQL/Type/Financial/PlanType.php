@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Financial\Plan;
 
 class PlanType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'PlanType',
+        'name' => 'plan',
         'description' => 'A type',
         'model' => Plan::class
     ];

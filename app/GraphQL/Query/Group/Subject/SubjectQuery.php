@@ -9,7 +9,7 @@ class SubjectQuery extends BaseSubjectQuery
 {
     use SingleQuery;
 
-    public function args()
+    public function args(): array
     {
         return [
             'id' => [

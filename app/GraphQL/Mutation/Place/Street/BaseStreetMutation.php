@@ -7,16 +7,16 @@ use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Place\StreetProps;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 
-class BaseStreetMutation extends MainMutation
+abstract class BaseStreetMutation extends MainMutation
 {
     use StreetProps;
-    
+
     protected $attributes = [
         'name' => 'StreetMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'area_id' => [
@@ -40,10 +40,10 @@ class BaseStreetMutation extends MainMutation
      * @param Request $request
      * @return Array $request
      */
-    public function getRequest( $request)
+    public function getRequest($request)
     {
-        return array_merge( $request->all(), [
-            'coordinates'   => new Point( $request->get('lat'), $request->get('lng') )
+        return array_merge($request->all(), [
+            'coordinates'   => new Point($request->get('lat'), $request->get('lng'))
         ]);
     }
 }

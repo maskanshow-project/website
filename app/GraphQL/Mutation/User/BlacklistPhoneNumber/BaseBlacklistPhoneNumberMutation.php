@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\User\BlacklistPhoneNumberProps;
 
-class BaseBlacklistPhoneNumberMutation extends MainMutation
+abstract class BaseBlacklistPhoneNumberMutation extends MainMutation
 {
     use BlacklistPhoneNumberProps;
-    
+
     protected $attributes = [
         'name' => 'BlacklistPhoneNumberMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'phone_number' => [

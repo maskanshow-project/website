@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Estate\Feature;
 
 class FeatureType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'FeatureType',
+        'name' => 'feature',
         'description' => 'A type',
         'model' => Feature::class
     ];

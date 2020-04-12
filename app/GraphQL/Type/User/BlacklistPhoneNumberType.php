@@ -11,7 +11,7 @@ class BlacklistPhoneNumberType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'BlacklistPhoneNumberType',
+        'name' => 'blacklist_phone_number',
         'description' => 'A type',
         'model' => BlacklistPhoneNumber::class
     ];

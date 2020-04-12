@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\Helpers\CreatorRelationship;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class SpecDefault extends Model implements AuditableContract
@@ -18,14 +18,14 @@ class SpecDefault extends Model implements AuditableContract
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'spec_row_id' 
+        'spec_row_id'
     ];
 
     /**
@@ -51,7 +51,7 @@ class SpecDefault extends Model implements AuditableContract
             'spec_default_translations.value' => 10,
         ],
         'joins' => [
-            'spec_default_translations' => ['spec_defaults.id','spec_default_translations.spec_default_id'],
+            'spec_default_translations' => ['spec_defaults.id', 'spec_default_translations.spec_default_id'],
         ],
     ];
 

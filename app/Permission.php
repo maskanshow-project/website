@@ -3,7 +3,7 @@
 namespace App;
 
 use Laratrust\Models\LaratrustPermission;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 
 class Permission extends LaratrustPermission
 {

@@ -7,18 +7,18 @@ use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\User\UserProps;
 use Rebing\GraphQL\Support\UploadType;
 
-class BaseUserMutation extends MainMutation
+abstract class BaseUserMutation extends MainMutation
 {
     use UserProps;
-    
+
     protected $incrementing = false;
-    
+
     protected $attributes = [
         'name' => 'UserMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'city_id' => [
@@ -43,7 +43,7 @@ class BaseUserMutation extends MainMutation
                 'type' => Type::string()
             ],
             'avatar' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'phone_number' => [
                 'type' => Type::string()
@@ -58,7 +58,7 @@ class BaseUserMutation extends MainMutation
                 'type' => Type::boolean()
             ],
             'roles' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'is_deleted_image' => [
                 'type' => Type::boolean()
@@ -67,14 +67,14 @@ class BaseUserMutation extends MainMutation
                 'type' => Type::boolean()
             ],
             'permissions' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             // 'is_active' => [
             //     'type' => Type::boolean()
             // ]
         ];
     }
-    
+
     /**
      * The function that get the model and run after the model was updated
      *
@@ -84,23 +84,21 @@ class BaseUserMutation extends MainMutation
      */
     public function afterUpdate($request, $user)
     {
-        if ( auth()->id() !== $request->get('id') )
-        {
-            $user->syncPermissions( $request->get('permissions', []) );
-            $user->syncRoles( $request->get('roles', [])  );
+        if (auth()->id() !== $request->get('id')) {
+            $user->syncPermissions($request->get('permissions', []));
+            $user->syncRoles($request->get('roles', []));
         }
     }
-    
+
     /**
      * Get the portion of request class
      *
      * @param Request $request
      * @return Array $request
      */
-    public function getRequest( $request)
+    public function getRequest($request)
     {
-        if ( auth()->check() && $request->get('id') === auth()->id() )
-        {
+        if (auth()->check() && $request->get('id') === auth()->id()) {
             return $request->only(
                 'city_id',
                 'first_name',
@@ -113,7 +111,7 @@ class BaseUserMutation extends MainMutation
                 'is_public_info'
             )->all();
         }
-        
+
         return array_merge($request->only(
             'city_id',
             'first_name',

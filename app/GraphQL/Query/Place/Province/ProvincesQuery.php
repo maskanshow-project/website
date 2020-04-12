@@ -15,14 +15,14 @@ class ProvincesQuery extends BaseProvinceQuery
     {
         return [
             'country' => [
-                'type' => Type::nonNull( Type::int() )
+                'type' => Type::nonNull(Type::int())
             ],
         ];
     }
 
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
-        return Type::listOf( \GraphQL::type('province') );
+        return Type::listOf(\GraphQL::type('province'));
     }
 
     public function getPortionOfData($data, $args)

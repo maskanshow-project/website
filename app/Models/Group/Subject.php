@@ -12,7 +12,7 @@ use App\Traits\MultiLevel;
 use App\Helpers\CreateTimeline;
 use App\Helpers\CreatorRelationship;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -29,7 +29,7 @@ class Subject extends Model implements AuditableContract, HasMedia
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -60,7 +60,7 @@ class Subject extends Model implements AuditableContract, HasMedia
         'title',
         'description',
     ];
-    
+
     /**
      * Searchable rules.
      * 
@@ -76,7 +76,7 @@ class Subject extends Model implements AuditableContract, HasMedia
             'subject_translations.description' => 5,
         ],
         'joins' => [
-            'subject_translations' => ['subjects.id','subject_translations.subject_id'],
+            'subject_translations' => ['subjects.id', 'subject_translations.subject_id'],
         ],
     ];
 
@@ -117,15 +117,15 @@ class Subject extends Model implements AuditableContract, HasMedia
     /**
      * Get all the child categories that owned by the category
      */
-    public function childs ()
+    public function childs()
     {
         return $this->hasMany(self::class, 'parent_id');
     }
-    
+
     /**
      * return parent category that can have many childs
      */
-    public function parent ()
+    public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
@@ -133,11 +133,11 @@ class Subject extends Model implements AuditableContract, HasMedia
     /**
      * Get all the articles that owned the category & adverb
      */
-    public function articles ()
+    public function articles()
     {
         return $this->belongsToMany(Article::class);
     }
-    
+
     /**
      * Get the media field of the model
      */
@@ -145,7 +145,7 @@ class Subject extends Model implements AuditableContract, HasMedia
     {
         return $this->morphMany(config('medialibrary.media_model'), 'model');
     }
-    
+
 
     /****************************************
      **              Methods

@@ -6,23 +6,24 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
 use App\GraphQL\Helpers\ChartQueryHelper;
+use Closure;
 use DB;
 
 class VisitedEstatesQuery extends BaseEstateQuery
 {
     use ChartQueryHelper;
 
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
-        return Type::listOf( \GraphQL::type('chart_record') );
+        return Type::listOf(\GraphQL::type('chart_record'));
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $date = jdate("now - 11 months");
-        $date = $date->subDays( $date->getDay() - 1 );
+        $date = $date->subDays($date->getDay() - 1);
 
-        $result = DB::table('visited_estates')->where('user_id', auth()->id() )
+        $result = DB::table('visited_estates')->where('user_id', auth()->id())
             ->select([
                 \DB::raw("month(`visited_at`) as 'month'"),
                 \DB::raw("count(`visited_at`) 'count'")
@@ -32,10 +33,10 @@ class VisitedEstatesQuery extends BaseEstateQuery
             ->get()
             ->pluck('count', 'month');
 
-            
+
         $this->change_new_year_month($result);
         $this->change_old_year_month($result);
 
-        return array_values( $result->sortKeys()->toArray() );
+        return array_values($result->sortKeys()->toArray());
     }
 }

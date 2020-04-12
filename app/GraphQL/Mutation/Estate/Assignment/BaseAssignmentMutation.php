@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Estate\AssignmentProps;
 
-class BaseAssignmentMutation extends MainMutation
+abstract class BaseAssignmentMutation extends MainMutation
 {
     use AssignmentProps;
-    
+
     protected $attributes = [
         'name' => 'AssignmentMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [

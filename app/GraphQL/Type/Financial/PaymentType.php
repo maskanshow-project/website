@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Financial\Payment;
 
 class PaymentType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'PaymentType',
+        'name' => 'payment',
         'description' => 'A type',
         'model' => Payment::class
     ];

@@ -11,15 +11,15 @@ class CustomerOpinionInput extends GraphQLType
     protected $inputObject = true;
 
     protected $attributes = [
-        'name' => 'CustomerOpinionInput',
+        'name' => 'customer_opinion_input',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'avatar' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'post' => [
                 'type' => Type::string()

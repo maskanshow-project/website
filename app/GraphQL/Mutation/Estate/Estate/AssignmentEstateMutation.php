@@ -6,10 +6,11 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\Estate\Estate;
+use Closure;
 
 class AssignmentEstateMutation extends BaseEstateMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -19,48 +20,46 @@ class AssignmentEstateMutation extends BaseEstateMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        if ( $this->checkPermission("accept-assignment-estate") )
-            return true;
-        
-        elseif ( auth()->user()->visitedEstates()->where('id', $args['estate'] ?? false)->count() )
+        if ($this->checkPermission("accept-assignment-estate"))
             return true;
 
-        elseif ( (Estate::find($args['estate'])->user_id ?? false) === auth()->id() )
+        elseif (auth()->user()->visitedEstates()->where('id', $args['estate'] ?? false)->count())
+            return true;
+
+        elseif ((Estate::find($args['estate'])->user_id ?? false) === auth()->id())
             return true;
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'estate' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
-    {
-        $estate = Estate::findOrFail( $args['estate'] );
 
-        if ( $estate->assignmented_at )
-        {
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
+    {
+        $estate = Estate::findOrFail($args['estate']);
+
+        if ($estate->assignmented_at) {
             return [
                 'status' => 400,
                 'message' => 'این ملک قبلا واگذار شده است'
             ];
         }
 
-        if ( $estate->assignment_informations()->where('id', auth()->id() )->count() )
-        {
+        if ($estate->assignment_informations()->where('id', auth()->id())->count()) {
             return [
                 'status' => 400,
                 'message' => 'این ملک قبلا توسط شما اعلام واگذاری شده است'
             ];
         }
 
-        $estate->assignment_informations()->attach( auth()->user()->id );
+        $estate->assignment_informations()->attach(auth()->user()->id);
 
         $estate->increment('assignment_count');
 

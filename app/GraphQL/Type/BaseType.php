@@ -7,11 +7,11 @@ use GraphQL\Type\Definition\Type;
 use App\Traits\CheckPermissions;
 use Illuminate\Support\Str;
 
-class BaseType extends GraphQLType
+abstract class BaseType extends GraphQLType
 {
     use CheckPermissions;
 
-    public function fields()
+    public function fields(): array
     {
         return array_merge(
             [
@@ -25,7 +25,7 @@ class BaseType extends GraphQLType
                     'type' => Type::string()
                 ]
             ],
-            
+
             $this->get_fields()
         );
     }
@@ -45,11 +45,11 @@ class BaseType extends GraphQLType
     public function audits($type)
     {
         return [
-            'type' => Type::listOf( \GraphQL::type('audit') ),
-            'query' => function(array $args, $query) {
+            'type' => Type::listOf(\GraphQL::type('audit')),
+            'query' => function (array $args, $query) {
                 return $query->orderBy('created_at', 'desc')->limit(5);
             },
-            'privacy' => function() use($type) {
+            'privacy' => function () use ($type) {
                 return $this->checkPermission("see-log-{$type}");
             }
         ];
@@ -59,7 +59,7 @@ class BaseType extends GraphQLType
     {
         return [
             'type' => \GraphQL::type('user'),
-            'privacy' => function() use($type) {
+            'privacy' => function () use ($type) {
                 return $this->checkPermission("see-creator-{$type}");
             }
         ];
@@ -69,7 +69,7 @@ class BaseType extends GraphQLType
     {
         return [
             'type' => \GraphQL::type('votes'),
-            'resolve' => function($data) {
+            'resolve' => function ($data) {
                 return [
                     'likes' => $data->dislikesCount,
                     'dislikes' => $data->dislikesCount
@@ -82,7 +82,7 @@ class BaseType extends GraphQLType
     public function relationListField($type, $acceptable_field = 'is_active', $permission = null, $ordering = 'desc')
     {
         return [
-            'type'  => Type::listOf( \GraphQL::type($type) ),
+            'type'  => Type::listOf(\GraphQL::type($type)),
             'query' => $this->getRelationQuery($type, $acceptable_field, $permission, null, $ordering)
         ];
     }
@@ -90,7 +90,7 @@ class BaseType extends GraphQLType
     public function paginatedRelationListField($type, $acceptable_field = 'is_active', $permission = null)
     {
         return [
-            'type'  => Type::listOf( \GraphQL::type($type) ),
+            'type'  => Type::listOf(\GraphQL::type($type)),
             'query' => $this->getRelationQuery($type, $acceptable_field, $permission, true)
         ];
     }
@@ -107,13 +107,13 @@ class BaseType extends GraphQLType
     {
         $permission = $permission ? $permission : "read-{$type}";
 
-        return function(array $args, $query) use($type, $acceptable_field, $permission, $paginated, $ordering) {
-                
-            if ( !$this->checkPermission($permission) )
+        return function (array $args, $query) use ($type, $acceptable_field, $permission, $paginated, $ordering) {
+
+            if (!$this->checkPermission($permission))
                 $query->where(Str::plural($type) . ".{$acceptable_field}", 1);
-                
-            if ( $paginated )
-                $query->offset( (($args['page'] ?? 1 ) - 1) * 10 )->take(10);
+
+            if ($paginated)
+                $query->offset((($args['page'] ?? 1) - 1) * 10)->take(10);
 
             return $query->orderBy(Str::plural($type) . ".created_at", $ordering);
         };
@@ -123,7 +123,7 @@ class BaseType extends GraphQLType
     {
         return [
             'type' => Type::boolean(),
-            'privacy' => function() use($type) {
+            'privacy' => function () use ($type) {
                 return $this->checkPermission("read-{$type}");
             }
         ];
@@ -133,7 +133,7 @@ class BaseType extends GraphQLType
     {
         return [
             'type' => \GraphQL::type('single_media'),
-            'resolve' => function($data) use($field) {
+            'resolve' => function ($data) use ($field) {
                 return $data->$field[0] ?? null;
             }
         ];
@@ -143,7 +143,7 @@ class BaseType extends GraphQLType
     {
         return [
             'type' => Type::boolean(),
-            'resolve' => function($data) {
+            'resolve' => function ($data) {
                 return $data->user_id === auth()->id() ?? false;
             }
         ];

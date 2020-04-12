@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class SingleMediaType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'SingleMedia',
+        'name' => 'single_media',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'id' => [

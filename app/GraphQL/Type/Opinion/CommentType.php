@@ -9,7 +9,7 @@ use App\Models\Opinion\Comment;
 class CommentType extends BaseType
 {
     protected $attributes = [
-        'name' => 'CommentType',
+        'name' => 'comment',
         'description' => 'A type',
         'model' => Comment::class
     ];

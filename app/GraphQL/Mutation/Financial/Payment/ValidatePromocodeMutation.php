@@ -8,6 +8,7 @@ use App\GraphQL\Props\Financial\PaymentProps;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\Financial\Promocode;
+use Closure;
 
 class ValidatePromocodeMutation extends MainMutation
 {
@@ -18,7 +19,7 @@ class ValidatePromocodeMutation extends MainMutation
         'description' => 'A mutation'
     ];
 
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -28,61 +29,57 @@ class ValidatePromocodeMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return true;
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'code' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
             'plan' => [
-                'type' => Type::nonNull( Type::int() )
+                'type' => Type::nonNull(Type::int())
             ]
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
-    {
-        $promocode = Promocode::whereCode( $args['code'] )->with('plans')
-                ->where(function ($query) {
-                    $query->where('expired_at', '>', now() )->orWhere('expired_at', null);
-                })
-                ->where(function ($query) {
-                    $query->where('quantity', '>=', '1')->orWhere('quantity', null);
-                })
-                ->first();
 
-        if ( !$promocode )
-        {
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
+    {
+        $promocode = Promocode::whereCode($args['code'])->with('plans')
+            ->where(function ($query) {
+                $query->where('expired_at', '>', now())->orWhere('expired_at', null);
+            })
+            ->where(function ($query) {
+                $query->where('quantity', '>=', '1')->orWhere('quantity', null);
+            })
+            ->first();
+
+        if (!$promocode) {
             return [
                 'status' => 400,
                 'message' => 'این کد تخفیف معتبر نیست یا منقضی شده است'
             ];
         }
 
-        if ( $promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'] )->count() !== 1 )
-        {
+        if ($promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'])->count() !== 1) {
             return [
                 'status' => 400,
                 'message' => 'امکان استفاده از این کد تخفیف برای خرید این پلن ممکن نیست'
-            ];   
+            ];
         }
 
 
-        if ( $promocode->quantity && $promocode->used_count >= $promocode->quantity )
-        {
+        if ($promocode->quantity && $promocode->used_count >= $promocode->quantity) {
             return [
                 'status' => 400,
                 'message' => 'متاسفانه این کد تخفیف دیگر قابل استفاده نیست'
             ];
         }
 
-        if ( $promocode->users()->where('id', auth()->id() )->count() )
-        {
+        if ($promocode->users()->where('id', auth()->id())->count()) {
             return [
                 'status' => 400,
                 'message' => 'شما قبلا یکبار از این کد تخفیف استفاده کرده اید'

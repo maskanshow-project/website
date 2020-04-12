@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class ResultMessageType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'ResultMessageType',
+        'name' => 'result',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'code' => [

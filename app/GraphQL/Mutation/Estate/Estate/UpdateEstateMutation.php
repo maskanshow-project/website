@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutation\Estate\Estate;
 
 use App\GraphQL\Helpers\UpdateMutation;
+use Closure;
 
 class UpdateEstateMutation extends BaseEstateMutation
 {
@@ -13,7 +14,7 @@ class UpdateEstateMutation extends BaseEstateMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return auth()->check();
     }
@@ -27,12 +28,12 @@ class UpdateEstateMutation extends BaseEstateMutation
      */
     public function getModel($data)
     {
-        return $this->model::when( auth()->user()->can('update-estate'), function($query) use($data) {
+        return $this->model::when(auth()->user()->can('update-estate'), function ($query) use ($data) {
 
             return $query->findOrFail($data);
-        }, function($query) use($data) {
+        }, function ($query) use ($data) {
 
-            return $query->where('user_id', auth()->id() )->findOrFail($data);
+            return $query->where('user_id', auth()->id())->findOrFail($data);
         });
     }
 }

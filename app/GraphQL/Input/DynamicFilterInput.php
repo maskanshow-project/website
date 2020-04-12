@@ -10,11 +10,11 @@ class DynamicFilterInput extends GraphQLType
     protected $inputObject = true;
 
     protected $attributes = [
-        'name' => 'DynamicFilterInput',
+        'name' => 'dynamic_filter_input',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'row_id' => [
@@ -26,7 +26,7 @@ class DynamicFilterInput extends GraphQLType
                 'rules' => 'nullable'
             ],
             'values' => [
-                'type' => Type::listOf( Type::int() ),
+                'type' => Type::listOf(Type::int()),
                 'rules' => 'nullable'
             ]
         ];

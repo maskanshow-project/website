@@ -10,13 +10,14 @@ use GraphQL\Type\Definition\ResolveInfo;
 use App\Mail\ResetPassword;
 use App\Models\User\PasswordReset;
 use App\User;
+use Closure;
 use DB;
 use Mail;
 
 class RequestResetPasswordMutation extends MainMutation
 {
-    public function type()
-    {   
+    public function type(): \GraphQL\Type\Definition\Type
+    {
         return \GraphQL::type('result');
     }
 
@@ -25,7 +26,7 @@ class RequestResetPasswordMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return auth()->guest();
     }
@@ -35,24 +36,23 @@ class RequestResetPasswordMutation extends MainMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
-        return ( new ResetPasswordRequest )->rules($args, 'REQUEST');
+        return (new ResetPasswordRequest)->rules($args, 'REQUEST');
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'email' => [
-                'type' => Type::nonNull( Type::string() )
+                'type' => Type::nonNull(Type::string())
             ],
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        if ( !$user = User::whereEmail( $args['email'] )->first() )
-        {
+        if (!$user = User::whereEmail($args['email'])->first()) {
             return [
                 'status' => 400,
                 'message' => 'آدرس ایمیل مورد نظر شما یافت نشد'
@@ -61,12 +61,12 @@ class RequestResetPasswordMutation extends MainMutation
 
         PasswordReset::updateOrCreate([
             'user_id' => $user->id,
-        ],[
+        ], [
             'token' => $token = str_random(100),
             'expired_at' => now()->addDay(1)
         ]);
-        
-        Mail::to( $user->email )->send( new ResetPassword($user, $token) );
+
+        Mail::to($user->email)->send(new ResetPassword($user, $token));
 
         return [
             'status' => 200,

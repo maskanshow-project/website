@@ -6,10 +6,10 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Spec\SpecHeaderProps;
 
-class BaseSpecHeaderMutation extends MainMutation
+abstract class BaseSpecHeaderMutation extends MainMutation
 {
     use SpecHeaderProps;
-    
+
     protected $permission_label = 'spec';
 
     protected $attributes = [
@@ -17,7 +17,7 @@ class BaseSpecHeaderMutation extends MainMutation
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'spec_id' => [

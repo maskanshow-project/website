@@ -8,22 +8,22 @@ use GraphQL\Type\Definition\Type;
 class CoordinateType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'CoordinateType',
+        'name' => 'coordinate',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'lat' => [
                 'type' => Type::float(),
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     return $data ? $data->getLat() : null;
                 }
             ],
             'lng' => [
                 'type' => Type::float(),
-                'resolve' => function($data) {
+                'resolve' => function ($data) {
                     return $data ? $data->getLng() : null;
                 }
             ],

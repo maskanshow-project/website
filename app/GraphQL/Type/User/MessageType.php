@@ -11,7 +11,7 @@ class MessageType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'MessageType',
+        'name' => 'message',
         'description' => 'A type',
         'model' => Message::class
     ];

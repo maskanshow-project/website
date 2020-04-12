@@ -2,14 +2,15 @@
 
 namespace App\GraphQL\Helpers;
 
+use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
 
 trait CreateMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
-        return \GraphQL::type( $this->type );
+        return \GraphQL::type($this->type);
     }
 
     /**
@@ -17,9 +18,9 @@ trait CreateMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->checkPermission("create-". ($this->permission_label ? $this->permission_label : $this->type));
+        return $this->checkPermission("create-" . ($this->permission_label ? $this->permission_label : $this->type));
     }
 
     /**
@@ -27,24 +28,24 @@ trait CreateMutation
      *
      * @return array
      */
-    protected function rules(array $args = [])
+    protected function rules(array $args = []): array
     {
-        return ( new $this->request )->rules($args, 'CREATE');
-    }
-    
-    public function attributes()
-    {
-        return ( new $this->request )->attributes();
+        return (new $this->request)->rules($args, 'CREATE');
     }
 
-    public function args()
+    public function attributes()
     {
-        return $this->getArgs();
+        return (new $this->request)->attributes();
     }
-   
-    
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function args(): array
     {
-        return $this->store($args, $fields);
+        return $this->get_args();
+    }
+
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
+    {
+        return $this->store($args, $getSelectFields());
     }
 }

@@ -9,7 +9,7 @@ use App\Models\Spec\SpecHeader;
 class SpecHeaderType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SpecHeaderType',
+        'name' => 'spec_header',
         'description' => 'A type',
         'model' => SpecHeader::class
     ];
@@ -29,17 +29,17 @@ class SpecHeaderType extends BaseType
             ],
             // 'rows' => $this->relationListField('spec_row', 'is_active', 'read-spec', 'asc'),
             'rows' => [
-                'type'  => Type::listOf( \GraphQL::type('spec_row') ),
-                'query' => function(array $args, $query) {
+                'type'  => Type::listOf(\GraphQL::type('spec_row')),
+                'query' => function (array $args, $query) {
 
-                    return $query->when($args['only_show_valid_spec'] ?? false, function($query) use($args) {
-                        
-                        $query->whereHas('data', function($query) use($args) {
+                    return $query->when($args['only_show_valid_spec'] ?? false, function ($query) use ($args) {
+
+                        $query->whereHas('data', function ($query) use ($args) {
 
                             $query->where('estate_id', $args['id'] ?? false);
                         });
                     })
-                    ->orderBy("spec_rows.created_at", 'asc');
+                        ->orderBy("spec_rows.created_at", 'asc');
                 }
             ],
             'audits' => $this->audits('spec'),

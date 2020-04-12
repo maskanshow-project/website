@@ -6,18 +6,18 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Spec\SpecRowProps;
 
-class BaseSpecRowMutation extends MainMutation
+abstract class BaseSpecRowMutation extends MainMutation
 {
     use SpecRowProps;
-    
+
     protected $permission_label = 'spec';
-    
+
     protected $attributes = [
         'name' => 'SpecRowMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'spec_header_id' => [

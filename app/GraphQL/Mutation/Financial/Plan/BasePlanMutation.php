@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Financial\PlanProps;
 
-class BasePlanMutation extends MainMutation
+abstract class BasePlanMutation extends MainMutation
 {
     use PlanProps;
-    
+
     protected $attributes = [
         'name' => 'PlanMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'color' => [

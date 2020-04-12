@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Estate\LabelProps;
 
-class BaseLabelMutation extends MainMutation
+abstract class BaseLabelMutation extends MainMutation
 {
     use LabelProps;
-    
+
     protected $attributes = [
         'name' => 'LabelMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [

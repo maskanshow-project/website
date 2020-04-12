@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutation\Option\SiteSetting;
 
+use Closure;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -11,7 +12,7 @@ class AdvertisingSiteSettingMutation extends BaseSiteSettingMutation
 {
     public $field = 'ads';
 
-    public function args()
+    public function args(): array
     {
         return [
             $this->field => [
@@ -20,7 +21,7 @@ class AdvertisingSiteSettingMutation extends BaseSiteSettingMutation
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $args = collect($args);
 

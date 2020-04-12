@@ -4,14 +4,15 @@ namespace App\GraphQL\Query\Opinion\Comment;
 
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\Opinion\CommentProps;
+use Closure;
 
-class BaseCommentQuery extends MainQuery
+abstract class BaseCommentQuery extends MainQuery
 {
     use CommentProps;
 
     protected $acceptable = false;
 
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return $this->checkPermission('read-comment');
     }

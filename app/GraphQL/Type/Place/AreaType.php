@@ -9,7 +9,7 @@ use App\Models\Places\Area;
 class AreaType extends BaseType
 {
     protected $attributes = [
-        'name' => 'AreaType',
+        'name' => 'area',
         'description' => 'A type',
         'model' => Area::class
     ];
@@ -28,11 +28,11 @@ class AreaType extends BaseType
                 'type' => \GraphQL::type('city')
             ],
             'streets' => [
-                'type' => Type::listOf( \GraphQL::type('street') )
+                'type' => Type::listOf(\GraphQL::type('street'))
             ],
             'offices' => [
-                'type' => Type::listOf( \GraphQL::type('office') ),
-                'query' => function($args, $query) {
+                'type' => Type::listOf(\GraphQL::type('office')),
+                'query' => function ($args, $query) {
                     return $query->inRandomOrder()->limit(5);
                 }
             ]

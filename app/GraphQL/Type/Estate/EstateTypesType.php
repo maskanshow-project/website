@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Estate\EstateType;
 
 class EstateTypesType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'EstateTypesType',
+        'name' => 'estate_type',
         'description' => 'A type',
         'model' => EstateType::class
     ];

@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Helpers;
 
+use Closure;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
@@ -9,7 +10,7 @@ use Illuminate\Support\Str;
 
 trait ActiveMutation
 {
-    public function type()
+    public function type(): \GraphQL\Type\Definition\Type
     {
         return \GraphQL::type('result');
     }
@@ -19,30 +20,30 @@ trait ActiveMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         $active_type = Str::replaceFirst('is_', '', $this->acceptable_field);
 
-        return $this->checkPermission("{$active_type}-". ($this->permission_label ? $this->permission_label : $this->type));
+        return $this->checkPermission("{$active_type}-" . ($this->permission_label ? $this->permission_label : $this->type));
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'id'        => [
                 'type' => $this->incrementing ? Type::int() : Type::string()
             ],
             'ids'       => [
-                'type' => Type::listOf( $this->incrementing ? Type::int() : Type::string() )
+                'type' => Type::listOf($this->incrementing ? Type::int() : Type::string())
             ],
             'status'    => [
-                'type' => Type::nonNull( Type::boolean() ),
+                'type' => Type::nonNull(Type::boolean()),
             ]
         ];
     }
-   
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
-        return $this->active($args, $fields);
+        return $this->active($args, $getSelectFields());
     }
 }

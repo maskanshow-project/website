@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class TagType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'TagType',
+        'name' => 'tag',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'name' => [

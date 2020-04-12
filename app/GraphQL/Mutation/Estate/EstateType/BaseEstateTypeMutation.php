@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Estate\EstateTypeProps;
 
-class BaseEstateTypeMutation extends MainMutation
+abstract class BaseEstateTypeMutation extends MainMutation
 {
     use EstateTypeProps;
-    
+
     protected $attributes = [
         'name' => 'EstateTypeMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [
@@ -28,7 +28,7 @@ class BaseEstateTypeMutation extends MainMutation
                 'type' => Type::string()
             ],
             'assignments' => [
-                'type' => Type::listOf( Type::int() )
+                'type' => Type::listOf(Type::int())
             ],
             'is_active' => [
                 'type' => Type::boolean()
@@ -45,7 +45,7 @@ class BaseEstateTypeMutation extends MainMutation
      */
     public function afterCreate($request, $estate_type)
     {
-        $estate_type->assignments()->attach( $request->get('assignments') );
+        $estate_type->assignments()->attach($request->get('assignments'));
     }
 
     /**
@@ -57,6 +57,6 @@ class BaseEstateTypeMutation extends MainMutation
      */
     public function afterUpdate($request, $estate_type)
     {
-        $estate_type->assignments()->sync( $request->get('assignments') );
+        $estate_type->assignments()->sync($request->get('assignments'));
     }
 }

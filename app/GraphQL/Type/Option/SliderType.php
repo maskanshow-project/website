@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class SliderType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'SliderType',
+        'name' => 'slider_item',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'image' => [

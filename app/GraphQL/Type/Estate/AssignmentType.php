@@ -7,9 +7,9 @@ use GraphQL\Type\Definition\Type;
 use App\Models\Estate\Assignment;
 
 class AssignmentType extends BaseType
-{    
+{
     protected $attributes = [
-        'name' => 'AssignmentType',
+        'name' => 'assignment',
         'description' => 'A type',
         'model' => Assignment::class
     ];

@@ -9,11 +9,11 @@ class UserQuery extends BaseUserQuery
 {
     use SingleQuery;
 
-    public function args()
+    public function args(): array
     {
         return [
             'id' => [
-                'type' => Type::nonNull( $this->incrementing ? Type::int() : Type::string() )
+                'type' => Type::nonNull($this->incrementing ? Type::int() : Type::string())
             ],
             'page' => [
                 'type' => Type::int()

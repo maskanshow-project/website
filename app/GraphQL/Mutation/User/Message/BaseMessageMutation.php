@@ -6,16 +6,16 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\User\MessageProps;
 
-class BaseMessageMutation extends MainMutation
+abstract class BaseMessageMutation extends MainMutation
 {
     use MessageProps;
-    
+
     protected $attributes = [
         'name' => 'MessageMutation',
         'description' => 'A mutation'
     ];
 
-    public function getArgs()
+    public function get_args()
     {
         return [
             'title' => [

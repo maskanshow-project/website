@@ -5,7 +5,7 @@ namespace App\GraphQL\Query\Shop\Estate;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\Estate\EstateProps;
 
-class BaseEstateQuery extends MainQuery
+abstract class BaseEstateQuery extends MainQuery
 {
     use EstateProps;
 
@@ -15,12 +15,12 @@ class BaseEstateQuery extends MainQuery
 
     public function showOnlyAtiveData($data)
     {
-        if ( !$this->acceptable )
+        if (!$this->acceptable)
             return;
 
-        if ( !$this->checkPermission("read-{$this->type}") )
-            $data->where( function($query) {
-                $query->where($this->acceptable_field, 1)->orWhere('user_id', auth()->id() );
+        if (!$this->checkPermission("read-{$this->type}"))
+            $data->where(function ($query) {
+                $query->where($this->acceptable_field, 1)->orWhere('user_id', auth()->id());
             });
     }
 }

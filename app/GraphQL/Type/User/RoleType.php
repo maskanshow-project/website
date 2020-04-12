@@ -11,7 +11,7 @@ class RoleType extends BaseType
     protected $incrementing = false;
 
     protected $attributes = [
-        'name' => 'RoleType',
+        'name' => 'role',
         'description' => 'A type',
         'model' => Role::class
     ];
@@ -33,7 +33,7 @@ class RoleType extends BaseType
                 'selectable' => false
             ],
             'permissions' => [
-                'type' => Type::listOf( \GraphQL::type('permission') )
+                'type' => Type::listOf(\GraphQL::type('permission'))
             ],
             'messages' => $this->relationListField('message'),
             'audits' => $this->audits('spec'),

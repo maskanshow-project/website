@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutation\Option\SiteSetting;
 
+use Closure;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -9,7 +10,7 @@ use Rebing\GraphQL\Support\UploadType;
 
 class InfoSiteSettingMutation extends BaseSiteSettingMutation
 {
-    public function args()
+    public function args(): array
     {
         return [
             'title' => [
@@ -25,16 +26,16 @@ class InfoSiteSettingMutation extends BaseSiteSettingMutation
                 'type' => Type::string()
             ],
             'logo' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'watermark' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'banner' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'header_banner' => [
-                'type' => UploadType::getInstance()
+                'type' => \GraphQL::type('Upload')
             ],
             'banner_link' => [
                 'type' => Type::string()
@@ -48,11 +49,11 @@ class InfoSiteSettingMutation extends BaseSiteSettingMutation
         ];
     }
 
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
     {
         $args = collect($args);
 
-        if ( $args->isEmpty() )
+        if ($args->isEmpty())
             return $this->result(false);
 
         $this->updateInfoFields($args);
@@ -72,34 +73,36 @@ class InfoSiteSettingMutation extends BaseSiteSettingMutation
     public function updateInfoFields($args)
     {
         foreach ($args->only(
-            'title', 'description', 'phone', 'address', 'theme_color', 'banner_link', 'is_enabled'
-        ) as $option => $value)
-        {
+            'title',
+            'description',
+            'phone',
+            'address',
+            'theme_color',
+            'banner_link',
+            'is_enabled'
+        ) as $option => $value) {
             $model = $this->model::whereName($option)->first();
-            
-            if ( $model )
-                $model->update([ 'value' => $value ]);
 
-            else 
-                $this->model::create([ 'name' => $option, 'value' => $value]);
+            if ($model)
+                $model->update(['value' => $value]);
+
+            else
+                $this->model::create(['name' => $option, 'value' => $value]);
         }
     }
 
     public function updateImageFields($args)
     {
-        foreach ($args->only('logo', 'watermark', 'banner', 'header_banner') as $option => $value)
-        {
+        foreach ($args->only('logo', 'watermark', 'banner', 'header_banner') as $option => $value) {
             if (!$value) continue;
-            
+
             $model = $this->model::whereName($option)->first();
-            
-            if ( $model )
-            {
+
+            if ($model) {
                 $model->clearMediaCollection();
                 $model->addMedia($value)->toMediaCollection();
-            }
-            else 
-                $this->model::create([ 'name' => $option ])->addMedia($value)->toMediaCollection();
+            } else
+                $this->model::create(['name' => $option])->addMedia($value)->toMediaCollection();
         }
     }
 }

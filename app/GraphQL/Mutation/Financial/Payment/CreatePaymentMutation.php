@@ -11,6 +11,7 @@ use App\Models\Financial\Promocode;
 use App\Models\Financial\Payment;
 use App\GraphQL\Helpers\CreateMutation;
 use App\GraphQL\Props\Financial\PaymentProps;
+use Closure;
 
 class CreatePaymentMutation extends MainMutation
 {
@@ -26,12 +27,12 @@ class CreatePaymentMutation extends MainMutation
      *
      * @return bool
      */
-    public function authorize(array $args)
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         return true;
     }
 
-    public function args()
+    public function args(): array
     {
         return [
             'plan' => [
@@ -45,16 +46,16 @@ class CreatePaymentMutation extends MainMutation
             ]
         ];
     }
-   
-    
-    public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
-    {
-        $plan = Plan::findOrFail( $args['plan'] );
 
-        if ( $args['promocode'] ?? false )
-            $promocode = Promocode::whereCode( $args['promocode'] )
+
+    public function resolve($root, $args, $context, ResolveInfo $info, Closure $getSelectFields)
+    {
+        $plan = Plan::findOrFail($args['plan']);
+
+        if ($args['promocode'] ?? false)
+            $promocode = Promocode::whereCode($args['promocode'])
                 ->where(function ($query) {
-                    $query->where('expired_at', '>', now() )->orWhere('expired_at', null);
+                    $query->where('expired_at', '>', now())->orWhere('expired_at', null);
                 })
                 ->where(function ($query) {
                     $query->where('quantity', '>=', '1')->orWhere('quantity', null);
@@ -62,25 +63,24 @@ class CreatePaymentMutation extends MainMutation
                 ->first();
 
 
-        if ( $promocode ?? false )
-        {
-            if ( $promocode->quantity && $promocode->used_count >= $promocode->quantity )
+        if ($promocode ?? false) {
+            if ($promocode->quantity && $promocode->used_count >= $promocode->quantity)
                 $promocode = null;
-    
-            if ( $promocode->users()->where('id', auth()->id() )->count() )
+
+            if ($promocode->users()->where('id', auth()->id())->count())
                 $promocode = null;
-    
-            if ( $promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'] )->count() !== 1 )
+
+            if ($promocode->plans->isNotEmpty() && $promocode->plans->where('id', $args['plan'])->count() !== 1)
                 $promocode = null;
         }
-        
+
 
         return Payment::create([
             'code' => str_random(50),
             'plan_id' => $plan->id,
             'promocode_id' => $promocode->id ?? null,
             'description' => $args['description'] ?? null,
-            'amount' => $promocode ?? false ? $plan->price - ( $plan->price * $promocode->cost / 100 ) : $plan->price,
+            'amount' => $promocode ?? false ? $plan->price - ($plan->price * $promocode->cost / 100) : $plan->price,
             'expired_at' => now()->addMinute(5)
         ]);
     }

@@ -9,7 +9,7 @@ use App\Models\Spec\SpecData;
 class SpecDataType extends BaseType
 {
     protected $attributes = [
-        'name' => 'SpecDataType',
+        'name' => 'spec_data',
         'description' => 'A type',
         'model' => SpecData::class
     ];
@@ -25,7 +25,7 @@ class SpecDataType extends BaseType
                 'type' => Type::string(),
             ],
             'values' => [
-                'type' => Type::listOf( \GraphQL::type('spec_default') ),
+                'type' => Type::listOf(\GraphQL::type('spec_default')),
             ],
             'row' => $this->relationItemField('spec_row', 'is_active', 'read-spec')
         ];

@@ -8,11 +8,11 @@ use GraphQL\Type\Definition\Type;
 class CustomerOpinionType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'CustomerOpinionType',
+        'name' => 'customer_opinion',
         'description' => 'A type'
     ];
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'avatar' => [
