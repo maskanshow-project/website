@@ -17,7 +17,7 @@ class Blacklist implements Rule
      */
     public function __construct()
     {
-        // 
+        //
     }
 
     /**
@@ -29,7 +29,7 @@ class Blacklist implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ( auth()->user()->hasRole('consultant') )
+        if (auth()->user()->hasRole('consultant'))
             return true;
 
         $item = DB::table('blacklist_phone_numbers')
@@ -37,10 +37,10 @@ class Blacklist implements Rule
             ->where("deleted_at", null)
             ->first();
 
-        if ( !$item ) return true;
-        
+        if (!$item) return true;
+
         $this->error_message = $item->description;
-        
+
         return false;
     }
 

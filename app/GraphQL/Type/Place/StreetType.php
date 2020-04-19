@@ -24,6 +24,9 @@ class StreetType extends BaseType
             'name' => [
                 'type' => Type::string()
             ],
+            'regex' => [
+                'type' => Type::string()
+            ],
             'area' => [
                 'type' => \GraphQL::type('area')
             ],

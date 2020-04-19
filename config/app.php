@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        SmaaT\EstateBot\EstateBotProvider::class,
 
         /*
          * Package Service Providers...
@@ -223,9 +224,7 @@ return [
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
-        'Faker' => Ybazli\Faker\Facades\Faker::class,
-
+        'View' => Illuminate\Support\Facades\View::class
     ],
 
 ];

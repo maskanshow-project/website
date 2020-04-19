@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\Estate\Estate;
 
 use App\GraphQL\Helpers\DeleteMutation;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class DeleteEstateMutation extends BaseEstateMutation
 {

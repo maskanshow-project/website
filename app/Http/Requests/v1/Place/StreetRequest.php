@@ -22,13 +22,14 @@ class StreetRequest extends MainRequest
                 'string',
                 'max:30',
                 Rule::unique('streets')
-                    ->ignore( $args['id'] ?? null )
-                    ->where(function ($query) use($args) {
+                    ->ignore($args['id'] ?? null)
+                    ->where(function ($query) use ($args) {
                         return $query->where('area_id', $args['area_id'] ?? null);
                     }),
             ],
-            'lat'       => [ $this->requiredOrFilled(), 'numeric' ],
-            'lng'       => [ $this->requiredOrFilled(), 'numeric' ],
+            'regex'     => 'nullable|string|max:150',
+            'lat'       => [$this->requiredOrFilled(), 'numeric'],
+            'lng'       => [$this->requiredOrFilled(), 'numeric'],
 
             /* relateion */
             'area_id'   => [$this->requiredOrFilled(), 'integer', 'exists:areas,id'],

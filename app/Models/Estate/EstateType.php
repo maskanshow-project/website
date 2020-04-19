@@ -51,12 +51,13 @@ class EstateType extends Model implements AuditableContract
      */
     public $translatedAttributes = [
         'title',
+        'similar_titles',
         'description',
     ];
 
     /**
      * Searchable rules.
-     * 
+     *
      * Columns and their priority in search results.
      * Columns with higher values are more important.
      * Columns with equal values have equal importance.

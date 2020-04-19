@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\User\User;
 
 use App\GraphQL\Helpers\UpdateMutation;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class UpdateUserMutation extends BaseUserMutation
 {

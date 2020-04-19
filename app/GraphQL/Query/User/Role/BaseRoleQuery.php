@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\User\Role;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\User\RoleProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseRoleQuery extends MainQuery
 {

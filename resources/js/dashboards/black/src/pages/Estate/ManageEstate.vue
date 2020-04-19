@@ -5,21 +5,30 @@
         <div class="pull-right">
           <h1
             class="animated bounceInRight delay-first"
-            :style="{ color: '#fff', fontWeight: 'bold', textShadow: '0px 3px 15px #333' }"
+            :style="{
+              color: '#fff',
+              fontWeight: 'bold',
+              textShadow: '0px 3px 15px #333'
+            }"
           >
             <span v-if="$route.params.id" dir="rtl">
               ویرایش
-              <span :style="{ color: '#ff3d3d', fontSize: '24px' }">{{ form_data.title }}</span>
+              <span :style="{ color: '#ff3d3d', fontSize: '24px' }">
+                {{
+                form_data.title
+                }}
+              </span>
             </span>
             <span v-else>
               ثبت
               <span :style="{ color: '#ff3d3d' }">ملک</span> جدید
             </span>
-            <i class="header-nav-icon tim-icons icon-align-left-2" :style="{fontSize: '25px'}"></i>
+            <i class="header-nav-icon tim-icons icon-align-left-2" :style="{ fontSize: '25px' }"></i>
           </h1>
-          <h6
-            class="header-description animated bounceInRight delay-secound"
-          >از طریق فرم زیر میتوانید به صورت کامل اطلاعات ملک خود را به ثبت برسانید</h6>
+          <h6 class="header-description animated bounceInRight delay-secound">
+            از طریق فرم زیر میتوانید به صورت کامل اطلاعات ملک خود را به ثبت
+            برسانید
+          </h6>
         </div>
         <div class="pull-left animated bounceInDown delay-last">
           <base-button
@@ -55,10 +64,14 @@
 
             <br />
 
-            <div id="aparat_video_frame" v-if="is_loaded_video">
+            <div id="aparat_video_frame" v-if="false && is_loaded_video">
               <script
                 type="text/JavaScript"
-                :src="`https://www.aparat.com/embed/${form_data.aparat_video.replace('https://www.aparat.com/v/', '').trim()}?data[rnddiv]=aparat_video_frame&data[responsive]=yes`"
+                :src="
+                  `https://www.aparat.com/embed/${(form_data.aparat_video || '')
+                    .replace('https://www.aparat.com/v/', '')
+                    .trim()}?data[rnddiv]=aparat_video_frame&data[responsive]=yes`
+                "
               ></script>
             </div>
           </div>
@@ -95,13 +108,14 @@
                   <div
                     class="mt-2"
                     :style="{ fontSize: '10px' }"
-                  >{{ area.streets.map(i => i.name).join(' - ') }}</div>
+                  >{{ area.streets.map(i => i.name).join(" - ") }}</div>
                 </md-option>
               </md-select>
-              <span
-                class="md-helper-text"
-                v-if="area_id"
-              >{{ area.streets.map(i => i.name).join(' - ') }}</span>
+              <span class="md-helper-text" v-if="area_id">
+                {{
+                area.streets.map(i => i.name).join(" - ")
+                }}
+              </span>
               <span class="md-helper-text" v-else>لطفا نام منطقه این ملک را از لیست انتخاب کنید</span>
             </md-field>
           </div>
@@ -110,9 +124,13 @@
             <md-field>
               <label>خیابان</label>
               <md-select v-model="street_id">
-                <md-option
-                  v-if="streets.length === 0"
-                >{{ area_id ? 'در این منطقه هیچ خیابانی ثبت نشده است' : 'لطفا ابتدا منطقه مورد نظر خود را انتخاب کنید' }}</md-option>
+                <md-option v-if="streets.length === 0">
+                  {{
+                  area_id
+                  ? "در این منطقه هیچ خیابانی ثبت نشده است"
+                  : "لطفا ابتدا منطقه مورد نظر خود را انتخاب کنید"
+                  }}
+                </md-option>
                 <md-option
                   v-for="street in streets"
                   :key="street.id"
@@ -191,7 +209,14 @@
             <l-control position="bottomright">
               <el-tooltip content="موقعیت من">
                 <base-button
-                  @click="location ? $refs.map.setCenter({ lat: location[0], lng: location[1] }) : false"
+                  @click="
+                    location
+                      ? $refs.map.setCenter({
+                          lat: location[0],
+                          lng: location[1]
+                        })
+                      : false
+                  "
                   class="pt-2"
                   type="success"
                   size="sm"
@@ -204,7 +229,12 @@
 
               <el-tooltip content="موقعیت ملک">
                 <base-button
-                  @click="$refs.map.setCenter({ lat: form_data.coordinates.lat, lng: form_data.coordinates.lng })"
+                  @click="
+                    $refs.map.setCenter({
+                      lat: form_data.coordinates.lat,
+                      lng: form_data.coordinates.lng
+                    })
+                  "
                   class="pt-2"
                   type="warning"
                   size="sm"
@@ -279,7 +309,10 @@
 
             <div class="row">
               <div
-                :class="getWidthClass(row, indexRow, header.rows.length) ? 'col-md-12' : 'col-md-6'
+                :class="
+                  getWidthClass(row, indexRow, header.rows.length)
+                    ? 'col-md-12'
+                    : 'col-md-6'
                 "
                 v-for="(row, indexRow) in header.rows"
                 :key="row.id"
@@ -322,7 +355,11 @@
                   </md-select>
 
                   <span class="md-suffix">{{ row.postfix }}</span>
-                  <span class="md-helper-text" :title="row.help">{{ row.help }}</span>
+                  <span class="md-helper-text" :title="row.help">
+                    {{
+                    row.help
+                    }}
+                  </span>
                 </md-field>
               </div>
             </div>
@@ -498,7 +535,9 @@
           <base-input
             class="col-md-4"
             label="تمایل به همکاری"
-            v-if="$store.state.roles.includes('consultant') && getSelectedAssignment"
+            v-if="
+            false && $store.state.roles.includes('consultant') && getSelectedAssignment
+            "
           >
             <el-switch
               dir="ltr"
@@ -507,10 +546,10 @@
               active-color="#ff8d72"
               inactive-text="تمایل ندارم"
             ></el-switch>
-            <small
-              slot="helperText"
-              class="form-text text-muted"
-            >درصورت عدم تمایل ، لیبل مربوطه روی ملک شما در سایت قرار خواهد گرفت</small>
+            <small slot="helperText" class="form-text text-muted">
+              درصورت عدم تمایل ، لیبل مربوطه روی ملک شما در سایت قرار خواهد
+              گرفت
+            </small>
           </base-input>
         </div>
       </md-tab>
@@ -773,10 +812,10 @@ export default {
         spec {
           id title headers {
             id title description
-            rows {
+            rows ( only_show_valid_spec: true estate_id: "${this.$route.params.id}" ) {
               id title description help
               prefix postfix is_multiple is_required
-              data { id data values { id value } }
+              data ( estate_id: "${this.$route.params.id}" ) { id data values { id value } }
               defaults { id value }
             }
           }
@@ -792,7 +831,7 @@ export default {
     },
     priceFieldWithClass() {
       const data = this.getSelectedAssignment;
-      const isConsultant = this.$store.state.roles.includes("consultant");
+      const isConsultant = false;
 
       if (data.length === 0) return isConsultant ? "col-md-8" : "col-md-12";
 
@@ -896,6 +935,17 @@ export default {
             this.street_id = data.data.estate.street.id;
             this.area_id = data.data.estate.street.area.id;
           }
+
+          if (!data.data.estate.advantages) data.data.estate.advantages = [];
+          if (!data.data.estate.disadvantages)
+            data.data.estate.disadvantages = [];
+          if (!data.data.estate.tags) data.data.estate.tags = [];
+
+          if (
+            !data.data.estate.coordinates ||
+            !data.data.estate.coordinates.lat
+          )
+            data.data.estate.coordinates = { lat: 36.2605, lng: 59.6168 };
 
           if (!data.data.estate.spec) data.data.estate.spec = { id: null };
 

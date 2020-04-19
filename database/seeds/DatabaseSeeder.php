@@ -1,4 +1,5 @@
 <?php
+
 use App\Helpers\CustomSeeder;
 use App\Models\Estate\Label;
 use App\Models\Places\Area;
@@ -15,6 +16,7 @@ class DatabaseSeeder extends CustomSeeder
      */
     public function run()
     {
+        $this->call(EstateBotInitSeeder::class);
         // $this->call(LocationTablesSeeder::class);
 
         // $this->call(UserTableSeeder::class);
@@ -30,21 +32,21 @@ class DatabaseSeeder extends CustomSeeder
         // $this->call(LaratrustSeeder::class);
 
         // $this->call(OptionTableSeeder::class);
-    
+
         // $this->call(BlogTablesSeeder::class);
 
         // $this->createTable(Label::class, ['id', 'title', 'color']);
 
         // $this->call(TypesTablesSeeder::class);
-        
+
         // $this->call(SpecificationTablesSeeder::class);
 
         // $this->call(FinancialTablesSeeder::class);
 
         // for ($i = 0; $i < 10; $i++)
-        //     $this->call(EstateTablesSeeder::class); 
+        //     $this->call(EstateTablesSeeder::class);
 
-        // $this->call(AbstractTablesSeeder::class);        
+        // $this->call(AbstractTablesSeeder::class);
     }
 
     /**

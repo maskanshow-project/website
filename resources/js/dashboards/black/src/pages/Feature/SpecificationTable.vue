@@ -4,22 +4,37 @@
       <div class="row col-12 m-0 p-0">
         <div class="col-12 text-right m-0 p-0">
           <div class="pull-right">
-            <h1 class="animated bounceInRight delay-first" :style="{ color: '#fff', fontWeight: 'bold', textShadow: '0px 3px 15px #333' }">
-              مدیریت <span :style="{ color: '#ff3d3d' }">جدول مشخصات</span> فنی
-              <i class="header-nav-icon tim-icons icon-align-left-2" :style="{fontSize: '25px'}"></i>
+            <h1
+              class="animated bounceInRight delay-first"
+              :style="{ color: '#fff', fontWeight: 'bold', textShadow: '0px 3px 15px #333' }"
+            >
+              مدیریت
+              <span :style="{ color: '#ff3d3d' }">جدول مشخصات</span> فنی
+              <i
+                class="header-nav-icon tim-icons icon-align-left-2"
+                :style="{fontSize: '25px'}"
+              ></i>
             </h1>
-            <h6 class="header-description animated bounceInRight delay-secound">با استفاده از جداول زیر ، امکان مدیریت کامل جدول مشخصات فنی مورد نظر برای شما ممکن خواهد شد</h6>
+            <h6
+              class="header-description animated bounceInRight delay-secound"
+            >با استفاده از جداول زیر ، امکان مدیریت کامل جدول مشخصات فنی مورد نظر برای شما ممکن خواهد شد</h6>
           </div>
           <div class="pull-left animated bounceInDown delay-last">
-            <flip-clock :options="{
+            <flip-clock
+              :options="{
               label: false,
               clockFace: 'TwentyFourHourClock'
-            }" />
+            }"
+            />
           </div>
         </div>
       </div>
 
-      <card v-if="has_loaded" class="mt-4 mb-4 operation-cell text-right animated bounceInRight delay-first" dir="rtl">
+      <card
+        v-if="has_loaded"
+        class="mt-4 mb-4 operation-cell text-right animated bounceInRight delay-first"
+        dir="rtl"
+      >
         <h3 class="card-title">
           {{ table_title }}
           <el-popover
@@ -30,9 +45,7 @@
             :disabled="typeof table_estate_type.title === 'string' ? table_estate_type.title.length <= 50 : false"
             :content="table_estate_type.title"
           >
-            <span
-              slot="reference"
-              class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow">
+            <span slot="reference" class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow">
               <i class="tim-icons icon-bullet-list-67 hvr-icon"></i>
               {{ table_estate_type.title | truncate(50) }}
             </span>
@@ -45,17 +58,92 @@
           ثبت عنوان جدید
         </base-button>
 
-        <base-button @click="$router.push('/panel/specification')" size="sm" type="warning" class="pull-left">
+        <base-button
+          @click="$router.push('/panel/specification')"
+          size="sm"
+          type="warning"
+          class="pull-left"
+        >
           بازگشت
           <i class="tim-icons icon-double-left"></i>
         </base-button>
       </card>
 
-      <md-dialog :md-active.sync="$store.state.spec.is_open.spec_header" class="text-right" dir="rtl">
+      <md-dialog :md-active.sync="spec_default_dialog" class="text-right" dir="rtl">
         <md-dialog-title>
-          <h2 class="modal-title">
-            {{ $store.state.spec.is_creating.spec_header ? 'ثبت عنوان جدول' : 'ویرایش عنوان جدول' }}
-          </h2>
+          <h2 class="modal-title">مدیریت مقادیر سطر</h2>
+          <p>از طریق فرم زیر میتوانید کلیه مقادیر جدول را مدیریت کنید</p>
+        </md-dialog-title>
+
+        <div class="md-dialog-content">
+          <div class="p-2">
+            <base-table
+              :style="{ width: '100%' }"
+              :tableData="row_defaults"
+              :has_animation="false"
+              type="spec"
+              group="feature"
+              label="مقدار"
+              :fields="[
+                {
+                  field: 'value',
+                  label: 'مقدار',
+                  icon: 'icon-caps-small'
+                },
+                {
+                  field: 'similar_titles',
+                  label: 'عناوین مشابه',
+                  icon: 'icon-caps-small'
+                },
+              ]"
+              :has_loaded="true"
+              :canSelect="false"
+              :methods="{ deleteSingle: deleteDefault, edit: (index, item) => editMethod(index, item, 'default') }"
+              :has_operation="true"
+              :has_times="false"
+            >
+              <template #value-body="props">
+                {{ selected_row.prefix }}
+                {{ props.row.value }}
+                {{ selected_row.postfix }}
+              </template>
+
+              <template #similar_titles-body="props">
+                <div>
+                  <p v-for="(item, index) in props.row.similar_titles" :key="index">
+                    -
+                    {{ selected_row.prefix }}
+                    {{ item }}
+                    {{ selected_row.postfix }}
+                  </p>
+                </div>
+              </template>
+            </base-table>
+          </div>
+        </div>
+
+        <md-dialog-actions>
+          <base-button class="ml-2" size="sm" type="danger" @click="spec_default_dialog = false">
+            <i class="tim-icons icon-simple-remove"></i>
+            بستن
+          </base-button>
+
+          <base-button size="sm" type="success" @click="createMethod(selected_row.id, 'default')">
+            <i class="tim-icons icon-simple-add"></i>
+            افزودن مقدار جدید
+          </base-button>
+        </md-dialog-actions>
+      </md-dialog>
+
+      <md-dialog
+        :md-active.sync="$store.state.spec.is_open.spec_header"
+        class="text-right"
+        dir="rtl"
+      >
+        <md-dialog-title>
+          <h2
+            class="modal-title"
+          >{{ $store.state.spec.is_creating.spec_header ? 'ثبت عنوان جدول' : 'ویرایش عنوان جدول' }}</h2>
           <p>از طریق فرم زیر میتوانید عنوان جدول {{ $store.state.spec.is_creating.spec_header ? 'جدید ثبت کنید' : 'مورد نظر خود را ویرایش کنید' }}</p>
         </md-dialog-title>
 
@@ -69,7 +157,7 @@
                 <span class="md-helper-text">برای مثال : مشخصات پردازنده</span>
                 <!-- <span class="md-error" v-show="!$v.title.required">لطفا عنوان را وارد کنید</span> -->
               </md-field>
-              <br/>
+              <br />
               <md-field>
                 <label>توضیحات</label>
                 <md-textarea v-model="header_form.description.value" :maxlength="250"></md-textarea>
@@ -90,8 +178,7 @@
             <i class="tim-icons icon-simple-remove"></i>
             لغو
           </base-button>
-          
-          
+
           <base-button
             size="sm"
             :loading="$store.state.spec.is_mutation_loading.spec_header"
@@ -105,8 +192,11 @@
                 color="#fff"
                 v-if="$store.state.spec.is_mutation_loading.spec_header"
               />
-              <span v-else class="pull-right ml-2" >
-                <i v-if="$store.state.spec.is_creating.spec_header" class="tim-icons icon-simple-add"></i>
+              <span v-else class="pull-right ml-2">
+                <i
+                  v-if="$store.state.spec.is_creating.spec_header"
+                  class="tim-icons icon-simple-add"
+                ></i>
                 <i v-else class="tim-icons icon-pencil"></i>
               </span>
             </transition>
@@ -117,9 +207,9 @@
 
       <md-dialog :md-active.sync="$store.state.spec.is_open.spec_row" class="text-right" dir="rtl">
         <md-dialog-title>
-          <h2 class="modal-title">
-            {{ $store.state.spec.is_creating.spec_row ? 'ثبت ردیف جدول' : 'ویرایش ردیف جدول' }}
-          </h2>
+          <h2
+            class="modal-title"
+          >{{ $store.state.spec.is_creating.spec_row ? 'ثبت ردیف جدول' : 'ویرایش ردیف جدول' }}</h2>
           <p>از طریق فرم زیر میتوانید ردیف جدول {{ $store.state.spec.is_creating.spec_row ? 'جدید ثبت کنید' : 'مورد نظر خود را ویرایش کنید' }}</p>
         </md-dialog-title>
 
@@ -132,6 +222,13 @@
                 <i class="md-icon tim-icons icon-caps-small"></i>
                 <!-- <span class="md-error" v-show="!$v.title.required">لطفا عنوان ردیف را وارد کنید</span> -->
               </md-field>
+              <br />
+
+              <md-chips v-model="row_form.similar_titles.value" md-placeholder="افزودن ...">
+                <label>عناوین مشابه</label>
+                <span class="md-helper-text">عناوین مشابه با این فیلد جهت بررسی ربات</span>
+              </md-chips>
+              <br />
 
               <div class="row">
                 <div class="col-6">
@@ -151,7 +248,7 @@
                   </md-field>
                 </div>
               </div>
-              <br/>
+              <br />
 
               <md-field>
                 <label>توضیحات</label>
@@ -159,7 +256,7 @@
                 <i class="md-icon tim-icons icon-paper"></i>
                 <span class="md-helper-text">توضیحی مختصر درباره این ردیف</span>
               </md-field>
-              <br/>
+              <br />
 
               <md-field>
                 <label>راهنما</label>
@@ -167,14 +264,19 @@
                 <i class="md-icon tim-icons icon-alert-circle-exc"></i>
                 <span class="md-helper-text">راهنمایی کوتاه جهت نمایش به کاربران درباره این ردیف</span>
               </md-field>
-              <br/>
+              <br />
 
               <md-field>
                 <label>آیکون</label>
-                <md-select v-model="row_form.icon.value" >
-                  <md-optgroup v-for="group in $store.state.icons" :key="group.label" :label="group.label">
+                <md-select v-model="row_form.icon.value">
+                  <md-optgroup
+                    v-for="group in $store.state.icons"
+                    :key="group.label"
+                    :label="group.label"
+                  >
                     <md-option v-for="icon in group.icons" :key="icon" :value="icon">
-                      {{ icon }} <i :class="`fas fa-${icon}`"></i>
+                      {{ icon }}
+                      <i :class="`fas fa-${icon}`"></i>
                     </md-option>
                   </md-optgroup>
                 </md-select>
@@ -182,41 +284,41 @@
                 <span class="md-helper-text">آیکون سطر جدول را مشخص کنید</span>
               </md-field>
 
-              <br/>
+              <br />
               <div class="row" dir="ltr">
                 <el-switch
                   class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_filterable.value"
                   active-text="قابلیت فیتلر"
                   active-color="#ff8d72"
-                  inactive-text="غیرقابل فیلتر">
-                </el-switch>
+                  inactive-text="غیرقابل فیلتر"
+                ></el-switch>
                 <el-switch
                   class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_detailable.value"
                   active-text="قابل نمایش"
                   active-color="#ff8d72"
-                  inactive-text="عدم نمایش">
-                </el-switch>
+                  inactive-text="عدم نمایش"
+                ></el-switch>
               </div>
-              <br/>
+              <br />
               <div class="row" dir="ltr">
                 <el-switch
                   class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_required.value"
                   active-text="اجباری"
                   active-color="#ff8d72"
-                  inactive-text="اختیاری">
-                </el-switch>
+                  inactive-text="اختیاری"
+                ></el-switch>
                 <el-switch
                   class="col-6 d-flex justify-content-center"
                   v-model="row_form.is_multiple.value"
                   active-text="چند مقداری"
                   active-color="#ff8d72"
-                  inactive-text="تک مقداری">
-                </el-switch>
+                  inactive-text="تک مقداری"
+                ></el-switch>
               </div>
-              <br/>
+              <br />
             </form>
           </div>
         </div>
@@ -231,7 +333,7 @@
             <i class="tim-icons icon-simple-remove"></i>
             لغو
           </base-button>
-          
+
           <base-button
             size="sm"
             :loading="$store.state.spec.is_mutation_loading.spec_row"
@@ -245,7 +347,7 @@
                 color="#fff"
                 v-if="$store.state.spec.is_mutation_loading.spec_row"
               />
-              <span v-else class="pull-right ml-2" >
+              <span v-else class="pull-right ml-2">
                 <i v-if="$store.state.spec.is_creating.spec_row" class="tim-icons icon-simple-add"></i>
                 <i v-else class="tim-icons icon-pencil"></i>
               </span>
@@ -255,61 +357,72 @@
         </md-dialog-actions>
       </md-dialog>
 
-      <md-dialog :md-active.sync="$store.state.spec.is_open.spec_default" class="text-right" dir="rtl">
+      <md-dialog
+        :md-active.sync="$store.state.spec.is_open.spec_default"
+        class="text-right"
+        dir="rtl"
+      >
         <md-dialog-title>
-          <h2 class="modal-title">مدیریت مقادیر سطر</h2>
-          <p>از طریق فرم زیر میتوانید کلیه مقادیر جدول را مدیریت کنید</p>
+          <h2
+            class="modal-title"
+          >{{ $store.state.spec.is_creating.spec_default ? 'ثبت ردیف جدول' : 'ویرایش ردیف جدول' }}</h2>
+          <p>از طریق فرم زیر میتوانید ردیف جدول {{ $store.state.spec.is_creating.spec_default ? 'جدید ثبت کنید' : 'مورد نظر خود را ویرایش کنید' }}</p>
         </md-dialog-title>
 
         <div class="md-dialog-content">
           <div class="p-2">
-            <base-table
-              :style="{ width: '100%' }"
-              :tableData="row_defaults"
-              :has_animation="false"
-              type="spec"
-              group="feature"
-              label="مقدار"
-              :fields="[
-                {
-                  field: 'value',
-                  label: 'مقدار',
-                  icon: 'icon-caps-small'
-                }
-              ]"
-              :has_loaded="true"
-              :canSelect="false"
-              :methods="{ deleteSingle: deleteDefault, edit: createDefault }"
-              :has_operation="true"
-              :has_times="false"
-            >
-              <template #value-body="props">
-                {{ selected_row.prefix }}
-                {{ props.row.value }}
-                {{ selected_row.postfix }}
-              </template>
-            </base-table>
+            <form @submit.prevent>
+              <md-field>
+                <label>مقدار</label>
+                <md-input v-model="default_form.value.value" :maxlength="50" />
+                <i class="md-icon tim-icons icon-caps-small"></i>
+                <!-- <span class="md-error" v-show="!$v.title.required">لطفا عنوان ردیف را وارد کنید</span> -->
+              </md-field>
+              <br />
+
+              <md-chips v-model="default_form.similar_titles.value" md-placeholder="افزودن ...">
+                <label>عناوین مشابه</label>
+                <span class="md-helper-text">عناوین مشابه با این فیلد جهت بررسی ربات</span>
+              </md-chips>
+              <br />
+              <br />
+            </form>
           </div>
         </div>
 
         <md-dialog-actions>
           <base-button
-            class="ml-2"
             size="sm"
+            class="ml-2"
             type="danger"
             @click="$store.state.spec.is_open.spec_default = false"
           >
             <i class="tim-icons icon-simple-remove"></i>
-            بستن
+            لغو
           </base-button>
 
           <base-button
             size="sm"
-            type="success"
-            @click="createDefault(null, null, true)"
+            :loading="$store.state.spec.is_mutation_loading.spec_default"
+            :type="$store.state.spec.is_creating.spec_default ? 'success' : 'warning'"
+            @click="$store.state.spec.is_creating.spec_default ? store() : update()"
           >
-            <i class="tim-icons icon-simple-add"></i>
-            افزودن مقدار جدید
+            <transition name="fade" mode="out-in">
+              <semipolar-spinner
+                :animation-duration="2000"
+                :size="17"
+                color="#fff"
+                v-if="$store.state.spec.is_mutation_loading.spec_default"
+              />
+              <span v-else class="pull-right ml-2">
+                <i
+                  v-if="$store.state.spec.is_creating.spec_default"
+                  class="tim-icons icon-simple-add"
+                ></i>
+                <i v-else class="tim-icons icon-pencil"></i>
+              </span>
+            </transition>
+            {{ $store.state.spec.is_creating.spec_default ? 'ذخیره' : 'بروز رسانی' }} ردیف جدول مشخصات
           </base-button>
         </md-dialog-actions>
       </md-dialog>
@@ -319,7 +432,10 @@
           <div class="text-right pull-right">
             <h2 class="animated bounceInRight delay-first mb-0">
               {{ header.title }}
-              <i class="tim-icons icon-bullet-list-67" :style="{fontSize: '20px'}"></i>
+              <i
+                class="tim-icons icon-bullet-list-67"
+                :style="{fontSize: '20px'}"
+              ></i>
             </h2>
             <h6 class="text-muted animated bounceInRight delay-secound">{{ header.description }}</h6>
           </div>
@@ -332,13 +448,23 @@
             </el-tooltip>
 
             <el-tooltip content="ویرایش عنوان">
-              <base-button @click="editMethod(index, header, 'header')" type="warning" size="sm" icon>
+              <base-button
+                @click="editMethod(index, header, 'header')"
+                type="warning"
+                size="sm"
+                icon
+              >
                 <i class="tim-icons icon-pencil"></i>
               </base-button>
             </el-tooltip>
 
             <el-tooltip content="حذف عنوان">
-              <base-button @click="deleteSingle(index, header, 'header')" type="danger" size="sm" icon>
+              <base-button
+                @click="deleteSingle(index, header, 'header')"
+                type="danger"
+                size="sm"
+                icon
+              >
                 <i class="tim-icons icon-trash-simple"></i>
               </base-button>
             </el-tooltip>
@@ -407,7 +533,8 @@
               >
                 <span
                   slot="reference"
-                  class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow">
+                  class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow"
+                >
                   <i class="tim-icons icon-bullet-list-67 hvr-icon"></i>
                   {{ slotProps.row.prefix }}
                   {{ item.value | truncate(20) }}
@@ -415,16 +542,19 @@
                 </span>
               </el-popover>
 
-              <el-dropdown v-if="slotProps.row.defaults.length > 3" :key="slotProps.row.defaults.map((c) => c.id).join(',')">
+              <el-dropdown
+                v-if="slotProps.row.defaults.length > 3"
+                :key="slotProps.row.defaults.map((c) => c.id).join(',')"
+              >
                 <span class="el-dropdown-link badge badge-default">
-                  باقی مقادیر ها <i class="el-icon-arrow-down el-icon--right"></i>
+                  باقی مقادیر ها
+                  <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     v-for="item in slotProps.row.defaults.filter( (i, index) => index < 3)"
-                    :key="item.id">
-                    {{ item.value }}
-                  </el-dropdown-item>
+                    :key="item.id"
+                  >{{ item.value }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </transition-group>
@@ -438,41 +568,44 @@
                     <td>
                       <i class="tim-icons icon-satisfied"></i>
                     </td>
-                    <td class="text-right" :class="slotProps.row.is_detailable ? 'text-success' : 'text-danger'">
-                      {{ slotProps.row.is_detailable ? 'نمایش' : 'عدم نمایش' }}
-                    </td>
+                    <td
+                      class="text-right"
+                      :class="slotProps.row.is_detailable ? 'text-success' : 'text-danger'"
+                    >{{ slotProps.row.is_detailable ? 'نمایش' : 'عدم نمایش' }}</td>
                   </tr>
-                  
+
                   <tr>
                     <td>
-                      <i class="tim-icons icon-bullet-list-67"></i>    
+                      <i class="tim-icons icon-bullet-list-67"></i>
                     </td>
-                    <td class="text-right" :class="slotProps.row.is_multiple ? 'text-success' : 'text-danger'">
-                      {{ slotProps.row.is_multiple ? 'چند مقداری' : 'تک مقداری' }}
-                    </td>
+                    <td
+                      class="text-right"
+                      :class="slotProps.row.is_multiple ? 'text-success' : 'text-danger'"
+                    >{{ slotProps.row.is_multiple ? 'چند مقداری' : 'تک مقداری' }}</td>
                   </tr>
-                  
+
                   <tr>
                     <td>
                       <i class="tim-icons icon-pin"></i>
                     </td>
-                    <td class="text-right" :class="slotProps.row.is_filterable ? 'text-success' : 'text-danger'">
-                      {{ slotProps.row.is_filterable ? 'قابلیت فیلتر' : 'غیرقابل فیلتر' }}
-                    </td>
+                    <td
+                      class="text-right"
+                      :class="slotProps.row.is_filterable ? 'text-success' : 'text-danger'"
+                    >{{ slotProps.row.is_filterable ? 'قابلیت فیلتر' : 'غیرقابل فیلتر' }}</td>
                   </tr>
-                  
+
                   <tr>
                     <td>
                       <i class="tim-icons icon-lock-circle"></i>
                     </td>
-                    <td class="text-right" :class="slotProps.row.is_required ? 'text-success' : 'text-danger'">
-                      {{ slotProps.row.is_required ? 'اجباری' : 'اختیاری' }}
-                    </td>
+                    <td
+                      class="text-right"
+                      :class="slotProps.row.is_required ? 'text-success' : 'text-danger'"
+                    >{{ slotProps.row.is_required ? 'اجباری' : 'اختیاری' }}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
           </template>
 
           <template #texts-body="slotProps">
@@ -482,18 +615,14 @@
                   <td>
                     <i class="tim-icons icon-double-left"></i>
                   </td>
-                  <td class="text-right">
-                    {{ slotProps.row.postfix }}
-                  </td>
+                  <td class="text-right">{{ slotProps.row.postfix }}</td>
                 </tr>
 
                 <tr v-if="slotProps.row.prefix">
                   <td>
                     <i class="tim-icons icon-double-right"></i>
                   </td>
-                  <td class="text-right">
-                    {{ slotProps.row.prefix }}
-                  </td>
+                  <td class="text-right">{{ slotProps.row.prefix }}</td>
                 </tr>
               </tbody>
             </table>
@@ -501,31 +630,29 @@
 
           <template #custom-operations="slotProps">
             <el-tooltip content="مدیریت مقادیر">
-              <base-button class="m-0" @click="manageValues(slotProps.index, slotProps.row)" type="success" size="sm" icon>
+              <base-button
+                class="m-0"
+                @click="manageValues(slotProps.index, slotProps.row)"
+                type="success"
+                size="sm"
+                icon
+              >
                 <i class="tim-icons icon-bullet-list-67"></i>
               </base-button>
             </el-tooltip>
           </template>
         </base-table>
       </div>
-      
+
       <transition name="fade">
         <div class="main-panel-loading" v-if="!has_loaded">
-          <fingerprint-spinner
-            :animation-duration="1000"
-            :size="100"
-            color="#fff"
-          />
+          <fingerprint-spinner :animation-duration="1000" :size="100" color="#fff" />
         </div>
       </transition>
 
       <transition name="loading">
         <div class="query-loader" v-if="$store.state.spec.is_mutation_loading.spec_default">
-          <half-circle-spinner
-            :animation-duration="800"
-            :size="40"
-            color="#fff"
-          />
+          <half-circle-spinner :animation-duration="800" :size="40" color="#fff" />
         </div>
       </transition>
 
@@ -534,7 +661,8 @@
           v-show="has_loaded && headers.length === 0"
           md-icon="search"
           md-label="متاسفانه هیچ داده ای یافت نشد :("
-          md-description="اگر در حالت جستجو نیستید و هیچ فیلتری نیز اعمال نکرده اید ، میتوانید با کلیک بر روی دکمه زیر یک داده جدید ثبت کنید">
+          md-description="اگر در حالت جستجو نیستید و هیچ فیلتری نیز اعمال نکرده اید ، میتوانید با کلیک بر روی دکمه زیر یک داده جدید ثبت کنید"
+        >
           <base-button @click="createMethod(null, 'header')" type="success" size="sm" class="ml-2">
             <i class="tim-icons icon-simple-add"></i>
             ثبت عنوان جدید
@@ -546,18 +674,19 @@
 </template>
 
 <script>
-import BaseTable from '../../components/BaseTable.vue'
-import { FlipClock } from '@mvpleung/flipclock';
-import {SemipolarSpinner, HalfCircleSpinner, FingerprintSpinner} from 'epic-spinners'
+import BaseTable from "../../components/BaseTable.vue";
+import { FlipClock } from "@mvpleung/flipclock";
+import {
+  SemipolarSpinner,
+  HalfCircleSpinner,
+  FingerprintSpinner
+} from "epic-spinners";
 
-import deleteMixin from '../../mixins/deleteMixin';
-import createMixin from '../../mixins/createMixin';
+import deleteMixin from "../../mixins/deleteMixin";
+import createMixin from "../../mixins/createMixin";
 
 export default {
-  mixins: [
-    createMixin,
-    deleteMixin
-  ],
+  mixins: [createMixin, deleteMixin],
   components: {
     BaseTable,
     FlipClock,
@@ -567,206 +696,180 @@ export default {
   },
   metaInfo() {
     return {
-      title: `جدول ${this.table_title}`,
-    }
+      title: `جدول ${this.table_title}`
+    };
   },
   data() {
     return {
       headers: [],
       row_defaults: [],
-      table_title: '',
-      table_description: '',
+      spec_default_dialog: false,
+      spec_default_is_creating: false,
+      spec_default_loading: false,
+      table_title: "",
+      table_description: "",
       table_estate_type: {
-        title: ''
+        title: ""
       },
 
       type: null,
-      group: 'spec',
+      group: "spec",
       has_loaded: false,
       is_modal_open: false,
       is_open_value_prompt: false,
       selected_type: false,
       selected_row: null
-    }
+    };
   },
   methods: {
-    createMethod(id = null, type = 'row')
-    {
-      this.label = type === 'row' ? 'سطر جدول' : 'عنوان جدول'
-      this.type = type === 'row' ? 'spec_row' : 'spec_header'
-      this.selected_type = type
-      this.selected_header_id = id
-      
-      this.create()
+    createMethod(id = null, type = "row") {
+      this.label =
+        type === "row"
+          ? "سطر جدول"
+          : type === "default"
+          ? "مقدار پیشفرض"
+          : "عنوان جدول";
+      this.type =
+        type === "row"
+          ? "spec_row"
+          : type === "default"
+          ? "spec_default"
+          : "spec_header";
+      this.selected_type = type;
+      this.selected_header_id = id;
+
+      this.create();
     },
-    createDefault(index = null, row = null, is_creating = false)
-    {
-      this.label = 'مقدار پیشفرض'
-      this.type = 'spec_default'
-      this.selected_type = 'default'
-
-      this.setAttr('is_creating', is_creating)
-
-      if ( !is_creating )
-      {
-        this.setAttr('selected', {
-          index,
-          id: row.id
-        })
-      }
-     
-      this.$swal.fire({
-        title: 'مقدار مورد نظر خود را وارد کنید :',
-        input: 'text',
-        inputValue: is_creating ? '' : row.value,
-        showCancelButton: true,
-        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
-        confirmButtonColor: '#0098f0',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'ذخیره',
-        cancelButtonText: 'لغو',
-        inputValidator: (value) => {
-          if (!value) {
-            return 'فیلد مقدار نمیتواند خالی باشد :('
-          }
-        }
-      })
-      .then(({value}) => {
-        
-        if (!value) return
-
-        this.$store.commit('setFormData', {
-          group: this.group,
-          type: this.type,
-          field: 'value',
-          value: value
-        })
-
-        this.storeInServer({
-          callback: ({data}) => {
-
-            if ( is_creating ) {
-              this.row_defaults.unshift(data)
-            } else {
-              this.row_defaults[ this.attr('selected').index ].value = data.value
-            }
-          }
-        })
-      })
-    },
-    afterCreate()
-    {
-      this.$store.commit('setFormData', {
+    afterCreate() {
+      this.$store.commit("setFormData", {
         group: this.group,
         type: this.type,
-        field: this.selected_type === 'row' ? 'spec_header_id' : 'spec_id',
-        value: this.selected_type === 'row' ? this.selected_header_id : this.$route.params.id
-      })
+        field:
+          this.selected_type === "row"
+            ? "spec_header_id"
+            : this.selected_type === "default"
+            ? "spec_row_id"
+            : "spec_id",
+        value:
+          this.selected_type === "row" || this.selected_type === "default"
+            ? this.selected_header_id
+            : this.$route.params.id
+      });
     },
-    editMethod(index, row, type = 'row')
-    {
-      this.label = type === 'row' ? 'سطر جدول' : 'عنوان جدول'
-      this.type = type === 'row' ? 'spec_row' : 'spec_header'
-      this.selected_type = type
-      
-      this.edit(index, row)
+    editMethod(index, row, type = "row") {
+      this.label =
+        type === "row"
+          ? "سطر جدول"
+          : type === "default"
+          ? "مقدار پیشفرض"
+          : "عنوان جدول";
+      this.type =
+        type === "row"
+          ? "spec_row"
+          : type === "default"
+          ? "spec_default"
+          : "spec_header";
+      this.selected_type = type;
+
+      this.edit(index, row);
     },
-    afterEdit(row)
-    {
-      this.$store.commit('setFormData', {
+    afterEdit(row) {
+      this.$store.commit("setFormData", {
         group: this.group,
         type: this.type,
-        field: this.selected_type === 'row' ? 'spec_header_id' : 'spec_id',
-        value: this.selected_type === 'row' 
-          ? this.headers.filter( header => header.rows.filter(i => i.id === row.id).length !== 0 )[0].id
-          : this.$route.params.id
-      })
+        field:
+          this.selected_type === "row"
+            ? "spec_header_id"
+            : this.selected_type == "default"
+            ? "spec_row_id"
+            : "spec_id",
+        value:
+          this.selected_type === "row"
+            ? this.headers.filter(
+                header => header.rows.filter(i => i.id === row.id).length !== 0
+              )[0].id
+            : this.selected_type == "default"
+            ? this.selected_row.id
+            : this.$route.params.id
+      });
     },
-    store()
-    {
+    store() {
       this.storeInServer({
-        callback: ({data}) => {
-
-          if ( this.selected_type === 'row' )
-          {
-            this.headers.filter(i => i.id === this.selected_header_id)[0].rows.unshift(data)
+        callback: ({ data }) => {
+          if (this.selected_type === "row") {
+            this.headers
+              .filter(i => i.id === this.selected_header_id)[0]
+              .rows.unshift(data);
+          } else if (this.selected_type == "default") {
+            this.row_defaults.unshift(data);
+          } else {
+            data.rows = [];
+            this.headers.unshift(data);
           }
-          else
-          {
-            data.rows = []
-            this.headers.unshift(data)
-          }
 
-          this.setAttr('is_open', false)
-          this.setAttr('is_creating', false)
+          this.setAttr("is_open", false);
+          this.setAttr("is_creating", false);
         }
-      })
+      });
     },
-    update()
-    {
+    update() {
       this.storeInServer({
-        callback: ({data}) => {
-          let index = this.attr('selected').index;
+        callback: ({ data }) => {
+          let index = this.attr("selected").index;
 
-          if ( this.selected_type === 'row' )
-          {
-            let item = this.headers.filter( header => header.rows.filter(i => i.id === data.id).length !== 0 )
-            item[0].rows[index] = data
-          }
-          else
-          {
-            data.rows = this.headers[index].rows
-            this.headers[index] = data
+          if (this.selected_type === "row") {
+            let item = this.headers.filter(
+              header => header.rows.filter(i => i.id === data.id).length !== 0
+            );
+            item[0].rows[index] = data;
+          } else if (this.selected_type == "default") {
+            this.row_defaults[this.attr("selected").index].value = data.value;
+          } else {
+            data.rows = this.headers[index].rows;
+            this.headers[index] = data;
           }
 
-          this.setAttr('is_open', false)
+          this.setAttr("is_open", false);
         }
-      })
+      });
     },
-    deleteSingle(index, row, type = 'row')
-    {
-      this.label = type === 'row' ? 'سطر جدول' : 'عنوان جدول'
-      this.type = type === 'row' ? 'spec_row' : 'spec_header'
-      this.selected_type = type
+    deleteSingle(index, row, type = "row") {
+      this.label = type === "row" ? "سطر جدول" : "عنوان جدول";
+      this.type = type === "row" ? "spec_row" : "spec_header";
+      this.selected_type = type;
 
-      this.handleDelete(index, row)
+      this.handleDelete(index, row);
     },
-    deleteDefault(index, row)
-    {
-      this.label = 'مقدار سطر'
-      this.type = 'spec_default'
-      this.selected_type = 'default'
+    deleteDefault(index, row) {
+      this.label = "مقدار سطر";
+      this.type = "spec_default";
+      this.selected_type = "default";
 
-      this.handleDelete(index, row)
+      this.handleDelete(index, row);
     },
-    afterDelete(index, row)
-    {
-      if ( this.selected_type === 'row' )
-      {
-        let item = this.headers.filter( header => header.rows.filter(i => i.id === row.id).length !== 0 )
-        item[0].rows.splice(index, 1)
-      }
-      else if ( this.selected_type === 'default' )
-      {
-        this.row_defaults.splice(index, 1)   
-      }
-      else
-        this.headers.splice(index, 1)
+    afterDelete(index, row) {
+      if (this.selected_type === "row") {
+        let item = this.headers.filter(
+          header => header.rows.filter(i => i.id === row.id).length !== 0
+        );
+        item[0].rows.splice(index, 1);
+      } else if (this.selected_type === "default") {
+        this.row_defaults.splice(index, 1);
+      } else this.headers.splice(index, 1);
     },
-    manageValues(index, row)
-    {
-      this.row_defaults = row.defaults
-      this.selected_row = row
-      this.type = 'spec_default'
+    manageValues(index, row) {
+      this.row_defaults = row.defaults;
+      this.selected_row = row;
+      this.type = "spec_default";
 
-      this.$store.commit('setFormData', {
+      this.$store.commit("setFormData", {
         group: this.group,
         type: this.type,
-        field: 'spec_row_id',
+        field: "spec_row_id",
         value: row.id
-      })
+      });
 
-      this.setAttr('is_open', true)
+      this.spec_default_dialog = true;
     },
     validate() {
       return true;
@@ -774,17 +877,19 @@ export default {
   },
   computed: {
     row_form() {
-      return this.$store.state.spec.form.spec_row
+      return this.$store.state.spec.form.spec_row;
+    },
+    default_form() {
+      return this.$store.state.spec.form.spec_default;
     },
     header_form() {
-      return this.$store.state.spec.form.spec_header
+      return this.$store.state.spec.form.spec_header;
     },
-    allQuery()
-    {
-      if ( this.selected_type === 'row' )
-      {
+    allQuery() {
+      if (this.selected_type === "row") {
         return `
           title
+          similar_titles
           description
           help
           postfix
@@ -801,26 +906,24 @@ export default {
             id
             value
           }
-        `
-      }
-      else if ( this.selected_type === 'header' )
-      {
+        `;
+      } else if (this.selected_type === "header") {
         return `
           title
           description
           rows {
             id
           }
-        `
+        `;
       }
 
-      return `value`
+      return `value similar_titles`;
     }
   },
-  mounted()
-  {
-    axios.post('/graphql/auth', {
-      query: `{
+  mounted() {
+    axios
+      .post("/graphql/auth", {
+        query: `{
         spec(id: ${this.$route.params.id}) {
           id
           title
@@ -837,6 +940,7 @@ export default {
             rows {
               id
               title
+              similar_titles
               description
               help
               postfix
@@ -852,22 +956,23 @@ export default {
               defaults {
                 id
                 value
+                similar_titles
               }
             }
           }
         }
       }`
-    })
-    .then(({data}) => {
-      // return console.log( data.data.spec )
-      this.table_title = data.data.spec.title
-      this.table_description = data.data.spec.description
-      // this.table_estate_type = data.data.spec.estate_type
-      this.headers = data.data.spec.headers
-    })
-    .then( () => this.has_loaded = true)
-  },
-}
+      })
+      .then(({ data }) => {
+        // return console.log( data.data.spec )
+        this.table_title = data.data.spec.title;
+        this.table_description = data.data.spec.description;
+        // this.table_estate_type = data.data.spec.estate_type
+        this.headers = data.data.spec.headers;
+      })
+      .then(() => (this.has_loaded = true));
+  }
+};
 </script>
 
 <style>

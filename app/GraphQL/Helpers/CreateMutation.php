@@ -33,7 +33,7 @@ trait CreateMutation
         return (new $this->request)->rules($args, 'CREATE');
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return (new $this->request)->attributes();
     }

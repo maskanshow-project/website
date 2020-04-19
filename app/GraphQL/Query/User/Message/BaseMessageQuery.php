@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\User\Message;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\User\MessageProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseMessageQuery extends MainQuery
 {

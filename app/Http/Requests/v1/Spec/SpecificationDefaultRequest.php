@@ -23,9 +23,11 @@ class SpecificationDefaultRequest extends MainRequest
                 'max:100',
                 new UniqueInSpec('spec_defaults', $args, 'spec_row_id')
             ],
+            'similar_titles'            => 'nullable|array',
+            'similar_titles.*'          => 'required|string|max:50',
 
             /**
-             * relateion 
+             * relateion
              */
             'spec_row_id'            => ['required', 'integer', 'exists:spec_rows,id'],
         ];

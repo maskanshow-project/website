@@ -6,6 +6,7 @@ use GraphQL\Type\Definition\Type;
 use App\GraphQL\Mutation\MainMutation;
 use App\GraphQL\Props\Option\SiteSettingProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\UploadType;
 
 abstract class BaseSiteSettingMutation extends MainMutation
@@ -42,7 +43,7 @@ abstract class BaseSiteSettingMutation extends MainMutation
         return (new $this->request)->rules($args, 'UPDATE');
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return (new $this->request)->attributes();
     }

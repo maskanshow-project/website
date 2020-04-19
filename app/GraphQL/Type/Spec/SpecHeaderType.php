@@ -30,13 +30,20 @@ class SpecHeaderType extends BaseType
             // 'rows' => $this->relationListField('spec_row', 'is_active', 'read-spec', 'asc'),
             'rows' => [
                 'type'  => Type::listOf(\GraphQL::type('spec_row')),
+                'args' => [
+                    'only_show_valid_spec' => [
+                        'type' => Type::boolean()
+                    ],
+                    'estate_id' => [
+                        'type' => Type::string()
+                    ],
+                ],
                 'query' => function (array $args, $query) {
-
                     return $query->when($args['only_show_valid_spec'] ?? false, function ($query) use ($args) {
 
                         $query->whereHas('data', function ($query) use ($args) {
 
-                            $query->where('estate_id', $args['id'] ?? false);
+                            $query->where('estate_id', $args['estate_id'] ?? false);
                         });
                     })
                         ->orderBy("spec_rows.created_at", 'asc');

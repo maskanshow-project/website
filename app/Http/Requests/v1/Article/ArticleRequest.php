@@ -23,7 +23,7 @@ class ArticleRequest extends MainRequest
             'title'         => [
                 $this->requiredOrFilled(),
                 'string',
-                'max:100', 
+                'max:100',
                 new UniqueTranslation('articles', $args['id'] ?? null)
             ],
             'description'   => 'nullable|string|max:255',
@@ -36,24 +36,24 @@ class ArticleRequest extends MainRequest
             ],
             'reading_time'  => 'nullable|digits_between:1,2',
             'is_active'     => 'nullable|boolean',
-            
+
             /* relateion */
             'subjects'      => 'nullable|array',
             'subjects.*'    => 'required|integer|exists:subjects,id',
-            
+
             'keywords'      => 'nullable|array',
             'keywords.*'    => 'required|string|max:100',
         ];
 
         return $rules;
     }
-    
+
     /**
      * Get custom attributes for validator errors.
      *
      * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'body' => 'متن مقاله',

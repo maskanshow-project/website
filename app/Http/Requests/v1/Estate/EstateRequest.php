@@ -8,6 +8,7 @@ use App\Rules\UniqueTranslation;
 use App\Rules\PlaqueNotInAddress;
 use App\Rules\Blacklist;
 use App\Rules\CheckRequiredSpecification;
+use App\Rules\UniquePhoneNumber;
 
 class EstateRequest extends MainRequest
 {
@@ -40,7 +41,8 @@ class EstateRequest extends MainRequest
                 'string',
                 'regex:/^(\+98|0)?\d\d{9}$/',
                 'size:11',
-                new Blacklist
+                new Blacklist,
+                new UniquePhoneNumber($method)
             ],
             'address'               => [
                 $this->requiredOrFilled(),

@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\User\BlacklistPhoneNumber;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\User\BlacklistPhoneNumberProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseBlacklistPhoneNumberQuery extends MainQuery
 {

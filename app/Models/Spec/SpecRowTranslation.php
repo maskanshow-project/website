@@ -9,7 +9,7 @@ class SpecRowTranslation extends Model
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,12 +17,22 @@ class SpecRowTranslation extends Model
      */
     protected $fillable = [
         'title',
+        'similar_titles',
         'prefix',
         'postfix',
         'description',
         'help',
     ];
-    
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'similar_titles'    => 'array',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *

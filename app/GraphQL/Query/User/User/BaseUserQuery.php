@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\User\User;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\User\UserProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseUserQuery extends MainQuery
 {

@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\Opinion\Comment;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\Opinion\CommentProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseCommentQuery extends MainQuery
 {

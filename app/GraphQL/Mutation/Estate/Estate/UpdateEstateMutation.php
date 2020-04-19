@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\Estate\Estate;
 
 use App\GraphQL\Helpers\UpdateMutation;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class UpdateEstateMutation extends BaseEstateMutation
 {

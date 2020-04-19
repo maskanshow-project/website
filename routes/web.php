@@ -11,20 +11,20 @@
 |
 */
 
-Route::get('/panel/{path?}', function() {
-    
-    if ( url('/') !== env('APP_URL') )
-        return redirect( env('APP_URL') );
+Route::get('/panel/{path?}', function () {
+
+    if (url('/') !== env('APP_URL'))
+        return redirect(env('APP_URL'));
 
     $dashboard_template = 'black';
 
     return view("dashboards.{$dashboard_template}");
 })->where('path', '.*');
 
-Route::get('/{path?}', function() {
-    
-    if ( url('/') !== env('APP_URL') )
-        return redirect( env('APP_URL') );
+Route::get('/{path?}', function () {
+
+    if (url('/') !== env('APP_URL'))
+        return redirect(env('APP_URL'));
 
     $dashboard_template = 'main';
 

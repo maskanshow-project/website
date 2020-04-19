@@ -23,6 +23,10 @@ class FeatureType extends BaseType
                 'type' => Type::string(),
                 'selectable' => false
             ],
+            'similar_titles' => [
+                'type' => Type::listOf(Type::string()),
+                'selectable' => false
+            ],
             'description' => [
                 'type' => Type::string(),
                 'selectable' => false

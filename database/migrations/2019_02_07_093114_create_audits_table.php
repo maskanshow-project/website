@@ -16,7 +16,7 @@ class CreateAuditsTable extends Migration
     {
         $schema = DB::connection()->getSchemaBuilder();
 
-        $schema->blueprintResolver(function($table, $callback) {
+        $schema->blueprintResolver(function ($table, $callback) {
             return new Blueprint($table, $callback);
         });
 
@@ -33,7 +33,7 @@ class CreateAuditsTable extends Migration
             $table->string('user_agent')->nullable();
             $table->string('tags')->nullable();
             $table->timestamps();
-			
+
             $table->index(['user_id', 'user_type']);
         });
     }

@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\Financial\Promocode;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\Financial\PromocodeProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BasePromocodeQuery extends MainQuery
 {

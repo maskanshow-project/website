@@ -25,6 +25,9 @@ abstract class BaseStreetMutation extends MainMutation
             'name' => [
                 'type' => Type::string()
             ],
+            'regex' => [
+                'type' => Type::string()
+            ],
             'lat' => [
                 'type' => Type::float()
             ],

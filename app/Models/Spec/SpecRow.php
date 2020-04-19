@@ -65,6 +65,7 @@ class SpecRow extends Model implements AuditableContract
      */
     public $translatedAttributes = [
         'title',
+        'similar_titles',
         'description',
         'prefix',
         'postfix',
@@ -73,7 +74,7 @@ class SpecRow extends Model implements AuditableContract
 
     /**
      * Searchable rules.
-     * 
+     *
      * Columns and their priority in search results.
      * Columns with higher values are more important.
      * Columns with equal values have equal importance.
@@ -135,7 +136,7 @@ class SpecRow extends Model implements AuditableContract
      ***************************************/
 
     /**
-     * Get the all of the spec row that owned spec header 
+     * Get the all of the spec row that owned spec header
      *
      */
     public function header()

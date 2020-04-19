@@ -16,10 +16,10 @@ class CreateSpecsTables extends Migration
     {
         $schema = DB::connection()->getSchemaBuilder();
 
-        $schema->blueprintResolver(function($table, $callback) {
+        $schema->blueprintResolver(function ($table, $callback) {
             return new Blueprint($table, $callback);
         });
-        
+
         $schema->create('specs', function (Blueprint $table) {
             $table->id();
             $table->reltoUsers();
@@ -36,7 +36,7 @@ class CreateSpecsTables extends Migration
             $table->string('description', 255)->nullable();
             $table->string('locale')->index();
 
-            $table->unique(['spec_id','locale']);
+            $table->unique(['spec_id', 'locale']);
             $table->foreign('spec_id')->references('id')->on('specs')->onDelete('cascade');
         });
 
@@ -55,7 +55,7 @@ class CreateSpecsTables extends Migration
             $table->string('description', 255)->nullable();
             $table->string('locale')->index();
 
-            $table->unique(['spec_header_id','locale']);
+            $table->unique(['spec_header_id', 'locale']);
             $table->foreign('spec_header_id')->references('id')->on('spec_headers')->onDelete('cascade');
         });
 
@@ -80,13 +80,13 @@ class CreateSpecsTables extends Migration
             $table->string('help', 255)->nullable();
             $table->string('locale')->index();
 
-            $table->unique(['spec_row_id','locale']);
+            $table->unique(['spec_row_id', 'locale']);
             $table->foreign('spec_row_id')->references('id')->on('spec_rows')->onDelete('cascade');
         });
 
         $schema->create('spec_defaults', function (Blueprint $table) {
             $table->table([
-                // 
+                //
             ], ['spec_rows']);
         });
 
@@ -97,7 +97,7 @@ class CreateSpecsTables extends Migration
             $table->mediumText('value');
             $table->string('locale')->index();
 
-            $table->unique(['spec_default_id','locale']);
+            $table->unique(['spec_default_id', 'locale']);
             $table->foreign('spec_default_id')->references('id')->on('spec_defaults')->onDelete('cascade');
         });
     }

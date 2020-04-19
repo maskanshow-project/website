@@ -17,7 +17,17 @@ class EstateTypeTranslation extends Model
      */
     protected $fillable = [
         'title',
+        'similar_titles',
         'description'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'similar_titles'    => 'array',
     ];
 
     /**

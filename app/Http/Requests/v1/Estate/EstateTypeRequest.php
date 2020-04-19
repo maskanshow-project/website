@@ -17,14 +17,16 @@ class EstateTypeRequest extends MainRequest
         $this->method = $method;
 
         return [
-            'title'                 => [
+            'title'                     => [
                 $this->requiredOrFilled(),
                 'string',
                 'max:50',
                 new UniqueTranslation('estate_types', $args['id'] ?? null)
             ],
-            'description'           => 'nullable|string|max:250',
-            'icon'                  => 'nullable|string|max:50',
+            'similar_titles'            => 'nullable|array',
+            'similar_titles.*'          => 'required|string|max:50',
+            'description'               => 'nullable|string|max:250',
+            'icon'                      => 'nullable|string|max:50',
         ];
     }
 }

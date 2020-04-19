@@ -11,9 +11,9 @@ trait CheckPermissions
      * @param string $permission
      * @return void
      */
-    public function checkPermission(string $permission)
+    public function checkPermission(string $permission): bool
     {
-        if ( !auth()->check() || !auth()->user()->can($permission) )
+        if (!auth()->check() || !auth()->user()->can($permission))
             return false;
 
         else

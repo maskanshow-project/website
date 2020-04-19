@@ -16,16 +16,16 @@ class DeleteUserMutation extends BaseUserMutation
      */
     public function destroy($args)
     {
-        $result = $this->model::where('id', '!=', auth()->id())->whereDoesntHave('roles', function ($query) {
+        $result = $this->model::where('id', '!=', auth()->id())->where('id', '!=', 'robot')->whereDoesntHave('roles', function ($query) {
             $query->where('name', 'owner');
         });
 
-        if ( $args['id'] ?? false )
+        if ($args['id'] ?? false)
             $result = $result->where('id', $args['id'] ?? false)->delete();
 
-        elseif ( $args['ids'] ?? false )
+        elseif ($args['ids'] ?? false)
             $result = $result->whereIn('id', $args['ids'] ?? false)->delete();
-        
+
         return [
             'status' => $result ? 200 : 400,
             'message' => $result ? 'با موفقیت حذف شد' : 'متاسفانه اطلاعاتی حذف نشد'

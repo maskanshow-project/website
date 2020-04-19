@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\User\Office;
 
 use App\GraphQL\Helpers\UpdateMutation;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class UpdateOfficeMutation extends BaseOfficeMutation
 {

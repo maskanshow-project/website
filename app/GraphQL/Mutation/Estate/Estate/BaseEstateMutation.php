@@ -123,7 +123,7 @@ abstract class BaseEstateMutation extends MainMutation
 
         return array_merge($request->all(), [
             'spec_id'       => $id ? (EstateType::find($id)->spec->id ?? null) : null,
-            'coordinates'   => new Point($request->get('lat'), $request->get('lng')),
+            'coordinates'   => ($request->get('lat') && $request->get('lng')) ? new Point($request->get('lat'), $request->get('lng')) : null,
             'is_active'     => auth()->user()->can('active-estate'),
             'reject_reason' => null
         ]);

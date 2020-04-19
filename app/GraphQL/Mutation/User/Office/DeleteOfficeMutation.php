@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\User\Office;
 
 use App\GraphQL\Helpers\DeleteMutation;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class DeleteOfficeMutation extends BaseOfficeMutation
 {

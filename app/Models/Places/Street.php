@@ -30,8 +30,9 @@ class Street extends Model implements AuditableContract
      * @var array
      */
     protected $fillable = [
-        'area_id', 
+        'area_id',
         'name',
+        'regex',
         'coordinates'
     ];
 
@@ -46,7 +47,7 @@ class Street extends Model implements AuditableContract
 
     /**
      * Searchable rules.
-     * 
+     *
      * Columns and their priority in search results.
      * Columns with higher values are more important.
      * Columns with equal values have equal importance.
@@ -58,7 +59,7 @@ class Street extends Model implements AuditableContract
             'name' => 10,
         ],
     ];
-    
+
     /**
      * Attributes to include in the Audit.
      *
@@ -89,7 +90,7 @@ class Street extends Model implements AuditableContract
     /****************************************
      **            Relationships
      ***************************************/
-    
+
     /**
      * Get the area of the street
      */

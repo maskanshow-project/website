@@ -158,8 +158,7 @@ class EstateType extends BaseType
             'votes' => $this->votes(),
             'specifications' => [
                 'type'  => Type::listOf(\GraphQL::type('spec_data')),
-                'query' => function (array $args, $query) {
-
+                'query' => function (array $args, $query, $ctx) {
                     return $query->whereHas('row', function ($query) {
                         return $query->where('is_detailable', true);
                     });

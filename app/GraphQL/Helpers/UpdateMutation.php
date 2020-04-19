@@ -34,7 +34,7 @@ trait UpdateMutation
         return (new $this->request)->rules($args, 'UPDATE');
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return (new $this->request)->attributes();
     }

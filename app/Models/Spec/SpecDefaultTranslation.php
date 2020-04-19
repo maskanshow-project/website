@@ -9,7 +9,7 @@ class SpecDefaultTranslation extends Model
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,8 +17,18 @@ class SpecDefaultTranslation extends Model
      */
     protected $fillable = [
         'value',
+        'similar_titles',
     ];
-    
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'similar_titles'    => 'array',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *

@@ -5,6 +5,7 @@ namespace App\GraphQL\Query\Shop\Spec;
 use App\GraphQL\Query\MainQuery;
 use App\GraphQL\Props\Spec\SpecProps;
 use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
 
 abstract class BaseSpecQuery extends MainQuery
 {

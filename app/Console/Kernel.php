@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use SmaaT\EstateBot\EstateBot;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        array_map(function ($provider) use ($schedule) {
+            $schedule->call(function () use ($provider) {
+                return (new $provider())->store_index_page_links();
+            })->everyMinute();
+        }, EstateBot::$providers);
     }
 
     /**
@@ -34,7 +39,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

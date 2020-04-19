@@ -21,6 +21,10 @@ abstract class BaseFeatureMutation extends MainMutation
             'title' => [
                 'type' => Type::string()
             ],
+            'similar_titles' => [
+                'type' => Type::listOf(Type::string()),
+                'selectable' => false
+            ],
             'description' => [
                 'type' => Type::string()
             ],

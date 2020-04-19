@@ -17,7 +17,7 @@ class PlaqueNotInAddress implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !str_contains($value, 'پلاک');
+        return !Str::contains($value, 'پلاک');
     }
 
     /**

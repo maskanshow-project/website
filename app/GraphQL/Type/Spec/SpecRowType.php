@@ -23,6 +23,10 @@ class SpecRowType extends BaseType
                 'type' => Type::string(),
                 'selectable' => false
             ],
+            'similar_titles' => [
+                'type' => Type::listOf(Type::string()),
+                'selectable' => false
+            ],
             'description' => [
                 'type' => Type::string(),
                 'selectable' => false
@@ -40,8 +44,13 @@ class SpecRowType extends BaseType
             ],
             'data' => [
                 'type' => \GraphQL::type('spec_data'),
-                'query' => function ($args, $query) {
-                    return $query->where('estate_id', $args['id'] ?? false);
+                'args' => [
+                    'estate_id' => [
+                        'type' => Type::string()
+                    ]
+                ],
+                'query' => function ($args, $query, $ctx) {
+                    return $query->where('estate_id', $args['estate_id'] ?? false);
                 },
             ],
             'compareData' => [

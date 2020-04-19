@@ -244,6 +244,7 @@ use App\GraphQL\Type\Option\CustomerOpinionType;
 use App\GraphQL\Input\CustomerOpinionInput;
 use App\GraphQL\Mutation\Option\SiteSetting\AdvertisingSiteSettingMutation;
 use App\GraphQL\Mutation\Option\SiteSetting\OpinionsSiteSettingMutation;
+use SmaaT\EstateBot\GraphQL\Mutations\UpdateBotProviderInfoMutation;
 
 return [
 
@@ -458,6 +459,9 @@ return [
                 'blacklistPhoneNumbers' => BlacklistPhoneNumbersQuery::class,
                 'blacklistPhoneNumber' => BlacklistPhoneNumberQuery::class,
                 'favorites' => FavoriteQuery::class,
+
+                'crawledResult' => \SmaaT\EstateBot\GraphQL\Queries\CrawledResult::class,
+                'botProviders' => \SmaaT\EstateBot\GraphQL\Queries\BotProviders::class,
             ],
             'mutation' => [
                 // Blog
@@ -580,6 +584,8 @@ return [
                 // Favorite
                 'addFavorite'   => AddFavoriteMutation::class,
                 'removeFavorite' => RemoveFavoriteMutation::class,
+
+                'updateBotProviderInfo' => UpdateBotProviderInfoMutation::class
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post', 'put', 'delete']
@@ -662,6 +668,9 @@ return [
         'result'            => ResultMessageType::class,
         'chart_record'      => ChartRecordType::class,
         'single_media'      => SingleMediaType::class,
+        'bot_provider'      => \SmaaT\EstateBot\GraphQL\Types\BotProviderType::class,
+        'crawled_link'      => \SmaaT\EstateBot\GraphQL\Types\CrawledLinkType::class,
+        'crawled_result'    => \SmaaT\EstateBot\GraphQL\Types\CrawledResultType::class,
         'Upload'            => \Rebing\GraphQL\Support\UploadType::class,
     ],
 

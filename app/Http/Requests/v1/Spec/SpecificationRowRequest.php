@@ -25,6 +25,8 @@ class SpecificationRowRequest extends MainRequest
                 'max:50',
                 new UniqueInSpec('spec_rows', $args, 'spec_header_id')
             ],
+            'similar_titles'            => 'nullable|array',
+            'similar_titles.*'          => 'required|string|max:50',
             'icon'                      => 'nullable|string|max:50',
             'description'               => 'nullable|string|max:255',
             'postfix'                   => 'nullable|string|max:20',
@@ -34,9 +36,9 @@ class SpecificationRowRequest extends MainRequest
             'is_multiple'               => 'nullable|boolean',
             'is_filterable'             => 'nullable|boolean',
             'is_active'                 => 'nullable|boolean',
-            
+
             /**
-             * relateion 
+             * relateion
              */
             'spec_header_id'            => ['required', 'integer', 'exists:spec_headers,id'],
         ];
