@@ -114,7 +114,7 @@
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    href="/app/maskanshow v1.3.0.apk"
+                    href="/app/maskanshow v1.3.1.apk"
                     download
                   >دانلود اپلیکیشن آندروید</a>
                 </li>
