@@ -9,6 +9,7 @@ use Closure;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use function GuzzleHttp\json_encode;
+use Illuminate\Support\Str;
 
 class LoginUserMutation extends BaseUserMutation
 {
@@ -55,7 +56,7 @@ class LoginUserMutation extends BaseUserMutation
                     }
                 }
             } else
-                auth()->user()->update(['system_authentication_code' => str_random(50)]);
+                auth()->user()->update(['system_authentication_code' => Str::random(50)]);
 
 
             $data = collect(Auth::user()->toArray());

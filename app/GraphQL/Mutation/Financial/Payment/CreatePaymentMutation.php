@@ -11,6 +11,7 @@ use App\Models\Financial\Promocode;
 use App\Models\Financial\Payment;
 use App\GraphQL\Helpers\CreateMutation;
 use App\GraphQL\Props\Financial\PaymentProps;
+use Illuminate\Support\Str;
 use Closure;
 
 class CreatePaymentMutation extends MainMutation
@@ -76,7 +77,7 @@ class CreatePaymentMutation extends MainMutation
 
 
         return Payment::create([
-            'code' => str_random(50),
+            'code' => Str::random(50),
             'plan_id' => $plan->id,
             'promocode_id' => $promocode->id ?? null,
             'description' => $args['description'] ?? null,

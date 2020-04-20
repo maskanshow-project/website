@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\CustomSeeder;
@@ -33,7 +34,7 @@ class LaratrustSeeder extends CustomSeeder
         // while(true)
         // {
         //     $password = $this->command->secret('Please Enter an password ');
-            
+
         //     if ( !is_null($password) ) break;
         // }
 
@@ -54,11 +55,11 @@ class LaratrustSeeder extends CustomSeeder
                 'name' => $key,
                 'display_name' => $roleLabel[$key]['name'],
                 'description' => $roleLabel[$key]['description']
-            // ], [
+                // ], [
             ]);
             $permissions = [];
 
-            $this->command->info('Creating Role '. strtoupper($key));
+            $this->command->info('Creating Role ' . strtoupper($key));
 
             // Reading role permission modules
             foreach ($modules as $module => $value) {
@@ -69,19 +70,18 @@ class LaratrustSeeder extends CustomSeeder
 
                     $permissions[] = \App\Permission::create([
                         'name' => $permissionValue . '-' . $module,
-                        'display_name' => $actionsLabel[ $permissionValue ] . ' ' . $permissionsLabel[ $module ],
-                        'description' => 'امکان ' . $actionsLabel[ $permissionValue ] . ' یک ' . $permissionsLabel[ $module ],
+                        'display_name' => $actionsLabel[$permissionValue] . ' ' . $permissionsLabel[$module],
+                        'description' => 'امکان ' . $actionsLabel[$permissionValue] . ' یک ' . $permissionsLabel[$module],
                     ])->id;
 
-                    $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
+                    $this->command->info('Creating Permission to ' . $permissionValue . ' for ' . $module);
                 }
             }
 
             // Attach all permissions to the role
             $role->permissions()->sync($permissions);
 
-            if ( $role->name === 'owner' )
-            {
+            if ($role->name === 'owner') {
                 $user = \App\User::firstOrCreate([
                     'email' => 'admin@maskanshow.ir'
                 ], [
@@ -90,14 +90,14 @@ class LaratrustSeeder extends CustomSeeder
                     'username' => 'siteadmin',
                     'password' => bcrypt('123456')
                 ]);
-                
+
                 $user->attachRole($role);
             }
 
             // $usernames->each( function($username) use($password, $role, $key) {
 
             //     $this->command->info("Creating '{$username}' user");
-    
+
             //     $email = "{$username}@{$key}.com";
             //     // Create default user for each role
 

@@ -9,6 +9,7 @@ use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Mail\ResetPassword;
 use App\Models\User\PasswordReset;
+use Illuminate\Support\Str;
 use App\User;
 use Closure;
 use DB;
@@ -62,7 +63,7 @@ class RequestResetPasswordMutation extends MainMutation
         PasswordReset::updateOrCreate([
             'user_id' => $user->id,
         ], [
-            'token' => $token = str_random(100),
+            'token' => $token = Str::random(100),
             'expired_at' => now()->addDay(1)
         ]);
 

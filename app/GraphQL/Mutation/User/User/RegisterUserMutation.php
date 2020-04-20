@@ -6,6 +6,7 @@ use GraphQL\Type\Definition\Type;
 use App\Http\Requests\v1\RegisterRequest;
 use App\User;
 use Closure;
+use Illuminate\Support\Str;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\UploadType;
@@ -80,7 +81,7 @@ class RegisterUserMutation extends BaseUserMutation
 
         auth()->login($user);
 
-        auth()->user()->update(['system_authentication_code' => str_random(50)]);
+        auth()->user()->update(['system_authentication_code' => Str::random(50)]);
 
         $data = collect($user->toArray());
 

@@ -435,7 +435,7 @@
                     class="small-text-field"
                     v-model="register.estate_info.username"
                     label="نام کاربری املاک خود را وارد کنید"
-                    :hint="`لینک صفحه شما : 
+                    :hint="`لینک صفحه شما :
                                         www.MaskanShow.ir/<b>${register.estate_info.username}</b>`"
                     persistent-hint
                     reverse
@@ -772,7 +772,7 @@ export default {
                             file_name
                             small
                         }
-                    }        
+                    }
                 `;
 
       let query = `
@@ -1117,7 +1117,7 @@ export default {
                                     token
                                     system_authentication_code
                                 }
-                            }                            
+                            }
                         `
         },
         headers: {
@@ -1304,7 +1304,7 @@ export default {
                                     status
                                     message
                                 }
-                            }                            
+                            }
                         `
         }
       })
@@ -1366,7 +1366,7 @@ export default {
                                     token
                                     system_authentication_code
                                 }
-                            }                            
+                            }
                         `
         },
         headers: {

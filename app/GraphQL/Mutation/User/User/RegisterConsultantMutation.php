@@ -10,6 +10,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\UploadType;
 use App\Http\Requests\v1\RegisterConsultantRequest;
 use App\Models\User\Office;
+use Illuminate\Support\Str;
 use Closure;
 
 class RegisterConsultantMutation extends BaseUserMutation
@@ -122,7 +123,7 @@ class RegisterConsultantMutation extends BaseUserMutation
 
         auth()->login($user);
 
-        auth()->user()->update(['system_authentication_code' => str_random(50)]);
+        auth()->user()->update(['system_authentication_code' => Str::random(50)]);
 
         $data = collect($user->toArray());
 

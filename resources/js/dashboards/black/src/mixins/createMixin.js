@@ -246,9 +246,14 @@ export default {
     errorResolver(error) {
       this.setAttr("is_mutation_loading", false);
 
-      if (error.type === "validation") {
-        for (let key in error.messages) {
-          error.messages[key].forEach(error => {
+      if (
+        Array.isArray(error) &&
+        error[0] &&
+        error[0].extensions &&
+        error[0].extensions.category === "validation"
+      ) {
+        for (let key in error[0].extensions.validation) {
+          error[0].extensions.validation[key].forEach(error => {
             this.$notify({
               title: "خطا اعتبار سنجی",
               message: error,

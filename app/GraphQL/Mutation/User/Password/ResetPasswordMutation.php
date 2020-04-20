@@ -13,6 +13,7 @@ use App\User;
 use Closure;
 use DB;
 use Mail;
+use Illuminate\Support\Str;
 
 class ResetPasswordMutation extends MainMutation
 {
@@ -95,7 +96,7 @@ class ResetPasswordMutation extends MainMutation
                 }
             }
         } else
-            $user->update(['system_authentication_code' => str_random(50)]);
+            $user->update(['system_authentication_code' => Str::random(50)]);
 
         $user->tokens()->whereName('web')->delete();
         $user->update(['password' => \Hash::make($args['password'])]);
