@@ -49,8 +49,8 @@ class CrawledResult extends Query
                 'crawled_last_week' => CrawledLink::where('crawled_at', '>=', now()->subDay(7))->count(),
                 'crawled_today' => CrawledLink::where('crawled_at', '>=', now()->startOfDay())->count(),
                 'registered_today' => CrawledLink::where('crawled_at', '>=', now()->startOfDay())->where('estate_id', '!=', null)->count(),
-                'registered' => CrawledLink::where('estate_id', '!=', null)->take(30)->get(),
-                'invalid' => CrawledLink::where('estate_id', null)->take(30)->get(),
+                'registered' => CrawledLink::where('estate_id', '!=', null)->orderBy('crawled_at', 'desc')->take(30)->get(),
+                'invalid' => CrawledLink::where('estate_id', null)->orderBy('crawled_at', 'desc')->take(30)->get(),
             ];
         });
     }

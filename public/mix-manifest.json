@@ -1,8 +1,3 @@
 {
-    "/js/app-1.3.1.js": "/js/app-1.3.1.js",
-    "/js/app-1.3.1.js.map": "/js/app-1.3.1.js.map",
-    "/js/manifest.js": "/js/manifest.js",
-    "/js/manifest.js.map": "/js/manifest.js.map",
-    "/js/vendor.js": "/js/vendor.js",
-    "/js/vendor.js.map": "/js/vendor.js.map"
+    "/js/main-1.3.1.js": "/js/main-1.3.1.js"
 }
