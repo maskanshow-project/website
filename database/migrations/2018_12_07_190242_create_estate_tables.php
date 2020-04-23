@@ -16,10 +16,10 @@ class CreateEstateTables extends Migration
     {
         $schema = DB::connection()->getSchemaBuilder();
 
-        $schema->blueprintResolver(function($table, $callback) {
+        $schema->blueprintResolver(function ($table, $callback) {
             return new Blueprint($table, $callback);
         });
-        
+
         $schema->create('labels', function (Blueprint $table) {
             $table->table([
                 'color'             => '9|comment:Hexadecimal code of the color, e.g #43df12',
@@ -33,12 +33,12 @@ class CreateEstateTables extends Migration
         $schema->create('label_translations', function ($table) {
             $table->increments('id');
             $table->integer('label_id')->unsigned();
-            
+
             $table->string('title', 50);
             $table->string('description', 250)->nullable();
 
             $table->string('locale')->index();
-            $table->unique(['label_id','locale']);
+            $table->unique(['label_id', 'locale']);
             $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
         });
 
@@ -46,10 +46,10 @@ class CreateEstateTables extends Migration
             $table->table([
                 'code'              => '20|nullable',
                 'area'              => 'integer',
-                'coordinates'       => 'point',
+                'coordinates'       => 'point|nullable',
                 'aparat_video'      => '10|nullable',
                 'views_count'       => 'unsignedInteger|default:0',
-                
+
                 'landlord_fullname' => 50,
                 'landlord_phone_number' => 15,
 
@@ -75,11 +75,11 @@ class CreateEstateTables extends Migration
         });
 
         \DB::statement('ALTER TABLE estates AUTO_INCREMENT = 1000;');
-        
+
         $schema->create('estate_translations', function ($table) {
             $table->increments('id');
             $table->unsignedInteger('estate_id');
-            
+
             $table->string('title', 50)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('address', 100)->nullable();
@@ -89,7 +89,7 @@ class CreateEstateTables extends Migration
 
             $table->string('locale')->index();
 
-            $table->unique(['estate_id','locale']);
+            $table->unique(['estate_id', 'locale']);
             $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
         });
 
@@ -106,17 +106,17 @@ class CreateEstateTables extends Migration
             $table->reltoSpec_rows();
             $table->reltoEstates();
             $table->full_timestamps();
-        });        
-        
+        });
+
         $schema->create('spec_data_translations', function ($table) {
             $table->increments('id');
             $table->integer('spec_data_id')->unsigned();
-            
+
             $table->mediumText('data')->nullable();
-            
+
             $table->string('locale')->index();
 
-            $table->unique(['spec_data_id','locale']);
+            $table->unique(['spec_data_id', 'locale']);
             $table->foreign('spec_data_id')->references('id')->on('spec_data')->onDelete('cascade');
         });
 
@@ -124,7 +124,7 @@ class CreateEstateTables extends Migration
             $table->add_foreign('spec_data', false, 'unsignedInteger', 'spec_data_id');
             $table->reltoSpec_defaults();
 
-            $table->primary([ 'spec_data_id', 'spec_default_id' ]);
+            $table->primary(['spec_data_id', 'spec_default_id']);
         });
 
         $schema->create('favorites', function (Blueprint $table) {

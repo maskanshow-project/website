@@ -12,9 +12,9 @@
 */
 
 Route::get('/panel/{path?}', function () {
-
-    if (url('/') !== env('APP_URL'))
+    if (url('/') !== env('APP_URL')) {
         return redirect(env('APP_URL'));
+    }
 
     $dashboard_template = 'black';
 
@@ -22,9 +22,9 @@ Route::get('/panel/{path?}', function () {
 })->where('path', '.*');
 
 Route::get('/{path?}', function () {
-
-    if (url('/') !== env('APP_URL'))
+    if (url('/') !== env('APP_URL')) {
         return redirect(env('APP_URL'));
+    }
 
     $dashboard_template = 'main';
 

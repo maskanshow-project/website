@@ -2,6 +2,7 @@
 
 namespace SmaaT\EstateBot\Providers;
 
+use App\Models\Estate\EstateType;
 use Cache;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -145,12 +146,12 @@ class MaskanFile extends EstateBot
 
     protected function parse_description(): String
     {
-        return str_replace("توضیحات ملک :", '', parent::parse_description());
+        return trim(str_replace("توضیحات ملک :", '', parent::parse_description()));
     }
 
     protected function parse_landlord_phone_number(): String
     {
-        return str_replace("تلفن تماس : ", '', parent::parse_landlord_phone_number());
+        return trim(str_replace("تلفن تماس : ", '', parent::parse_landlord_phone_number()));
     }
 
     protected function parse_landlord_fullname(): String
@@ -173,6 +174,35 @@ class MaskanFile extends EstateBot
     protected function parse_address(): ?String
     {
         return str_replace("آدرس ملک:", '', parent::parse_address());
+    }
+
+    protected function parse_specifications(EstateType $estate_type)
+    {
+        $specs = parent::parse_specifications($estate_type);
+
+        $this->handle_document_field_in_features($estate_type, $specs);
+
+        return $specs;
+    }
+
+    protected function handle_document_field_in_features(EstateType $estate_type, &$specs)
+    {
+        if ($estate_type->spec->rows ?? false) {
+            $row = $estate_type->spec->rows->first(function ($i) {
+                return $this->compare_value($i, 'سند');
+            });
+
+            if ($row->defaults ?? false) {
+                $res = $this->filter_first_valid_node($this->features_nodes()->each(function ($i) use ($row) {
+                    return ($v = $this->parse_item($row->defaults, $this->node_text($i), 'value')) ? [
+                        'id' => $row->id,
+                        'value' => $v->id
+                    ] : null;
+                }));
+
+                if ($res) $specs[] = $res;
+            }
+        }
     }
 
     public function store_index_page_links()

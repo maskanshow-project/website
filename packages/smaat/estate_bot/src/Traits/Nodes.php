@@ -35,9 +35,9 @@ trait Nodes
 
     protected function price_node_text($node): int
     {
-        preg_match('/\d+/', $this->replace_price_labels($this->fa_nums_to_en($this->remove_space_comma($this->node_text($node)))), $res);
+        preg_match('/(\d+)([.\/,،](\d+))?/', $this->replace_price_labels($this->fa_nums_to_en($this->remove_space_comma($this->node_text($node)))), $res);
 
-        return (int) $res[0] ?? false;
+        return (int) isset($res[3]) ? ($res[1] . ($res[3] / 10)) : $res[0] ?? false;
     }
 
     protected function street_node()

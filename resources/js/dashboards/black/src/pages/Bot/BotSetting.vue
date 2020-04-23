@@ -121,6 +121,10 @@ export default {
     FlipClock
   },
 
+  metaInfo: {
+    title: "تنظیمات ربات"
+  },
+
   data() {
     return {
       loading: null,

@@ -89,7 +89,7 @@
           <h5 class="card-category" :style="{ color: '#fd7e14' }">تعداد آگهی های ثبت نشده</h5>
           <h3 class="card-title">
             <ICountUp
-              :endVal="info.invalid_count"
+              :endVal="info.crawled_count - info.registered_count"
               :options="{
                 useEasing: true,
                 useGrouping: true,
@@ -233,8 +233,19 @@
 
     <div class="row mt-4" dir="rtl">
       <div class="col-12 text-right animated bounceInUp delay-last">
-        <h3 class="font-weight-bold mb-2">لینک های دارای مشکل</h3>
+        <div class="row justify-content-between no-gutters mb-3">
+          <h3 class="font-weight-bold mb-2 animated bounceInUp delay-last">لینک های دارای مشکل</h3>
+          <input
+            v-model="query.invalid"
+            type="text"
+            @keyup="search('invalid')"
+            dir="rtl"
+            class="pull-right form-control d-inline-block col-3 pr-2"
+            placeholder="جستجو کنید ..."
+          />
+        </div>
         <el-table :data="info.invalid" class="w-100 rounded shadow mb-4">
+          <el-table-column type="index" width="50"></el-table-column>
           <el-table-column prop="provider" label="منبع" width="100">
             <template slot-scope="scope">
               <p v-if="scope.row.provider == 'MelkeIrani'">ملک ایرانی</p>
@@ -267,9 +278,31 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="text-center mb-5">
+          <el-pagination
+            @current-change="page => handlePagination(page, 'invalid')"
+            background
+            layout="prev, pager, next"
+            :total="info.crawled_count - info.registered_count"
+            :page-size="20"
+          ></el-pagination>
+        </div>
 
-        <h3 class="font-weight-bold mb-2 animated bounceInUp delay-last">ملک های ثبت شده</h3>
-        <el-table :data="info.registered" class="w-100 rounded shadow">
+        <hr />
+
+        <div class="row justify-content-between no-gutters mb-3">
+          <h3 class="font-weight-bold mb-2 animated bounceInUp delay-last">ملک های ثبت شده</h3>
+          <input
+            v-model="query.registered"
+            type="text"
+            @keyup="search('registered')"
+            dir="rtl"
+            class="pull-right form-control d-inline-block col-3 pr-2"
+            placeholder="جستجو کنید ..."
+          />
+        </div>
+        <el-table :data="info.registered" class="w-100 rounded shadow mb-4">
+          <el-table-column type="index" width="50"></el-table-column>
           <el-table-column prop="provider" label="منبع" width="100">
             <template slot-scope="scope">
               <p v-if="scope.row.provider == 'MelkeIrani'">ملک ایرانی</p>
@@ -317,6 +350,15 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="text-center">
+          <el-pagination
+            @current-change="page => handlePagination(page, 'registered')"
+            background
+            layout="prev, pager, next"
+            :total="info.registered_count"
+            :page-size="20"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -333,6 +375,10 @@ export default {
     FlipClock
   },
 
+  metaInfo: {
+    title: "گزارشات ربات"
+  },
+
   mixins: [filtersHelper],
 
   data() {
@@ -341,12 +387,23 @@ export default {
       info: {
         crawled_count: 0,
         registered_count: 0,
-        invalid_count: 0,
         crawled_last_week: 0,
         crawled_today: 0,
         registered_today: 0,
         registered: [],
         invalid: []
+      },
+      page: {
+        registered: 1,
+        invalid: 1
+      },
+      timeout: {
+        registered: "",
+        invalid: ""
+      },
+      query: {
+        registered: "",
+        invalid: ""
       }
     };
   },
@@ -358,7 +415,6 @@ export default {
           crawledResult {
             crawled_count
             registered_count
-            invalid_count
             crawled_last_week
             crawled_today
             registered_today
@@ -391,6 +447,68 @@ export default {
         this.info = data.data.crawledResult;
         this.is_loaded = true;
       });
+  },
+
+  methods: {
+    handlePagination(page, type) {
+      this.page[type] = page;
+      this.refresh(type);
+    },
+
+    search(type) {
+      if (this.timeout[type]) clearTimeout(this.timeout[type]);
+
+      setTimeout(() => {
+        this.page[type] = 1;
+        this.refresh(type);
+      }, 800);
+    },
+
+    refresh(type) {
+      axios
+        .post("/graphql/auth", { query: this[type + "_query"] })
+        .then(({ data }) => {
+          this.info[type] = data.data.crawledResult.data;
+        });
+    }
+  },
+
+  computed: {
+    registered_query() {
+      return `{
+        crawledResult {
+          data: registered( page: ${this.page.registered} query: "${this.query.registered}" ) {
+            id
+            link
+            provider
+            crawled_at
+            estate  {
+              id
+              address
+              area
+              landlord_fullname
+              landlord_phone_number
+              assignment { id title }
+              estate_type { id title }
+            }
+          }
+        }
+      }`;
+    },
+
+    invalid_query() {
+      return `{
+        crawledResult {
+          data: invalid( page: ${this.page.invalid} query: "${this.query.invalid}" ) {
+            id
+            link
+            provider
+            crawled_at
+            errors
+          }
+        }
+      }`;
+    }
   }
 };
 </script>

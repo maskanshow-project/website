@@ -42,7 +42,7 @@ trait Parser
 
     protected function parse_address(): ?String
     {
-        return trim(str_replace('پلاک', '', preg_replace('/پلاک \d+/', '', $this->node_text($this->address_node()))));
+        return trim(str_replace('پلاک', '', preg_replace('/پلاک \d+/', '', $this->fa_nums_to_en($this->node_text($this->address_node())))));
     }
 
     protected function parse_area(): int
@@ -54,7 +54,7 @@ trait Parser
 
     protected function parse_description(): String
     {
-        return $this->node_text($this->description_node());
+        return trim($this->node_text($this->description_node()));
     }
 
     protected function parse_landlord_fullname(): String
@@ -69,7 +69,7 @@ trait Parser
 
     protected function parse_plaque(): String
     {
-        preg_match('/پلاک (\d+)/', $this->node_text($this->address_node()), $res);
+        preg_match('/پلاک (\d+)/', $this->fa_nums_to_en($this->node_text($this->address_node())), $res);
 
         return ($res[1] ?? 0);
     }
