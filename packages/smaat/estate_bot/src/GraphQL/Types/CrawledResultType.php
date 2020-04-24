@@ -62,37 +62,37 @@ class CrawledResultType extends GraphQLType
 
     protected function resolveCrawledCountField($root, $args)
     {
-        return Cache::remember('estate_bot.crawled_result.crawled_count', 600, function () {
-            return CrawledLink::count();
-        });
+        // return Cache::remember('estate_bot.crawled_result.crawled_count', 600, function () {
+        return CrawledLink::count();
+        // });
     }
 
     protected function resolveRegisteredCountField($root, $args)
     {
-        return Cache::remember('estate_bot.crawled_result.registered_count', 600, function () {
-            return CrawledLink::where('estate_id', '!=', null)->count();
-        });
+        // return Cache::remember('estate_bot.crawled_result.registered_count', 600, function () {
+        return CrawledLink::where('estate_id', '!=', null)->count();
+        // });
     }
 
     protected function resolveCrawledLastWeekField($root, $args)
     {
-        return Cache::remember('estate_bot.crawled_result.crawled_last_week', 600, function () {
-            return CrawledLink::where('crawled_at', '>=', now()->subDay(7))->count();
-        });
+        // return Cache::remember('estate_bot.crawled_result.crawled_last_week', 600, function () {
+        return CrawledLink::where('crawled_at', '>=', now()->subDay(7))->count();
+        // });
     }
 
     protected function resolveCrawledTodayField($root, $args)
     {
-        return Cache::remember('estate_bot.crawled_result.crawled_today', 600, function () {
-            return CrawledLink::where('crawled_at', '>=', now()->startOfDay())->count();
-        });
+        // return Cache::remember('estate_bot.crawled_result.crawled_today', 600, function () {
+        return CrawledLink::where('crawled_at', '>=', now()->startOfDay())->count();
+        // });
     }
 
     protected function resolveRegisteredTodayField($root, $args)
     {
-        return Cache::remember('estate_bot.crawled_result.registered_today', 600, function () {
-            return CrawledLink::where('crawled_at', '>=', now()->startOfDay())->where('estate_id', '!=', null)->count();
-        });
+        // return Cache::remember('estate_bot.crawled_result.registered_today', 600, function () {
+        return CrawledLink::where('crawled_at', '>=', now()->startOfDay())->where('estate_id', '!=', null)->count();
+        // });
     }
 
     protected function resolveRegisteredField($root, $args)
