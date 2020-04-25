@@ -197,6 +197,16 @@ class MelkeIrani extends EstateBot
         );
     }
 
+    protected function area_node()
+    {
+        return $this->filter_first_valid_node(
+            $this->crawler->filter($this->area_selector())->each(function ($node) {
+                if (strpos($node->text(), "زیربنا") !== false)
+                    return $node;
+            })
+        );
+    }
+
     protected function landlord_phone_number_node()
     {
         return $this->crawler->filter($this->landlord_phone_number_selector())->eq(1);
@@ -226,7 +236,7 @@ class MelkeIrani extends EstateBot
 
     protected function parse_area(): int
     {
-        return (int) str_replace("مساحت:", '', $this->node_text($this->area_node()));
+        return (int) str_replace("زیربنا:", '', $this->node_text($this->area_node()));
     }
 
     protected function parse_address(): ?String

@@ -13,7 +13,7 @@ trait Store
 {
     protected $links;
 
-    protected $max_page = 2;
+    protected $max_page = 5;
 
     public function store_index_page_links()
     {

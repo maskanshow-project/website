@@ -16,7 +16,7 @@ abstract class EstateBot
 
     public static $providers = [
         Enum::MelkeIrani => MelkeIrani::class,
-        Enum::MaskanFile => MaskanFile::class
+        // Enum::MaskanFile => MaskanFile::class
     ];
 
     protected $client;

@@ -27,7 +27,7 @@ trait Loader
     private function load_assignments()
     {
         $this->assignments = Cache::remember('estate_bot.assignments', 86400, function () {
-            return Assignment::all([
+            return Assignment::where('id', '!=', 5)->get([
                 'id', 'has_sales_price', 'has_mortgage_price', 'has_rental_price',
             ]);
         });
