@@ -17,7 +17,9 @@ trait Compare
     {
         if (!$value) return null;
 
-        return $collection->first(function ($item) use ($value, $field, $has_similar) {
+        return $collection->sortByDesc(function ($i) use ($field) {
+            return strlen($i->$field);
+        })->first(function ($item) use ($value, $field, $has_similar) {
             return $this->compare_value($item, $value, $field, $has_similar);
         });
     }

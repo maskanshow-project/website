@@ -17,7 +17,7 @@ trait Store
 
     public function store_index_page_links()
     {
-        $page = 1;
+        $page = 15;
         $this->links = collect();
 
         while ($page <= $this->max_page) {
