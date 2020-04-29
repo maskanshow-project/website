@@ -236,7 +236,9 @@ class MelkeIrani extends EstateBot
 
     protected function parse_area(): int
     {
-        return (int) str_replace("زیربنا:", '', $this->node_text($this->area_node()));
+        $value = (int) str_replace("زیربنا:", '', $this->node_text($this->area_node()));
+
+        return $value != 0 ? $value : (int) str_replace("مساحت:", '', $this->node_text(parent::area_node()));
     }
 
     protected function parse_address(): ?String

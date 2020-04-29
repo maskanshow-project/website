@@ -13,11 +13,11 @@ trait Store
 {
     protected $links;
 
-    protected $max_page = 5;
+    protected $max_page = 20;
 
     public function store_index_page_links()
     {
-        $page = 15;
+        $page = 1;
         $this->links = collect();
 
         while ($page <= $this->max_page) {

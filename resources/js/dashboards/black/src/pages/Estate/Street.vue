@@ -151,7 +151,6 @@ export default {
       maxLength: maxLength(30)
     },
     regex: {
-      required,
       maxLength: maxLength(150)
     }
   },
