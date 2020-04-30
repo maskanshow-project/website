@@ -967,7 +967,7 @@ export default {
                                         last_name
                                         full_name
                                         avatar {
-                                            id 
+                                            id
                                             file_name
                                             medium
                                         }
@@ -1164,7 +1164,10 @@ export default {
             { value: 70000000, disabled: false },
             { value: 80000000, disabled: false },
             { value: 90000000, disabled: false },
-            { value: 100000000, disabled: false }
+            { value: 100000000, disabled: false },
+            { value: 150000000, disabled: false },
+            { value: 250000000, disabled: false },
+            { value: 500000000, disabled: false }
           ]
         },
         max: {
@@ -1184,7 +1187,10 @@ export default {
             { value: 70000000, disabled: false },
             { value: 80000000, disabled: false },
             { value: 90000000, disabled: false },
-            { value: 100000000, disabled: false }
+            { value: 100000000, disabled: false },
+            { value: 150000000, disabled: false },
+            { value: 250000000, disabled: false },
+            { value: 500000000, disabled: false }
           ]
         },
         label: "رهن",
@@ -1497,7 +1503,7 @@ export default {
                                         address
                                         owner {
                                         avatar {
-                                            id 
+                                            id
                                             file_name
                                             medium
                                         }
@@ -2158,7 +2164,7 @@ export default {
                                     parseInt(el)
                                   )}]`
                             }
-                            
+
                         }`;
         }
       });
