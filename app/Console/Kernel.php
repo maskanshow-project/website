@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         array_map(function ($provider) use ($schedule) {
             $schedule->call(function () use ($provider) {
                 return (new $provider())->store_index_page_links();
-            })->everyMinute();
+            })->hourly();
         }, EstateBot::$providers);
     }
 

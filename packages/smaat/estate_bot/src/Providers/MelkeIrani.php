@@ -226,7 +226,15 @@ class MelkeIrani extends EstateBot
             throw new Exception("The Melke Irani Website token has expired !");
         }
 
+        if (!$this->is_valid_property())
+            return "";
+
         return str_replace("نام:", '', parent::parse_landlord_fullname());
+    }
+
+    protected function is_valid_property(): bool
+    {
+        return strpos($this->node_text($this->crawler->filter(".sitem .sitemtitr > p:nth-child(4)")->first()), "ملک ایرانی") !== false;
     }
 
     protected function parse_landlord_phone_number(): String
