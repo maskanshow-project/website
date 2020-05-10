@@ -1,29 +1,36 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-import './loadModules'
+import "./loadModules";
 // import './laravel_echo'
-import './axios'
+import "./axios";
 
 import VueRouter from "vue-router";
-import VueMeta from 'vue-meta'
+import VueMeta from "vue-meta";
 
-import RouterPrefetch from 'vue-router-prefetch'
+import RouterPrefetch from "vue-router-prefetch";
 import App from "./App";
 import router from "./router/index";
 
 import BlackDashboard from "./plugins/blackDashboard";
-import i18n from "./i18n"
+import i18n from "./i18n";
 // import './registerServiceWorker'
 
-import jQuery from 'jquery'
-window.jQuery = window.$ = jQuery
+import jQuery from "jquery";
+window.jQuery = window.$ = jQuery;
 
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueSweetalert2 from "vue-sweetalert2";
 
-import store from './stores/main'
+// Configuration VueAnalytics
+import VueAnalytics from "vue-analytics";
+Vue.use(VueAnalytics, {
+  id: "UA-157961258-2",
+  router
+});
+
+import store from "./stores/main";
 
 Vue.use(BlackDashboard);
-Vue.use(VueMeta)
+Vue.use(VueMeta);
 Vue.use(VueRouter);
 Vue.use(RouterPrefetch);
 Vue.use(VueSweetalert2);
