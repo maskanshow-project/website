@@ -49,7 +49,7 @@ trait Store
 
         return [
             'links' => $diff = array_diff($links, $this->crawled_links($links)),
-            'has_more' => count($diff) === count($links)
+            'has_more' => count($diff) !== 0
         ];
     }
 

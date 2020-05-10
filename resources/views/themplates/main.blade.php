@@ -6,6 +6,17 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="samandehi" content="153481811"/>
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157961258-2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-157961258-2');
+        </script>
+
+
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
@@ -35,7 +46,7 @@
                     }
 
                     $address = '';
-                    
+
                     if ( $estate->street )
                     {
                         if ( $estate->street->area )
@@ -46,7 +57,7 @@
 
                     $address .= ' ' . $estate->address;
                     $address .= $estate->description ? ' | ' . $estate->description : null;
-                    
+
                     \SEO::setTitle( trim($title) );
                     \SEO::setDescription( trim($address) );
                 }
@@ -55,7 +66,7 @@
 
         {!! \SEO::generate(false) !!}
 
-        
+
         <link rel="stylesheet" href="/css/app.css">
         <!-- Fonts -->
         <link href="/fonts/flaticon/flaticon.min.css" rel="stylesheet">
