@@ -799,7 +799,7 @@ export default {
                 ? `کد دسترسی : ${data.data.createAccessCode.code}`
                 : null,
             text: data.data.createAccessCode.message,
-            type:
+            icon:
               data.data.createAccessCode.status === 200 ? "success" : "error",
             showConfirmButton: true,
             confirmButtonText: "باشه"
@@ -817,7 +817,7 @@ export default {
           inputPlaceholder: "رمز عبور",
           showCancelButton: true,
           title: `لطفا رمز عبور مورد نظر خود را وارد کنید`,
-          type: "warning",
+          icon: "warning",
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
           confirmButtonColor: "#0098f0",
@@ -850,7 +850,7 @@ export default {
                   return this.$swal.fire({
                     title: "تغییری نکرد",
                     text: data.data.updateUserPassword.message,
-                    type: "error",
+                    icon: "error",
                     timer: 2000,
                     showConfirmButton: false
                   });
@@ -859,7 +859,7 @@ export default {
                 this.$swal.fire({
                   title: "تغییر کرد",
                   text: "رمز عبور کاربر مورد نظر با موفقیت بروزرسانی شد",
-                  type: "success",
+                  icon: "success",
                   timer: 2000,
                   showConfirmButton: false
                 });
@@ -960,7 +960,7 @@ export default {
           } های انتخاب شده به حالت ${
             this.acceptType ? "تایید" : "رد"
           } شده درخواهند آمد !`,
-          type: "warning",
+          icon: "warning",
           showCancelButton: true,
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
@@ -1007,7 +1007,7 @@ export default {
                   text: `${this.label} هایی که انتخاب کردید با موفقیت ${
                     this.acceptType ? "تایید" : "رد"
                   } شدند :)`,
-                  type: "success",
+                  icon: "success",
                   timer: 1000,
                   showConfirmButton: false
                 });
@@ -1019,7 +1019,7 @@ export default {
                   this.$swal.fire({
                     title: "خطایی رخ داد !",
                     text: error.response.data.message,
-                    type: "error",
+                    icon: "error",
                     timer: 5000,
                     confirmButtonText: "بسیار خب :("
                   });
@@ -1064,7 +1064,7 @@ export default {
             return this.$swal.fire({
               title: "خطایی رخ داد",
               text: data.data.changeCreditUser.message,
-              type: "error",
+              icon: "error",
               showConfirmButton: false,
               timer: 2000
             });
@@ -1102,7 +1102,7 @@ export default {
           this.$swal.fire({
             title: this.form_data.type ? "اضافه شد" : "کاسته شد",
             text: data.data.changeCreditUser.message,
-            type: "success",
+            icon: "success",
             showConfirmButton: false,
             timer: 1000
           });

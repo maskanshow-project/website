@@ -224,7 +224,7 @@ export default {
           this.$swal.fire({
             title: msg,
             text: `${this.label} با موفقیت ${msg}:)`,
-            type: "success",
+            icon: "success",
             showConfirmButton: false,
             timer: 1000
           });

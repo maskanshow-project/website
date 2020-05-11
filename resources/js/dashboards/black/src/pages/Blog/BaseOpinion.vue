@@ -8,7 +8,6 @@
       :canCreate="false"
       :canEdit="false"
       :canSearch="false"
-      
       :methods="{}"
       ref="datatable"
     >
@@ -17,7 +16,9 @@
           <tbody>
             <tr v-if="rel === 'article' && slotProps.row.article">
               <td>
-                <img :src="slotProps.row.article.image ? slotProps.row.article.image.thumb : '/images/placeholder.png'" />
+                <img
+                  :src="slotProps.row.article.image ? slotProps.row.article.image.thumb : '/images/placeholder.png'"
+                />
               </td>
               <td class="text-right">
                 <el-popover
@@ -27,14 +28,19 @@
                   :disabled="typeof slotProps.row.article.title === 'string' ? slotProps.row.article.title.length <= 30 : false"
                   :content="slotProps.row.article.title"
                 >
-                  <a :href="`/article/${slotProps.row.article.slug}`" slot="reference">{{ slotProps.row.article.title | truncate(50) }}</a>
+                  <a
+                    :href="`/article/${slotProps.row.article.slug}`"
+                    slot="reference"
+                  >{{ slotProps.row.article.title | truncate(50) }}</a>
                 </el-popover>
               </td>
             </tr>
 
             <tr v-if="rel === 'product' && slotProps.row.product">
               <td>
-                <img :src="slotProps.row.product.photos && slotProps.row.product.photos.length ? slotProps.row.product.photos[0].thumb : '/images/placeholder.png'" />
+                <img
+                  :src="slotProps.row.product.photos && slotProps.row.product.photos.length ? slotProps.row.product.photos[0].thumb : '/images/placeholder.png'"
+                />
               </td>
               <td class="text-right">
                 <el-popover
@@ -48,10 +54,12 @@
                 </el-popover>
               </td>
             </tr>
-            
+
             <tr class="mt-2" v-if="slotProps.row.writer">
               <td>
-                <img :src="slotProps.row.writer.avatar ? slotProps.row.writer.avatar.thumb : '/images/placeholder-user.png'" />
+                <img
+                  :src="slotProps.row.writer.avatar ? slotProps.row.writer.avatar.thumb : '/images/placeholder-user.png'"
+                />
               </td>
               <td class="text-right">
                 <el-popover
@@ -64,7 +72,10 @@
                   <span slot="reference">{{ slotProps.row.writer.full_name | truncate(30) }}</span>
                 </el-popover>
 
-                <span class="badge badge-warning" v-if="!slotProps.row.writer.full_name.trim()">کاربر ناشناس</span>
+                <span
+                  class="badge badge-warning"
+                  v-if="!slotProps.row.writer.full_name.trim()"
+                >کاربر ناشناس</span>
               </td>
             </tr>
           </tbody>
@@ -72,7 +83,7 @@
       </template>
 
       <template #status-body="slotProps">
-        <i class="tim-icons icon-check-2 text-success ml-2"></i>  
+        <i class="tim-icons icon-check-2 text-success ml-2"></i>
         <el-switch
           :disabled="can(`accept-${type}`)"
           @change="accept(slotProps.index, $event)"
@@ -85,7 +96,13 @@
 
       <template #custom-operations="slotProps">
         <el-tooltip content="مشاهده اطلاعات">
-          <base-button class="ml-2" @click="info(slotProps.index, slotProps.row)" type="success" size="sm" icon>
+          <base-button
+            class="ml-2"
+            @click="info(slotProps.index, slotProps.row)"
+            type="success"
+            size="sm"
+            icon
+          >
             <i class="tim-icons icon-chat-33"></i>
           </base-button>
         </el-tooltip>
@@ -109,9 +126,11 @@
                 useEasing: true,
                 useGrouping: true,
               }"
-            />
-            مورد انتخاب شده
-            <i class="tim-icons" :class="acceptType ? 'icon-check-2' : 'icon-refresh-01'"></i>
+            />مورد انتخاب شده
+            <i
+              class="tim-icons"
+              :class="acceptType ? 'icon-check-2' : 'icon-refresh-01'"
+            ></i>
           </base-button>
         </transition>
       </template>
@@ -126,21 +145,27 @@
         <div class="p-2">
           <div class="row" :style="{ position: 'relative', zIndex: 1}">
             <div class="col-6" v-if="rel === 'article' && showing_info.article">
-              <img class="header-image" :src="showing_info.article.image ? showing_info.article.image.small : '/images/placeholder.png'" />
+              <img
+                class="header-image"
+                :src="showing_info.article.image ? showing_info.article.image.small : '/images/placeholder.png'"
+              />
               <p class="header-paragraph">
                 <i class="tim-icons icon-single-copy-04"></i>
                 {{ showing_info.article.title }}
               </p>
             </div>
             <div class="col-6">
-              <img class="header-image" :src="showing_info.writer.avatar ? showing_info.writer.avatar.small : '/images/placeholder-user.png'" />
+              <img
+                class="header-image"
+                :src="showing_info.writer.avatar ? showing_info.writer.avatar.small : '/images/placeholder-user.png'"
+              />
               <p class="header-paragraph">
                 <i class="tim-icons icon-single-02"></i>
                 {{ showing_info.writer.full_name }}
               </p>
             </div>
           </div>
-          <hr/>
+          <hr />
           <div class="row">
             <div class="col-12">
               <div class="text-right pull-right">
@@ -151,15 +176,16 @@
               </div>
             </div>
             <div class="col-12">
-              <p class="animated bounceInDown delay-first" :style="{
+              <p
+                class="animated bounceInDown delay-first"
+                :style="{
                 padding: '15px',
                 borderRight: '4px solid #960577'
-              }">
-                {{ showing_info.message }}
-              </p>
+              }"
+              >{{ showing_info.message }}</p>
             </div>
           </div>
-          <hr/>
+          <hr />
 
           <div v-if="type === 'review'">
             <div class="row" v-if="false">
@@ -173,7 +199,8 @@
                   <div
                     class="col-12 pull-right mb-2"
                     v-for="(item, index) of showing_info.ranks"
-                    :key="index">
+                    :key="index"
+                  >
                     <p class="pull-right">{{ item.title }}</p>
 
                     <el-rate
@@ -182,16 +209,15 @@
                       disabled
                       show-score
                       text-color="#ff9900"
-                      score-template=" {value} امتیاز">
-                    </el-rate>
+                      score-template=" {value} امتیاز"
+                    ></el-rate>
                   </div>
                 </div>
                 <span
                   class="col-12 badge badge-warning data-badge mb-2"
-                  v-if="!showing_info.ranks">
-                  هیچ امتیازی ثبت نشده است :(
-                </span>
-              </div>                        
+                  v-if="!showing_info.ranks"
+                >هیچ امتیازی ثبت نشده است :(</span>
+              </div>
             </div>
             <hr v-if="false" />
 
@@ -205,15 +231,15 @@
                 <div v-if="showing_info.advantages && showing_info.advantages.length">
                   <span
                     :style="{ animationDelay: `${500 + index * 100}ms` }"
-                    class="col-12 badge badge-success data-badge mb-2  animated bounceLeftUp"
+                    class="col-12 badge badge-success data-badge mb-2 animated bounceLeftUp"
                     v-for="(item, index) of showing_info.advantages"
-                    :key="index">
-                    {{ item }}
-                  </span>
+                    :key="index"
+                  >{{ item }}</span>
                 </div>
-                <span v-else class="col-12 badge badge-warning data-badge mb-2">
-                  هیچ نکته مثبتی ثبت نشده است :(
-                </span>
+                <span
+                  v-else
+                  class="col-12 badge badge-warning data-badge mb-2"
+                >هیچ نکته مثبتی ثبت نشده است :(</span>
               </div>
 
               <div class="col-6">
@@ -227,13 +253,13 @@
                     :style="{ animationDelay: `${500 + index * 100}ms` }"
                     class="col-12 badge badge-danger data-badge mb-2 animated bounceRightUp"
                     v-for="(item, index) of showing_info.disadvantages"
-                    :key="index">
-                    {{ item }}
-                  </span>
+                    :key="index"
+                  >{{ item }}</span>
                 </div>
-                <span v-else class="col-12 badge badge-primary data-badge mb-2">
-                  هیچ نکته منفی ثبت نشده است :)
-                </span>
+                <span
+                  v-else
+                  class="col-12 badge badge-primary data-badge mb-2"
+                >هیچ نکته منفی ثبت نشده است :)</span>
               </div>
             </div>
           </div>
@@ -279,12 +305,14 @@
               :has_operation="true"
             >
               <template #writer-body="props">
-                <img :src="props.row.writer.avatar ? props.row.writer.avatar.thumb : '/images/placeholder-user.png'" />
+                <img
+                  :src="props.row.writer.avatar ? props.row.writer.avatar.thumb : '/images/placeholder-user.png'"
+                />
                 {{ props.row.writer.full_name }}
               </template>
 
               <template #status-body="props">
-                <i class="tim-icons icon-check-2 text-success ml-2"></i>  
+                <i class="tim-icons icon-check-2 text-success ml-2"></i>
                 <el-switch
                   :disabled="can(`accept-${type}`)"
                   @change="accept(props.index, $event, true)"
@@ -300,15 +328,11 @@
       </div>
 
       <md-dialog-actions>
-        <base-button
-          size="sm"
-          type="danger"
-          @click="is_info_dialog_open = false"
-        >
+        <base-button size="sm" type="danger" @click="is_info_dialog_open = false">
           <i class="tim-icons icon-simple-remove"></i>
           بستن
         </base-button>
-        
+
         <base-button
           class="mr-2"
           v-if="type !== 'review'"
@@ -325,17 +349,17 @@
 </template>
 
 <script>
-import Datatable from '../../components/BaseDatatable.vue'
-import BaseTable from '../../components/BaseTable'
-import ICountUp from 'vue-countup-v2'
+import Datatable from "../../components/BaseDatatable.vue";
+import BaseTable from "../../components/BaseTable";
+import ICountUp from "vue-countup-v2";
 
-import createMixin from '../../mixins/createMixin'
-import initDatatable from '../../mixins/initDatatable'
-import deleteMixin from '../../mixins/deleteMixin';
-import filtersHelper from '../../mixins/filtersHelper';
+import createMixin from "../../mixins/createMixin";
+import initDatatable from "../../mixins/initDatatable";
+import deleteMixin from "../../mixins/deleteMixin";
+import filtersHelper from "../../mixins/filtersHelper";
 
-import voca from 'voca'
-import moment from 'moment';
+import voca from "voca";
+import moment from "moment";
 
 export default {
   props: {
@@ -354,12 +378,12 @@ export default {
     },
     group: {
       type: String,
-      default: 'product'
+      default: "product"
     },
     label: String,
     rel: {
       type: String,
-      default: 'product'
+      default: "product"
     }
   },
   components: {
@@ -367,12 +391,7 @@ export default {
     BaseTable,
     ICountUp
   },
-  mixins: [
-    filtersHelper,
-    initDatatable,
-    createMixin,
-    deleteMixin
-  ],
+  mixins: [filtersHelper, initDatatable, createMixin, deleteMixin],
   data() {
     return {
       selected_count: 0,
@@ -386,94 +405,111 @@ export default {
         ranks: null,
         article: {
           image: null,
-          title: '',
+          title: ""
         },
         product: {
           photos: null,
-          name: '',
+          name: ""
         },
         writer: {
           avatar: null,
-          full_name: '',
+          full_name: ""
         },
-        message: ''
+        message: ""
       },
       is_info_dialog_open: false
-    }
+    };
   },
   methods: {
     closePanel() {
       this.$refs.datatable.closePanel();
     },
     accept(index, status, parent = false) {
-      this.setAttr('is_query_loading', true)
+      this.setAttr("is_query_loading", true);
 
-      var id = parent ? this.showing_info.answers[index].id : this.data()[index].id;
+      var id = parent
+        ? this.showing_info.answers[index].id
+        : this.data()[index].id;
 
-      axios.post(`/graphql/auth`, {
-        query: `
+      axios
+        .post(`/graphql/auth`, {
+          query: `
           mutation {
-            ${ voca.camelCase(`accept ${this.type}`) } (id: ${id}, status: ${status}) {
+            ${voca.camelCase(
+              `accept ${this.type}`
+            )} (id: ${id}, status: ${status}) {
               status
               message
             }
           }
         `
-      })
-      .then(({data}) => {
-        this.setAttr('is_query_loading', false)
-
-        if ( parent ) {
-          // this.data()[index].answers[index].is_accept = status
-        } else {
-          this.data()[index].is_accept = status
-          this.data()[index].updated_at = moment().format('YYYY-M-D HH:mm:ss')
-        }
-        this.setData( this.data() )
-
-        this.$store.commit('setInactiveComments', status ? this.$store.state.inactive_comments - 1 : this.$store.state.inactive_comments + 1)
-        
-        this.$notify({
-          title: status ? 'تایید شد' : 'رد شد',
-          message: `${this.label} مورد نظر با موفقیت ${ status ? 'تایید شد' : 'رد شد' } :)`,
-          timeout: 1500,
-          type: status ? 'success' : 'danger',
-          verticalAlign: 'top',
-          horizontalAlign: 'left',
         })
-      })
-      .catch( error => {
-        this.setAttr('is_query_loading', false)
-        console.log(error)
-      } );
-    },
-    deleteAnswer(index, row)
-    {
-      this.delete_from_answers = true
-      this.handleDelete(index, row)
-    },
-    createAnswer()
-    {
-      this.$swal.fire({
-        input: 'textarea',
-        inputPlaceholder: 'متن پیام خود را بنویسید',
-        showCancelButton: true,
-        title: `متن پیام خود را وارد کنید`,
-        type: 'warning',
-        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
-        confirmButtonColor: '#0098f0',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'ثبت پاسخ',
-        cancelButtonText: 'منصرف شدم'
-      })
-      .then(({value}) => {
-        if (value) {
-          this.setAttr('is_query_loading', true)
+        .then(({ data }) => {
+          this.setAttr("is_query_loading", false);
 
-          axios.post(`/graphql/auth`, {
-            query: `mutation {
-              create: ${ voca.camelCase(`create ${this.type}`) } (
-                ${this.type === 'comment' ? 'parent_id' : 'question_id'}: ${this.showing_info.id}, 
+          if (parent) {
+            // this.data()[index].answers[index].is_accept = status
+          } else {
+            this.data()[index].is_accept = status;
+            this.data()[index].updated_at = moment().format(
+              "YYYY-M-D HH:mm:ss"
+            );
+          }
+          this.setData(this.data());
+
+          this.$store.commit(
+            "setInactiveComments",
+            status
+              ? this.$store.state.inactive_comments - 1
+              : this.$store.state.inactive_comments + 1
+          );
+
+          this.$notify({
+            title: status ? "تایید شد" : "رد شد",
+            message: `${this.label} مورد نظر با موفقیت ${
+              status ? "تایید شد" : "رد شد"
+            } :)`,
+            timeout: 1500,
+            type: status ? "success" : "danger",
+            verticalAlign: "top",
+            horizontalAlign: "left"
+          });
+        })
+        .catch(error => {
+          this.setAttr("is_query_loading", false);
+          console.log(error);
+        });
+    },
+    deleteAnswer(index, row) {
+      this.delete_from_answers = true;
+      this.handleDelete(index, row);
+    },
+    createAnswer() {
+      this.$swal
+        .fire({
+          input: "textarea",
+          inputPlaceholder: "متن پیام خود را بنویسید",
+          showCancelButton: true,
+          title: `متن پیام خود را وارد کنید`,
+          icon: "warning",
+          confirmButtonColor:
+            "linear-gradient(to bottom left, #00f2c3, #0098f0)",
+          confirmButtonColor: "#0098f0",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "ثبت پاسخ",
+          cancelButtonText: "منصرف شدم"
+        })
+        .then(({ value }) => {
+          if (value) {
+            this.setAttr("is_query_loading", true);
+
+            axios
+              .post(`/graphql/auth`, {
+                query: `mutation {
+              create: ${voca.camelCase(`create ${this.type}`)} (
+                ${this.type === "comment" ? "parent_id" : "question_id"}: ${
+                  this.showing_info.id
+                },
                 message: "${value}"
               ) {
                 id
@@ -490,180 +526,201 @@ export default {
                 updated_at
               }
             }`
-          })
-          .then(({data})=> {
-            this.setAttr('is_query_loading', false)
-            this.showing_info.answers.unshift(data.data.create)
+              })
+              .then(({ data }) => {
+                this.setAttr("is_query_loading", false);
+                this.showing_info.answers.unshift(data.data.create);
 
-            this.$swal.fire({
-              title: `ثبت شد`,
-              text: `پاسخ شما با موفقیت ثبت شد`,
-              type: 'success',
-              timer: 1000,
-              showConfirmButton: false,
-            })
-          })
-          .catch(this.errorResolver)
-        }
-      })
+                this.$swal.fire({
+                  title: `ثبت شد`,
+                  text: `پاسخ شما با موفقیت ثبت شد`,
+                  icon: "success",
+                  timer: 1000,
+                  showConfirmButton: false
+                });
+              })
+              .catch(this.errorResolver);
+          }
+        });
     },
-    afterDelete(index)
-    {
-      if ( this.delete_from_answers )
-      {
-        this.showing_info.answers.splice(index, 1)
-        this.delete_from_answers = false
-      }
-      else
-      {
-        this.data().splice(index, 1)
-        this.setData( this.data() )
-        
-        this.setAttr('counts', {
-          total: this.attr('counts').total - 1,
-          trash: this.attr('counts').trash + 1,
-        })
+    afterDelete(index) {
+      if (this.delete_from_answers) {
+        this.showing_info.answers.splice(index, 1);
+        this.delete_from_answers = false;
+      } else {
+        this.data().splice(index, 1);
+        this.setData(this.data());
+
+        this.setAttr("counts", {
+          total: this.attr("counts").total - 1,
+          trash: this.attr("counts").trash + 1
+        });
       }
     },
     accept_multiple() {
-      this.$swal.fire({
-        title: `برای ${this.acceptType ? 'تایید' : 'رد'} ${this.label} های انتخاب شده مطمئن هستید ؟`,
-        text: `در صورت ${this.acceptType ? 'تایید' : 'رد'} کردن ، تمامی ${this.label} های انتخاب شده به حالت ${this.acceptType ? 'تایید' : 'رد'} شده درخواهند آمد !`,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: 'linear-gradient(to bottom left, #00f2c3, #0098f0)',
-        confirmButtonColor: '#0098f0',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'بله ، مطمئنم !',
-        cancelButtonText: 'نه ، اشتباه شده'
-      }).then((result) => {
-        if (result.value) {
-          this.setAttr('is_query_loading', true)
+      this.$swal
+        .fire({
+          title: `برای ${this.acceptType ? "تایید" : "رد"} ${
+            this.label
+          } های انتخاب شده مطمئن هستید ؟`,
+          text: `در صورت ${this.acceptType ? "تایید" : "رد"} کردن ، تمامی ${
+            this.label
+          } های انتخاب شده به حالت ${
+            this.acceptType ? "تایید" : "رد"
+          } شده درخواهند آمد !`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor:
+            "linear-gradient(to bottom left, #00f2c3, #0098f0)",
+          confirmButtonColor: "#0098f0",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "بله ، مطمئنم !",
+          cancelButtonText: "نه ، اشتباه شده"
+        })
+        .then(result => {
+          if (result.value) {
+            this.setAttr("is_query_loading", true);
 
-          var ids = [];
-          this.attr('selected_items').forEach( item => {
-            ids = [...ids, this.data()[item].id]
-          })
+            var ids = [];
+            this.attr("selected_items").forEach(item => {
+              ids = [...ids, this.data()[item].id];
+            });
 
-          axios.post(`/graphql/auth`, {
-            query: `
+            axios
+              .post(`/graphql/auth`, {
+                query: `
               mutation {
-                ${ voca.camelCase(`accept ${this.type}`) } (ids: [${ids.join(',')}], status: ${this.acceptType}) {
+                ${voca.camelCase(`accept ${this.type}`)} (ids: [${ids.join(
+                  ","
+                )}], status: ${this.acceptType}) {
                   status
                   message
                 }
               }
             `
-          })
-          .then(({data})=> {
-            this.setAttr('is_query_loading', false)
-
-            let used_status = this.acceptType;
-            this.attr('selected_items').forEach(index => {
-              if ( this.data()[index].is_accept != used_status )
-                this.$store.commit('setInactiveComments', used_status ? this.$store.state.inactive_comments - 1 : this.$store.state.inactive_comments + 1)
-
-              this.data()[index].is_accept = used_status
-              this.data()[index].updated_at = moment().format('YYYY-M-D HH:mm:ss')
-            });
-
-            this.setAttr('selected_items', [], true)
-            this.$refs.datatable.selected_items = [];
-
-            this.$swal.fire({
-              title: `${this.acceptType ? 'تایید' : 'رد'} شدند`,
-              text: `${this.label} هایی که انتخاب کردید با موفقیت ${this.acceptType ? 'تایید' : 'رد'} شدند :)`,
-              type: 'success',
-              timer: 1000,
-              showConfirmButton: false,
-            })
-
-          })
-          .catch(error => {
-            this.setAttr('is_query_loading', false)
-
-            if (error.response) {
-              this.$swal.fire({
-                title: 'خطایی رخ داد !',
-                text: error.response.data.message,
-                type: 'error',
-                timer: 5000,
-                confirmButtonText: 'بسیار خب :('
               })
-            } else {
-              console.log(error)
-            }
-          });
-        }
-      })
-    },
-    info(index, row)
-    {
-      this.setAttr('is_query_loading', true)
+              .then(({ data }) => {
+                this.setAttr("is_query_loading", false);
 
-      axios.post('/graphql/auth', {
-        query: `{ singleData: ${this.type} (id: ${row.id}) { ${this.fullInfoQuery} } }`
-      }).then(({data}) => {
-        this.showing_info = { ...row, ...data.data.singleData };
-        this.showing_info.index = index;
-        this.is_info_dialog_open = true;
-        
-        this.setAttr('is_query_loading', false)
-      })
+                let used_status = this.acceptType;
+                this.attr("selected_items").forEach(index => {
+                  if (this.data()[index].is_accept != used_status)
+                    this.$store.commit(
+                      "setInactiveComments",
+                      used_status
+                        ? this.$store.state.inactive_comments - 1
+                        : this.$store.state.inactive_comments + 1
+                    );
+
+                  this.data()[index].is_accept = used_status;
+                  this.data()[index].updated_at = moment().format(
+                    "YYYY-M-D HH:mm:ss"
+                  );
+                });
+
+                this.setAttr("selected_items", [], true);
+                this.$refs.datatable.selected_items = [];
+
+                this.$swal.fire({
+                  title: `${this.acceptType ? "تایید" : "رد"} شدند`,
+                  text: `${this.label} هایی که انتخاب کردید با موفقیت ${
+                    this.acceptType ? "تایید" : "رد"
+                  } شدند :)`,
+                  icon: "success",
+                  timer: 1000,
+                  showConfirmButton: false
+                });
+              })
+              .catch(error => {
+                this.setAttr("is_query_loading", false);
+
+                if (error.response) {
+                  this.$swal.fire({
+                    title: "خطایی رخ داد !",
+                    text: error.response.data.message,
+                    icon: "error",
+                    timer: 5000,
+                    confirmButtonText: "بسیار خب :("
+                  });
+                } else {
+                  console.log(error);
+                }
+              });
+          }
+        });
     },
+    info(index, row) {
+      this.setAttr("is_query_loading", true);
+
+      axios
+        .post("/graphql/auth", {
+          query: `{ singleData: ${this.type} (id: ${row.id}) { ${this.fullInfoQuery} } }`
+        })
+        .then(({ data }) => {
+          this.showing_info = { ...row, ...data.data.singleData };
+          this.showing_info.index = index;
+          this.is_info_dialog_open = true;
+
+          this.setAttr("is_query_loading", false);
+        });
+    }
   },
   computed: {
     acceptType() {
-      var accept_count = 0, rejact_count = 0;
+      var accept_count = 0,
+        rejact_count = 0;
 
-      this.attr('selected_items').forEach(index => {
-        if ( this.data()[index].is_accept )
-          ++accept_count
-        else
-          ++rejact_count
+      this.attr("selected_items").forEach(index => {
+        if (this.data()[index].is_accept) ++accept_count;
+        else ++rejact_count;
       });
 
       return accept_count <= rejact_count;
     },
 
     getFields() {
-      if ( this.type === 'question_and_answer' ) {
+      if (this.type === "question_and_answer") {
         return [
           {
-            field: 'writer',
-            label: 'مقاله / محصول',
-            icon: 'icon-badge'
-          }, {
-            field: 'title',
-            label: 'عنوان',
-            icon: 'icon-caps-small'
-          }, {
-            field: 'status',
-            label: 'وضعیت',
-            icon: 'icon-refresh-02'
+            field: "writer",
+            label: "مقاله / محصول",
+            icon: "icon-badge"
+          },
+          {
+            field: "title",
+            label: "عنوان",
+            icon: "icon-caps-small"
+          },
+          {
+            field: "status",
+            label: "وضعیت",
+            icon: "icon-refresh-02"
           }
-        ]
+        ];
       }
 
-      return [        
+      return [
         {
-          field: 'writer',
-          label: 'مقاله / کاربر',
-          icon: 'icon-badge'
-        }, {
-          field: 'title',
-          label: 'عنوان',
-          icon: 'icon-caps-small'
-        }, {
-          field: 'message',
-          label: 'پیام',
-          icon: 'icon-paper'
-        }, {
-          field: 'status',
-          label: 'وضعیت',
-          icon: 'icon-refresh-02'
+          field: "writer",
+          label: "مقاله / کاربر",
+          icon: "icon-badge"
+        },
+        {
+          field: "title",
+          label: "عنوان",
+          icon: "icon-caps-small"
+        },
+        {
+          field: "message",
+          label: "پیام",
+          icon: "icon-paper"
+        },
+        {
+          field: "status",
+          label: "وضعیت",
+          icon: "icon-refresh-02"
         }
-      ]
+      ];
     },
 
     allQuery() {
@@ -682,10 +739,10 @@ export default {
             file_name
             thumb
           }
-        }`
-    },
-  },
-}
+        }`;
+    }
+  }
+};
 </script>
 
 <style>
@@ -710,7 +767,8 @@ export default {
   width: 100%;
   float: right;
 }
-.info-cell a, .info-cell p {
+.info-cell a,
+.info-cell p {
   float: right;
 }
 

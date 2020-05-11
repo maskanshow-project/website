@@ -263,7 +263,7 @@ export default {
           } کردن ، ملک مورد نظر به حالت ${
             status ? "تایید" : "رد"
           } شده درخواهد آمد !`,
-          type: "warning",
+          icon: "warning",
           showCancelButton: true,
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
@@ -278,7 +278,7 @@ export default {
               this.$swal
                 .fire({
                   title: `علت شما برای رد کردن این ملک چیست ؟`,
-                  type: "warning",
+                  icon: "warning",
                   input: "textarea",
                   inputPlaceholder: "در این قسمت علت خود را بنویسید ...",
                   showCancelButton: true,
@@ -383,7 +383,7 @@ export default {
           } کردن ، تمامی ملک های انتخاب شده به حالت ${
             status ? "تایید" : "رد"
           } شده درخواهند آمد !`,
-          type: "warning",
+          icon: "warning",
           showCancelButton: true,
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
@@ -398,7 +398,7 @@ export default {
               this.$swal
                 .fire({
                   title: `علت شما برای رد کردن ملک ها چیست ؟`,
-                  type: "warning",
+                  icon: "warning",
                   input: "textarea",
                   inputPlaceholder: "در این قسمت علت خود را بنویسید ...",
                   showCancelButton: true,
@@ -455,7 +455,7 @@ export default {
                           text: `${this.label} هایی که انتخاب کردید با موفقیت ${
                             status ? "تایید" : "رد"
                           } شدند :)`,
-                          type: "success",
+                          icon: "success",
                           timer: 1000,
                           showConfirmButton: false
                         });
@@ -467,7 +467,7 @@ export default {
                           this.$swal.fire({
                             title: "خطایی رخ داد !",
                             text: error.response.data.message,
-                            type: "error",
+                            icon: "error",
                             timer: 5000,
                             confirmButtonText: "بسیار خب :("
                           });
@@ -520,7 +520,7 @@ export default {
                     text: `${this.label} هایی که انتخاب کردید با موفقیت ${
                       status ? "تایید" : "رد"
                     } شدند :)`,
-                    type: "success",
+                    icon: "success",
                     timer: 1000,
                     showConfirmButton: false
                   });
@@ -532,7 +532,7 @@ export default {
                     this.$swal.fire({
                       title: "خطایی رخ داد !",
                       text: error.response.data.message,
-                      type: "error",
+                      icon: "error",
                       timer: 5000,
                       confirmButtonText: "بسیار خب :("
                     });

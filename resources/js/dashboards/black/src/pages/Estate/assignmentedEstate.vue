@@ -166,7 +166,7 @@ export default {
         .fire({
           title: `برای تایید واگذاری ملک مورد نظر مطمئن هستید ؟`,
           text: `در صورت تایید کردن ، ملک مورد نظر انتخاب شده به حالت تایید شده درخواهند آمد !`,
-          type: "warning",
+          icon: "warning",
           showCancelButton: true,
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
@@ -232,7 +232,7 @@ export default {
         .fire({
           title: `برای تایید واگذاری ملک های مورد نظر مطمئن هستید ؟`,
           text: `در صورت تایید کردن ، ملک های انتخاب شده به حالت تایید شده درخواهند آمد !`,
-          type: "warning",
+          icon: "warning",
           showCancelButton: true,
           confirmButtonColor:
             "linear-gradient(to bottom left, #00f2c3, #0098f0)",
@@ -307,7 +307,7 @@ export default {
                   this.$swal.fire({
                     title: "خطایی رخ داد !",
                     text: error.response.data.message,
-                    type: "error",
+                    icon: "error",
                     timer: 5000,
                     confirmButtonText: "بسیار خب :("
                   });
