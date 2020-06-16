@@ -56,7 +56,7 @@
         "vue-axios": "^2.1.5",
         "vue-browser-geolocation": "^1.8.0",
         "vue-countup-v2": "^4.0.0",
-        "vue-material": "^1.0.0-beta-13",
+        "vue-material": "^1.0.0-beta-14",
         "vue-meta": "^2.2.0",
         "vue-persian-datetime-picker": "^2.0.1",
         "vue-router": "^3.0.6",

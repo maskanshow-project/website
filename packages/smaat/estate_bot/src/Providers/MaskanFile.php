@@ -232,7 +232,7 @@ class MaskanFile extends EstateBot
             'North' => '', 'South' => '', 'TwoCorners' => '', 'TowWay' => '', 'Oriental' => '', 'Western' => '', 'ThreeCorners' => '',
             'Document' => '', 'Total' => '', 'Half' => '', 'Proxy' => '', 'Promise' => '', 'Asansor' => '', 'Parking' => '',
             'HozoreMalek' => '', 'DarBarghi' => '', 'Teras' => '', 'Anbari' => '', 'malek' => '', 'tel' => '',
-            'addressWord' => '', 'date' => '', 'RegisterType' => ''
+            'addressWord' => '', 'date' => '', 'RegisterType' => '', 'Darbast' => '', 'EmtiazatMostaghel' => ''
         ]);
 
         $links = collect(explode('[&]', $res->json()['d']))->map(function ($i) {

@@ -11,7 +11,7 @@ const mix = require("laravel-mix");
  |
  */
 
-mix.js("resources/js/dashboards/black/src/main.js", "public/js/main-1.3.1.js");
+mix.js("resources/js/dashboards/black/src/main.js", "public/js/main-1.3.2.js");
 
 // mix.js("resources/js/website/app.js", "public/js/app-1.3.1.js")
 //     .extract(["vue"])

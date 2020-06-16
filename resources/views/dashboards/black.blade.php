@@ -43,6 +43,6 @@
             <App></App>
         </div>
 
-        <script src="{{ asset('js/main-1.3.1.js') }}"></script>
+        <script src="{{ asset('js/main-1.3.2.js') }}"></script>
     </body>
 </html>

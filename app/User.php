@@ -57,7 +57,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
      * @var boolean
      */
     protected static $create_uuid = true;
-    
+
     /**
      * The relations that must have soft deleted with with model.
      *
@@ -96,7 +96,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
 
     /**
      * Searchable rules.
-     * 
+     *
      * Columns and their priority in search results.
      * Columns with higher values are more important.
      * Columns with equal values have equal importance.
@@ -117,7 +117,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
             // 'brand_translations' => ['brands.id','brand_translations.brand_id'],
         ],
     ];
-    
+
     /**
      * Attributes to include in the Audit.
      *
@@ -132,7 +132,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         'password',
         'national_code',
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -163,11 +163,11 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         'deleted_at',
     ];
 
-    
+
     /****************************************
      **         Scopes & Mutators
      ***************************************/
-    
+
     /**
      * Get the user's full name.
      *
@@ -182,7 +182,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
     /****************************************
      **             Relations
      ***************************************/
-    
+
     /**
      * Get all the active sessions of the user
      */

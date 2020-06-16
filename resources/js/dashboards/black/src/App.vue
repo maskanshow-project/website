@@ -5,7 +5,10 @@
       <side-bar
         title="SmaaT"
         logo="/images/logo.jpg"
-        :style="{background: 'linear-gradient(0deg, #f4ecff, #fff)', width: is_collapsed ? '64px' : '230px' }"
+        :style="{
+          background: 'linear-gradient(0deg, #f4ecff, #fff)',
+          width: is_collapsed ? '64px' : '230px'
+        }"
       >
         <!-- :style="{background: 'linear-gradient(0deg, #7F7FD5, #86A8E7, #91EAE4)', width: is_collapsed ? '64px' : '230px' }" -->
         <template slot="links">
@@ -20,11 +23,17 @@
             class="el-menu-vertical-demo"
           >
             <el-menu-item class="main" index="0">
-              <sidebar-link to="/panel" name="داشبورد" icon="tim-icons icon-tv-2 dashboard-icon" />
+              <sidebar-link
+                to="/panel"
+                name="داشبورد"
+                icon="tim-icons icon-tv-2 dashboard-icon"
+              />
             </el-menu-item>
             <el-submenu
               index="1"
-              v-if="canSeeMenu(['assignment', 'estate_type', 'feature', 'spec'])"
+              v-if="
+                canSeeMenu(['assignment', 'estate_type', 'feature', 'spec'])
+              "
             >
               <template slot="title">
                 <i class="tim-icons icon-tie-bow feature-icon"></i>
@@ -45,7 +54,11 @@
                 />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('feature')">
-                <sidebar-link to="/panel/feature" name="امکانات املاک" icon="tim-icons icon-app" />
+                <sidebar-link
+                  to="/panel/feature"
+                  name="امکانات املاک"
+                  icon="tim-icons icon-app"
+                />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('spec')">
                 <sidebar-link
@@ -55,7 +68,10 @@
                 />
               </el-menu-item>
             </el-submenu>
-            <el-submenu index="2" v-if="canSeeMenu(['article', 'comment', 'subject'])">
+            <el-submenu
+              index="2"
+              v-if="canSeeMenu(['article', 'comment', 'subject'])"
+            >
               <template slot="title">
                 <i class="tim-icons icon-book-bookmark blog-icon"></i>
                 <span>
@@ -64,7 +80,8 @@
                     <span
                       v-if="$store.state.inactive_comments !== 0"
                       class="link-alert badge badge-danger mr-2"
-                    >{{ $store.state.inactive_comments }}</span>
+                      >{{ $store.state.inactive_comments }}</span
+                    >
                   </transition>
                 </span>
               </template>
@@ -84,7 +101,11 @@
                 />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('subject')">
-                <sidebar-link to="/panel/subject" name="موضوعات" icon="tim-icons icon-tag" />
+                <sidebar-link
+                  to="/panel/subject"
+                  name="موضوعات"
+                  icon="tim-icons icon-tag"
+                />
               </el-menu-item>
             </el-submenu>
             <el-submenu index="3">
@@ -94,19 +115,30 @@
                   املاک
                   <transition name="fade">
                     <span
-                      v-if="$store.state.estate.counts.inactive_estate.total + $store.state.estate.counts.assignmented_estate.total !== 0"
+                      v-if="
+                        $store.state.estate.counts.inactive_estate.total +
+                          $store.state.estate.counts.assignmented_estate
+                            .total !==
+                          0
+                      "
                       class="link-alert badge badge-danger mr-2"
-                    >{{ $store.state.estate.counts.inactive_estate.total + $store.state.estate.counts.assignmented_estate.total }}</span>
+                      >{{
+                        $store.state.estate.counts.inactive_estate.total +
+                          $store.state.estate.counts.assignmented_estate.total
+                      }}</span
+                    >
                   </transition>
                 </span>
               </template>
               <el-menu-item
                 v-if="
-                  $store.state.permissions.includes('read-estate') || (
-                     $store.state.me.remaining_registered_count > 0
-                  && $store.state.me.validity_end_at
-                  && !moment($store.state.me.validity_end_at).isBefore( moment() )
-                )"
+                  $store.state.permissions.includes('read-estate') ||
+                    ($store.state.me.remaining_registered_count > 0 &&
+                      $store.state.me.validity_end_at &&
+                      !moment($store.state.me.validity_end_at).isBefore(
+                        moment()
+                      ))
+                "
               >
                 <sidebar-link
                   to="/panel/estate/create"
@@ -114,7 +146,9 @@
                   icon="tim-icons icon-simple-add"
                 />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('read-estate')">
+              <el-menu-item
+                v-if="$store.state.permissions.includes('read-estate')"
+              >
                 <sidebar-link
                   to="/panel/estate"
                   name="کلیه املاک"
@@ -126,7 +160,11 @@
                   to="/panel/estate/mine"
                   name="ملک های شما"
                   icon="tim-icons icon-single-02"
-                  :alert="!$store.state.permissions.includes('read-estate') ? $store.state.estate.counts.inactive_estate.total : 0"
+                  :alert="
+                    !$store.state.permissions.includes('read-estate')
+                      ? $store.state.estate.counts.inactive_estate.total
+                      : 0
+                  "
                 />
               </el-menu-item>
               <el-menu-item>
@@ -136,7 +174,9 @@
                   icon="tim-icons icon-pin"
                 />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('active-estate')">
+              <el-menu-item
+                v-if="$store.state.permissions.includes('active-estate')"
+              >
                 <sidebar-link
                   to="/panel/estate/inactive"
                   name="ملک های تایید نشده"
@@ -144,7 +184,11 @@
                   :alert="$store.state.estate.counts.inactive_estate.total"
                 />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('accept-assignment-estate')">
+              <el-menu-item
+                v-if="
+                  $store.state.permissions.includes('accept-assignment-estate')
+                "
+              >
                 <sidebar-link
                   to="/panel/estate/assignmented"
                   name="ملک های واگذار شده"
@@ -153,16 +197,32 @@
                 />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('office')">
-                <sidebar-link to="/panel/office" name="دفاتر املاک" icon="tim-icons icon-bank" />
+                <sidebar-link
+                  to="/panel/office"
+                  name="دفاتر املاک"
+                  icon="tim-icons icon-bank"
+                />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('label')">
-                <sidebar-link to="/panel/label" name="لیبل وضعیت ملک" icon="tim-icons icon-tag" />
+                <sidebar-link
+                  to="/panel/label"
+                  name="لیبل وضعیت ملک"
+                  icon="tim-icons icon-tag"
+                />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('area')">
-                <sidebar-link to="/panel/area" name="مناطق" icon="tim-icons icon-map-big" />
+                <sidebar-link
+                  to="/panel/area"
+                  name="مناطق"
+                  icon="tim-icons icon-map-big"
+                />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('street')">
-                <sidebar-link to="/panel/street" name="خیابان ها" icon="tim-icons icon-square-pin" />
+                <sidebar-link
+                  to="/panel/street"
+                  name="خیابان ها"
+                  icon="tim-icons icon-square-pin"
+                />
               </el-menu-item>
             </el-submenu>
             <el-submenu index="4">
@@ -173,45 +233,85 @@
               <el-menu-item>
                 <sidebar-link
                   to="/panel/payment"
-                  :name="$store.state.permissions.includes('read-payment') ? 'گزارشات پرداخت' : 'پرداختی های شما'"
+                  :name="
+                    $store.state.permissions.includes('read-payment')
+                      ? 'گزارشات پرداخت'
+                      : 'پرداختی های شما'
+                  "
                   icon="tim-icons icon-credit-card"
                 />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('read-promocode')">
-                <sidebar-link to="/panel/promocode" name="کد تخفیف" icon="tim-icons icon-scissors" />
+              <el-menu-item
+                v-if="$store.state.permissions.includes('read-promocode')"
+              >
+                <sidebar-link
+                  to="/panel/promocode"
+                  name="کد تخفیف"
+                  icon="tim-icons icon-scissors"
+                />
               </el-menu-item>
               <el-menu-item v-if="hasPermissions('plan')">
-                <sidebar-link to="/panel/plan" name="پلن های مالی" icon="tim-icons icon-coins" />
+                <sidebar-link
+                  to="/panel/plan"
+                  name="پلن های مالی"
+                  icon="tim-icons icon-coins"
+                />
               </el-menu-item>
             </el-submenu>
             <el-submenu
               index="5"
               v-if="
-                 $store.state.permissions.includes('read-user')
-              || $store.state.permissions.includes('read-role')
-              || $store.state.permissions.includes('read-blacklist_phone_number')
-              || $store.state.permissions.includes('read-message')
-            "
+                $store.state.permissions.includes('read-user') ||
+                  $store.state.permissions.includes('read-role') ||
+                  $store.state.permissions.includes(
+                    'read-blacklist_phone_number'
+                  ) ||
+                  $store.state.permissions.includes('read-message')
+              "
             >
               <template slot="title">
                 <i class="tim-icons icon-single-02 user-icon"></i>
                 <span>کاربران</span>
               </template>
-              <el-menu-item v-if="$store.state.permissions.includes('read-user')">
-                <sidebar-link to="/panel/user" name="کاربران" icon="tim-icons icon-single-02" />
+              <el-menu-item
+                v-if="$store.state.permissions.includes('read-user')"
+              >
+                <sidebar-link
+                  to="/panel/user"
+                  name="کاربران"
+                  icon="tim-icons icon-single-02"
+                />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('read-role')">
-                <sidebar-link to="/panel/role" name="نقش ها" icon="tim-icons icon-tap-02" />
+              <el-menu-item
+                v-if="$store.state.permissions.includes('read-role')"
+              >
+                <sidebar-link
+                  to="/panel/role"
+                  name="نقش ها"
+                  icon="tim-icons icon-tap-02"
+                />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('read-blacklist_phone_number')">
+              <el-menu-item
+                v-if="
+                  $store.state.permissions.includes(
+                    'read-blacklist_phone_number'
+                  )
+                "
+              >
                 <sidebar-link
                   to="/panel/blacklist_phone_number"
                   name="تلفن های لیست سیاه"
                   icon="tim-icons icon-lock-circle"
                 />
               </el-menu-item>
-              <el-menu-item v-if="$store.state.permissions.includes('read-message')">
-                <sidebar-link to="/panel/message" name="پیام ها" icon="tim-icons icon-email-85" />
+              <el-menu-item
+                v-if="$store.state.permissions.includes('read-message')"
+              >
+                <sidebar-link
+                  to="/panel/message"
+                  name="پیام ها"
+                  icon="tim-icons icon-email-85"
+                />
               </el-menu-item>
             </el-submenu>
             <el-submenu index="6">
@@ -234,13 +334,20 @@
                 />
               </el-menu-item>
             </el-submenu>
-            <el-submenu index="7" v-if="$store.state.permissions.includes('manage-estate-bot')">
+            <el-submenu
+              index="7"
+              v-if="$store.state.permissions.includes('manage-estate-bot')"
+            >
               <template slot="title">
                 <i class="tim-icons icon-vector robot-icon"></i>
                 <span>ربات ثبت ملک</span>
               </template>
               <el-menu-item>
-                <sidebar-link to="/panel/robot/estates" name="گزارشات" icon="tim-icons icon-bank" />
+                <sidebar-link
+                  to="/panel/robot/estates"
+                  name="گزارشات"
+                  icon="tim-icons icon-bank"
+                />
               </el-menu-item>
               <el-menu-item>
                 <sidebar-link
@@ -393,6 +500,15 @@ export default {
 }
 .main-panel {
   border-top: none !important;
+}
+
+.md-dialog {
+  max-height: 100% !important;
+  background-color: transparent !important;
+}
+
+.md-dialog .md-dialog-container {
+  background-color: #fff !important;
 }
 
 #particles-js {

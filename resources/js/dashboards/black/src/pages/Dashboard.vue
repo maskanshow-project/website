@@ -4,8 +4,8 @@
       v-if="is_loaded"
       class="mb-4"
       style="height: 140px"
-      :gradient-color="['red', 'blue' , 'green']"
-      :gradient-stops="[ 1, 0.4, 0 ]"
+      :gradient-color="['red', 'blue', 'green']"
+      :gradient-stops="[1, 0.4, 0]"
       :chart-data="charts.chartData"
       :extra-options="charts.extraOptions"
     ></line-chart>
@@ -17,7 +17,9 @@
             class="tim-icons dashboard-header-cards-icon icon-bank"
             :style="{ background: '#ff8f8f', color: '#ff3d3d' }"
           ></i>
-          <h5 class="card-category" :style="{ color: '#ff3d3d' }">تعداد ملک بازدید شده</h5>
+          <h5 class="card-category" :style="{ color: '#ff3d3d' }">
+            تعداد ملک بازدید شده
+          </h5>
           <h3 class="card-title">
             <ICountUp
               v-if="can('see-details-estate')"
@@ -31,10 +33,9 @@
             />
             <span v-else>نا مشخص</span>
           </h3>
-          <p
-            class="card-text text-muted"
-            :style="{fontSize: '10px'}"
-          >تعداد ملک هایی که تا کنون بازدید کرده اید</p>
+          <p class="card-text text-muted" :style="{ fontSize: '10px' }">
+            تعداد ملک هایی که تا کنون بازدید کرده اید
+          </p>
         </card>
       </div>
 
@@ -44,7 +45,9 @@
             class="tim-icons dashboard-header-cards-icon icon-chart-bar-32"
             :style="{ background: '#85ffdb', color: '#20c997' }"
           ></i>
-          <h5 class="card-category" :style="{ color: '#20c997' }">تعداد آگهی ثبت شده</h5>
+          <h5 class="card-category" :style="{ color: '#20c997' }">
+            تعداد آگهی ثبت شده
+          </h5>
           <h3 class="card-title">
             <ICountUp
               :endVal="this.$store.state.me.registered_estate_count"
@@ -56,10 +59,9 @@
               }"
             />
           </h3>
-          <p
-            class="card-text text-muted"
-            :style="{fontSize: '10px'}"
-          >تعداد آگهی هایی که تا کنون ثبت کرده اید</p>
+          <p class="card-text text-muted" :style="{ fontSize: '10px' }">
+            تعداد آگهی هایی که تا کنون ثبت کرده اید
+          </p>
         </card>
       </div>
 
@@ -69,7 +71,9 @@
             class="tim-icons dashboard-header-cards-icon icon-bulb-63"
             :style="{ background: '#fbc190', color: '#fd7e14' }"
           ></i>
-          <h5 class="card-category" :style="{ color: '#fd7e14' }">تعداد ملک قابل بازدید</h5>
+          <h5 class="card-category" :style="{ color: '#fd7e14' }">
+            تعداد ملک قابل بازدید
+          </h5>
           <h3 class="card-title">
             <ICountUp
               v-if="can('see-details-estate')"
@@ -83,10 +87,9 @@
             />
             <span v-else>نامحدود</span>
           </h3>
-          <p
-            class="card-text text-muted"
-            :style="{fontSize: '10px'}"
-          >تعداد ملک هایی که میتوانید بازدید کنید</p>
+          <p class="card-text text-muted" :style="{ fontSize: '10px' }">
+            تعداد ملک هایی که میتوانید بازدید کنید
+          </p>
         </card>
       </div>
 
@@ -96,7 +99,9 @@
             class="tim-icons dashboard-header-cards-icon icon-pencil"
             :style="{ background: '#7cb6f5', color: '#007bff' }"
           ></i>
-          <h5 class="card-category" :style="{ color: '#007bff' }">تعداد آگهی قابل ثبت</h5>
+          <h5 class="card-category" :style="{ color: '#007bff' }">
+            تعداد آگهی قابل ثبت
+          </h5>
           <h3 class="card-title">
             <ICountUp
               v-if="can('create-estate')"
@@ -110,10 +115,9 @@
             />
             <span v-else>نامحدود</span>
           </h3>
-          <p
-            class="card-text text-muted"
-            :style="{fontSize: '10px'}"
-          >تعداد آگهی که میتوانید ثبت کنید</p>
+          <p class="card-text text-muted" :style="{ fontSize: '10px' }">
+            تعداد آگهی که میتوانید ثبت کنید
+          </p>
         </card>
       </div>
     </div>
@@ -127,7 +131,11 @@
         <span class="d-block mb-2" :style="{ fontSize: '18px' }">
           <b>هدف ما رضایت هرچه بیشتر شماست</b>
         </span>
-        {{ isBefore($store.state.me.validity_end_at) ? 'پلن شما منقضی شده است ، از قسمت پایین همین صفحه میتوانید اعتبار خود را شارژ نمایید' : 'زمان انقضاء پلن مالی شما در ساعت شمار رو به رو مشخص شده است' }}
+        {{
+          isBefore($store.state.me.validity_end_at)
+            ? "پلن شما منقضی شده است ، از قسمت پایین همین صفحه میتوانید اعتبار خود را شارژ نمایید"
+            : "زمان انقضاء پلن مالی شما در ساعت شمار رو به رو مشخص شده است"
+        }}
       </div>
 
       <flip-clock
@@ -136,7 +144,7 @@
           label: false,
           digit: expirationTime,
           countdown: true,
-          clockFace: 'DailyCounter',
+          clockFace: 'DailyCounter'
         }"
       />
 
@@ -146,12 +154,15 @@
           label: false,
           digit: 0,
           countdown: true,
-          clockFace: 'DailyCounter',
+          clockFace: 'DailyCounter'
         }"
       />
     </card>
 
-    <div class="row text-right ml-0 w-100 animated bounceInRight delay-last" dir="rtl">
+    <div
+      class="row text-right ml-0 w-100 animated bounceInRight delay-last"
+      dir="rtl"
+    >
       <base-alert
         v-for="message in messages"
         :key="message.id"
@@ -170,11 +181,14 @@
       <div class="col-md-12 text-right">
         <h2 class="animated bounceInRight delay-first mb-0">
           آخرین مقالات
-          <i class="tim-icons icon-single-copy-04" :style="{fontSize: '20px'}"></i>
+          <i
+            class="tim-icons icon-single-copy-04"
+            :style="{ fontSize: '20px' }"
+          ></i>
         </h2>
-        <h6
-          class="text-muted animated bounceInRight delay-secound"
-        >آخرین مقالاتی که در وبلاگ ثبت کرده اید</h6>
+        <h6 class="text-muted animated bounceInRight delay-secound">
+          آخرین مقالاتی که در وبلاگ ثبت کرده اید
+        </h6>
       </div>
     </div>
 
@@ -196,11 +210,15 @@
             مطالعه در{{ article.reading_time }} دقیقه
           </span>
         </h4>
-        <p class="card-text text-muted">{{ article.description | truncate(100) }}</p>
+        <p class="card-text text-muted">
+          {{ article.description | truncate(100) }}
+        </p>
 
         <transition-group name="list">
           <span
-            v-for="item in article.subjects.filter( (category, index) => index < 3)"
+            v-for="item in article.subjects.filter(
+              (category, index) => index < 3
+            )"
             :key="item.id"
             class="badge badge-default ml-1 hvr-grow-shadow hvr-icon-grow"
           >
@@ -210,7 +228,7 @@
 
           <el-dropdown
             v-if="article.subjects.length > 3"
-            :key="article.subjects.map((c) => c.id).join(',')"
+            :key="article.subjects.map(c => c.id).join(',')"
           >
             <span class="el-dropdown-link badge badge-default">
               باقی گروه ها
@@ -218,9 +236,12 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
-                v-for="item in article.subjects.filter( (category, index) => index < 3)"
+                v-for="item in article.subjects.filter(
+                  (category, index) => index < 3
+                )"
                 :key="item.id"
-              >{{ item.title }}</el-dropdown-item>
+                >{{ item.title }}</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </transition-group>
@@ -231,11 +252,14 @@
       <div class="col-md-12 text-right">
         <h2 class="animated bounceInRight delay-first mb-0">
           آخرین املاک نشان شده
-          <i class="tim-icons icon-single-copy-04" :style="{fontSize: '20px'}"></i>
+          <i
+            class="tim-icons icon-single-copy-04"
+            :style="{ fontSize: '20px' }"
+          ></i>
         </h2>
-        <h6
-          class="text-muted animated bounceInRight delay-secound"
-        >آخرین املاکی که در وبسایت نشان کرده اید</h6>
+        <h6 class="text-muted animated bounceInRight delay-secound">
+          آخرین املاکی که در وبسایت نشان کرده اید
+        </h6>
       </div>
     </div>
 
@@ -243,7 +267,9 @@
       <card v-for="favorite in favorites" :key="favorite.id" class="text-right">
         <!-- <img slot="image" class="card-img-top" :src="favorite.image ? article.image.small : '/images/placeholder.png'" alt="article image"/> -->
         <h4 class="card-title">{{ favorite.title | truncate(60) }}</h4>
-        <p class="card-text text-muted">{{ favorite.description | truncate(100) }}</p>
+        <p class="card-text text-muted">
+          {{ favorite.description | truncate(100) }}
+        </p>
       </card>
     </div>
 
@@ -251,11 +277,14 @@
       <div class="col-md-12 text-right">
         <h2 class="animated bounceInRight delay-first mb-0">
           پلن های موجود
-          <i class="tim-icons icon-single-copy-04" :style="{fontSize: '20px'}"></i>
+          <i
+            class="tim-icons icon-single-copy-04"
+            :style="{ fontSize: '20px' }"
+          ></i>
         </h2>
-        <h6
-          class="text-muted animated bounceInRight delay-secound"
-        >پلن های موجود جهت افزایش اعتبار حساب</h6>
+        <h6 class="text-muted animated bounceInRight delay-secound">
+          پلن های موجود جهت افزایش اعتبار حساب
+        </h6>
       </div>
     </div>
 
@@ -268,16 +297,26 @@
       >
         <h2 class="card-title text-center">
           <b
-            :style="{ color: isLight(plan.color) ? darken(plan.color, .6) : lighten(plan.color, .6) }"
-          >{{ plan.title | truncate(10) }}</b>
+            :style="{
+              color: isLight(plan.color)
+                ? darken(plan.color, 0.6)
+                : lighten(plan.color, 0.6)
+            }"
+            >{{ plan.title | truncate(10) }}</b
+          >
 
-          <span :style="{ color: isLight(plan.color) ? '#6c757d' : '#ffffff', fontSize: '14px' }">
+          <span
+            :style="{
+              color: isLight(plan.color) ? '#6c757d' : '#ffffff',
+              fontSize: '14px'
+            }"
+          >
             (
             <span v-if="plan.credit_days_count === 30">ماهانه</span>
             <span v-else-if="plan.credit_days_count === 360">یکساله</span>
-            <span
-              v-else-if="plan.credit_days_count % 30 === 0"
-            >{{ plan.credit_days_count / 30 }} ماهه</span>
+            <span v-else-if="plan.credit_days_count % 30 === 0"
+              >{{ plan.credit_days_count / 30 }} ماهه</span
+            >
             <span v-else>{{ plan.credit_days_count }} روزه</span>
             )
           </span>
@@ -286,31 +325,49 @@
         <div class="plan-price text-center">
           <h2
             class="m-0"
-            :style="{ color: isLight(plan.color) ? darken(plan.color, .6) : lighten(plan.color, .6) }"
-          >{{ plan.price > 999999 ? plan.price / 1000000 : plan.price / 1000 }}</h2>
-          <span
-            :style="{ color: isLight(plan.color) ? '#6c757d' : '#ffffff' }"
-          >{{ plan.price > 999999 ? 'میلیون' : 'هزار' }} تومان</span>
+            :style="{
+              color: isLight(plan.color)
+                ? darken(plan.color, 0.6)
+                : lighten(plan.color, 0.6)
+            }"
+          >
+            {{ plan.price > 999999 ? plan.price / 1000000 : plan.price / 1000 }}
+          </h2>
+          <span :style="{ color: isLight(plan.color) ? '#6c757d' : '#ffffff' }"
+            >{{ plan.price > 999999 ? "میلیون" : "هزار" }} تومان</span
+          >
         </div>
 
         <p class="text-center mt-5">
           قابلیت مشاهده
           <span
-            :style="{ color: isLight(plan.color) ? darken(plan.color, .3) : plan.color }"
-          >{{ plan.visited_estate_count }}</span> ملک
+            :style="{
+              color: isLight(plan.color) ? darken(plan.color, 0.3) : plan.color
+            }"
+            >{{ plan.visited_estate_count }}</span
+          >
+          ملک
         </p>
         <p class="text-center">
           قابلیت ثبت
           <span
-            :style="{ color: isLight(plan.color) ? darken(plan.color, .3) : plan.color }"
-          >{{ plan.registered_estate_count }}</span> ملک
+            :style="{
+              color: isLight(plan.color) ? darken(plan.color, 0.3) : plan.color
+            }"
+            >{{ plan.registered_estate_count }}</span
+          >
+          ملک
         </p>
 
         <el-popover
           placement="top-end"
           width="250"
           trigger="hover"
-          :disabled="typeof plan.description === 'string' ? plan.description.length <= 120 : false"
+          :disabled="
+            typeof plan.description === 'string'
+              ? plan.description.length <= 120
+              : false
+          "
           :title="plan.title"
           :content="plan.description"
         >
@@ -318,7 +375,8 @@
             slot="reference"
             class="card-text text-muted text-center mt-3"
             :style="{ overflow: 'hidden', outline: 'none' }"
-          >{{ plan.description | truncate(120) }}</pre>
+            >{{ plan.description | truncate(120) }}</pre
+          >
         </el-popover>
 
         <div class="d-flex justify-content-center text-center mt-2">
@@ -328,8 +386,13 @@
             :style="{
               color: isLight(plan.color) ? '#555' : '#fff',
               borderRadius: '30px',
-              background: `linear-gradient(to right, ${plan.color}, ${darken(plan.color, .1)}) !important`,
-              boxShadow: `0px 5px 10px -4px ${plan.color}, 0px 4px 6px -5px #000 !important`
+              background: `linear-gradient(to right, ${plan.color}, ${darken(
+                plan.color,
+                0.1
+              )}) !important`,
+              boxShadow: `0px 5px 10px -4px ${
+                plan.color
+              }, 0px 4px 6px -5px #000 !important`
             }"
             class="pull-left buy-plan-button"
           >
@@ -342,16 +405,24 @@
           v-if="$store.state.me.plan && $store.state.me.plan.id == plan.id"
           class="badge badge-success plan-active-label"
           :style="{
-            background: isLight(plan.color) ? darken(plan.color, .6) : lighten(plan.color, .6),
+            background: isLight(plan.color)
+              ? darken(plan.color, 0.6)
+              : lighten(plan.color, 0.6),
             color: plan.color
           }"
-        >فعال</span>
+          >فعال</span
+        >
 
         <div
           class="circle-color"
           :style="{
-            background: `linear-gradient(to right, ${plan.color}, ${darken(plan.color, .1)})`,
-            boxShadow: `0px 5px 10px -4px ${plan.color}, 0px 4px 6px -5px #000 !important`
+            background: `linear-gradient(to right, ${plan.color}, ${darken(
+              plan.color,
+              0.1
+            )})`,
+            boxShadow: `0px 5px 10px -4px ${
+              plan.color
+            }, 0px 4px 6px -5px #000 !important`
           }"
         ></div>
       </card>
@@ -362,21 +433,23 @@
         <h2 class="modal-title">
           خرید
           {{ selected_plan.title }}
-          <span
-            class="text-muted"
-            :style="{ fontSize: '14px' }"
-          >
+          <span class="text-muted" :style="{ fontSize: '14px' }">
             (
             <span v-if="selected_plan.credit_days_count === 30">ماهانه</span>
-            <span v-else-if="selected_plan.credit_days_count === 360">یکساله</span>
-            <span
-              v-else-if="selected_plan.credit_days_count % 30 === 0"
-            >{{ selected_plan.credit_days_count / 30 }} ماهه</span>
+            <span v-else-if="selected_plan.credit_days_count === 360"
+              >یکساله</span
+            >
+            <span v-else-if="selected_plan.credit_days_count % 30 === 0"
+              >{{ selected_plan.credit_days_count / 30 }} ماهه</span
+            >
             <span v-else>{{ selected_plan.credit_days_count }} روزه</span>
             )
           </span>
         </h2>
-        <p>از طریق فرم زیر میتوانید کد تخفیف خود را اعمال کرده و به درگاه پرداخت متصل باشید</p>
+        <p>
+          از طریق فرم زیر میتوانید کد تخفیف خود را اعمال کرده و به درگاه پرداخت
+          متصل باشید
+        </p>
       </md-dialog-title>
 
       <div class="md-dialog-content">
@@ -397,18 +470,20 @@
                   :style="{
                     background: '#ff8d72',
                     color: '#fff',
-                    boxShadow: '0px 5px 10px -4px #ff8d72, 0px 4px 6px -5px #000 !important',
+                    boxShadow:
+                      '0px 5px 10px -4px #ff8d72, 0px 4px 6px -5px #000 !important',
                     borderRadius: '30px',
                     outline: 'none'
                   }"
-                >اعمال کد تخفیف</el-button>
+                  >اعمال کد تخفیف</el-button
+                >
               </el-input>
             </div>
             <br />
 
             <el-input
               type="textarea"
-              :autosize="{ minRows: 4, maxRows: 6}"
+              :autosize="{ minRows: 4, maxRows: 6 }"
               maxlength="250"
               placeholder="اگر توضیحی درباره پرداخت خود دارید وارد کنید"
               v-model="payment_description"
@@ -421,7 +496,8 @@
               :style="{
                 background: '#67c23a',
                 color: '#fff',
-                boxShadow: '0px 5px 10px -4px #67c23a, 0px 4px 6px -5px #000 !important',
+                boxShadow:
+                  '0px 5px 10px -4px #67c23a, 0px 4px 6px -5px #000 !important',
                 borderRadius: '30px',
                 outline: 'none'
               }"
@@ -429,11 +505,11 @@
               جهت پرداخت مبلغ
               <b>
                 <ICountUp
-                  :style="{display: 'inline'}"
+                  :style="{ display: 'inline' }"
                   :endVal="final_price"
                   :options="{
                     useEasing: true,
-                    useGrouping: true,
+                    useGrouping: true
                   }"
                 />
               </b>
@@ -444,12 +520,22 @@
       </div>
 
       <md-dialog-actions v-if="false">
-        <base-button class="ml-2" type="danger" size="sm" @click="is_open = false">
+        <base-button
+          class="ml-2"
+          type="danger"
+          size="sm"
+          @click="is_open = false"
+        >
           <i class="tim-icons icon-simple-remove"></i>
           لغو
         </base-button>
 
-        <base-button size="sm" :loading="is_mutation_loading" type="success" @click="createPayment">
+        <base-button
+          size="sm"
+          :loading="is_mutation_loading"
+          type="success"
+          @click="createPayment"
+        >
           <transition name="fade" mode="out-in">
             <semipolar-spinner
               :animation-duration="2000"
@@ -459,15 +545,19 @@
             />
             <span v-else class="pull-right ml-2">
               <i class="tim-icons icon-credit-card"></i>
-            </span>
-          </transition>پرداخت صورت حساب
+            </span> </transition
+          >پرداخت صورت حساب
         </base-button>
       </md-dialog-actions>
     </md-dialog>
 
     <transition name="loading">
       <div class="query-loader" v-if="is_query_loading">
-        <half-circle-spinner :animation-duration="800" :size="40" color="#fff" />
+        <half-circle-spinner
+          :animation-duration="800"
+          :size="40"
+          color="#fff"
+        />
       </div>
     </transition>
   </div>
@@ -695,7 +785,9 @@ export default {
         axios
           .post("/graphql/auth", {
             query: `mutation {
-            validatePromocode(code: "${this.promocode}", plan: ${this.selected_plan.id})
+            validatePromocode(code: "${this.promocode}", plan: ${
+              this.selected_plan.id
+            })
             {
               count
               status
@@ -773,7 +865,9 @@ export default {
 
           setTimeout(
             () =>
-              (window.location = `/api/v1/payment/${data.data.createPayment.code}`),
+              (window.location = `/api/v1/payment/${
+                data.data.createPayment.code
+              }`),
             3000
           );
         })
