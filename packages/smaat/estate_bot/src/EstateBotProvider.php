@@ -8,24 +8,22 @@ use SmaaT\EstateBot\EstateBot;
 
 class EstateBotProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-    }
+	/**
+	 * Register services.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+	}
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        define('DS', DIRECTORY_SEPARATOR);
-
-        $this->loadMigrationsFrom(__DIR__ . DS . '..' . DS . 'database' . DS . 'migrations');
-    }
+	/**
+	 * Bootstrap services.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->loadMigrationsFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations');
+	}
 }
