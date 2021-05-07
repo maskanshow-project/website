@@ -50,7 +50,7 @@
         "persianjs": "^0.4.0",
         "tilt.js": "^1.2.1",
         "typed.js": "^2.0.10",
-        "ua-parser-js": "^0.7.21",
+        "ua-parser-js": "^0.7.24",
         "voca": "^1.4.0",
         "vue-analytics": "^5.22.1",
         "vue-axios": "^2.1.5",
